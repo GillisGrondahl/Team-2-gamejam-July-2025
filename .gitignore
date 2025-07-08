@@ -70,3 +70,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/#Audio Design/references
+/#GDD
+/Assets/Feel/FeelDemos/CardsUI/Textures/Art/Feelcardsui Fireproof.webm.meta
+/Assets/Feel/FeelDemos/CardsUI/Textures/Art/Feelcardsui Lady.webm.meta
+/Assets/Feel/FeelDemos/CardsUI/Textures/Art/Feelcardsui Sumerian.webm.meta
