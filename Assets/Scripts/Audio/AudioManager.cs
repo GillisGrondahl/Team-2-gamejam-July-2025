@@ -43,6 +43,9 @@ public class AudioManager : MonoBehaviour
         // Ensure banks are loaded (redundant if auto-loading works, but safe)
         if (!RuntimeManager.HasBankLoaded("Master"))
         {
+            RuntimeManager.LoadBank("BGM");
+            RuntimeManager.LoadBank("Ambience");
+            RuntimeManager.LoadBank("SFX");
             RuntimeManager.LoadBank("Master");
         }
 
