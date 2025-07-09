@@ -1,4 +1,5 @@
 using UnityEngine;
+using MoreMountains.Feedbacks;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Interactable : MonoBehaviour
@@ -6,6 +7,11 @@ public class Interactable : MonoBehaviour
     private Transform _target;
     private Rigidbody _rigidbody;
     private Material outlineMaterial;
+
+    [Header("MM Feedbacks")]
+    [SerializeField] private MMF_Player _fdbkPickUp;
+    [SerializeField] private MMF_Player _fdbkDropOnTable;
+
 
     private void Awake()
     {
@@ -31,6 +37,10 @@ public class Interactable : MonoBehaviour
         _target = target;
         _rigidbody.isKinematic = true;
         HideOutline();
+
+        _fdbkPickUp.PlayFeedbacks();
+
+        
     }
     public void Release()
     {
