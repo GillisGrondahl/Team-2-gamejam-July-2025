@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public EventReference BGM_trackEvent;
     public string BGM_pitchName = "Pitch";
     [Range(0f, 1f)] public float BGM_pitchValue = 0f;
-    private EventInstance BGM_musicEventInstance;
+    private EventInstance BGM_eventInstance;
 
 
 
@@ -18,6 +19,9 @@ public class AudioManager : MonoBehaviour
     public EventReference AMB_trackEvent;
     private EventInstance AMB_EventInstance;
 
+
+
+    private List<EventInstance> eventInstances; // list of FMOD event instances, we're keeping track so we can clean up (e.g., on a scene change)
 
 
 
@@ -28,7 +32,10 @@ public class AudioManager : MonoBehaviour
             Debug.Log("More than one AudioManager in the scene!");  
         }
         instance = this;
-        
+
+
+        eventInstances = new List<EventInstance>();
+
     }
 
     private void Start()
@@ -63,8 +70,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            BGM_musicEventInstance = RuntimeManager.CreateInstance(BGM_trackEvent);
-            BGM_musicEventInstance.start();
+            BGM_eventInstance = RuntimeManager.CreateInstance(BGM_trackEvent);
+            eventInstances.Add(BGM_eventInstance);
+            BGM_eventInstance.start();
         }
         
     }
@@ -73,7 +81,7 @@ public class AudioManager : MonoBehaviour
     {
       
 
-        BGM_musicEventInstance.setParameterByName(BGM_pitchName, pitch);
+        BGM_eventInstance.setParameterByName(BGM_pitchName, pitch);
     }
 
 
@@ -90,6 +98,8 @@ public class AudioManager : MonoBehaviour
         else
         {
             AMB_EventInstance = RuntimeManager.CreateInstance(AMB_trackEvent);
+            eventInstances.Add(AMB_EventInstance);
+
             AMB_EventInstance.start();
         }
     }
@@ -104,4 +114,21 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
+    #region Cleanup
+    private void CleanUp()
+    {
+        foreach (EventInstance instance in eventInstances)
+        {
+            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.release();
+        }
+
+    }
+
+    private void OnDestroy()
+    {
+        CleanUp();
+    }
+
+    #endregion
 }
