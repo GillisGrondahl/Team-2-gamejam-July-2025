@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance { get; private set; }
 
     [Header("BGM")]
+    public bool BGM_enabled = true;
     public EventReference BGM_trackEvent;
     public string BGM_pitchName = "Pitch";
     [Range(0f, 1f)] public float BGM_pitchValue = 0f;
@@ -61,6 +62,15 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         SetTempo(BGM_pitchValue);
+
+        if (!BGM_enabled)
+        {
+            BGM_eventInstance.setPaused(true);
+        }
+        else
+        {
+            BGM_eventInstance.setPaused(false);
+        }
     }
 
     #region BGM
