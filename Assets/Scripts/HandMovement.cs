@@ -33,7 +33,7 @@ public class HandMovement : MonoBehaviour
             }
 
             handTransform.transform.localPosition =
-    new Vector3(0f, 0f, handZPos);
+                new Vector3(0f, 0f, handZPos);
 
 
         }
