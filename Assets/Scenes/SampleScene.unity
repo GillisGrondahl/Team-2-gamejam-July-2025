@@ -458,11 +458,11 @@ MonoBehaviour:
   BGM_pitchValue: 0
   AMB_trackEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -760500940
+      Data2: 1243595926
+      Data3: -424208719
+      Data4: 1209409010
+    Path: event:/Ambience/AMB_Track1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
