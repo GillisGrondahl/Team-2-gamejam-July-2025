@@ -251,7 +251,7 @@
 			<value>-49.5</value>
 		</property>
 		<property name="gain">
-			<value>9.5</value>
+			<value>18</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{b1f33fc0-23aa-425b-ad13-b0b8800cf53e}" />
