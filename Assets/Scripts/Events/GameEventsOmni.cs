@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class GameEvents : MonoBehaviour
+    public class GameEventsOmni : MonoBehaviour
     {
-        public static GameEvents instance;
+        public static GameEventsOmni instance;
 
         private void Awake()
         {

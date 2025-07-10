@@ -12,7 +12,7 @@ public class MainMenuUI : MonoBehaviour
     {
         startButton.onClick.AddListener(() =>
         {
-            GameEvents.instance.StartGamePressed();
+            GameEventsOmni.instance.StartGamePressed();
         });
         exitButton.onClick.AddListener(() =>
         {
