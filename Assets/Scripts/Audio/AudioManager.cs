@@ -7,6 +7,16 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance { get; private set; }
 
+    [Header("Volume Control")]
+    [Range(0f, 1f)] public float masterVolume = 1f;
+    [Range(0f, 1f)] public float BGM_volume = 1f;
+    [Range(0f, 1f)] public float AMB_volume = 1f;
+    [Range(0f, 1f)] public float SFX_volume = 1f;
+    private Bus masterBus;
+    private Bus BGMBus;
+    private Bus AMBBus;
+    private Bus SFXBus;
+
     [Header("BGM")]
     public bool BGM_enabled = true;
     public EventReference BGM_trackEvent;
@@ -53,6 +63,11 @@ public class AudioManager : MonoBehaviour
         // Wait for all banks to finish loading
         RuntimeManager.WaitForAllSampleLoading();
 
+        // Assign busses
+        masterBus = RuntimeManager.GetBus("bus:/");
+        BGMBus = RuntimeManager.GetBus("bus:/BGM");
+        AMBBus = RuntimeManager.GetBus("bus:/Ambience");
+        SFXBus = RuntimeManager.GetBus("bus:/SFX");
 
         InitializeBGM();
         InitializeAmbience();
@@ -71,7 +86,45 @@ public class AudioManager : MonoBehaviour
         {
             BGM_eventInstance.setPaused(false);
         }
+
+
+        // Basic volume control (events subscription to be implemented later)
+        masterBus.getVolume(out float currentVolume);
+        if (masterVolume != currentVolume)
+        {
+            SetVolume(masterBus, masterVolume);
+        }
+        BGMBus.getVolume(out currentVolume);
+        if (BGM_volume != currentVolume)
+        {
+            SetVolume(BGMBus, BGM_volume);
+        }
+        AMBBus.getVolume(out currentVolume);
+        if (AMB_volume != currentVolume)
+        {
+            SetVolume(AMBBus, AMB_volume);
+        }
+        SFXBus.getVolume(out currentVolume);
+        if (SFX_volume != currentVolume)
+        {
+            SetVolume(SFXBus, SFX_volume);
+        }
+
+
     }
+
+    #region VolumeControl
+    private void SetVolume(Bus volumeControlBus, float volume)
+    {
+        volumeControlBus.setVolume(volume);
+        
+    }
+
+    
+
+
+
+    #endregion
 
     #region BGM
 
