@@ -10,7 +10,8 @@ public class Interactable : MonoBehaviour
 
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
-    [SerializeField] private MMF_Player _fdbkDropOnTable;
+    [SerializeField] private MMF_Player _fdbkDropped;
+    [Tooltip("Minimum velocity to trigger drop feedback")] [SerializeField] private float _velocityThreshold = 0.5f;
 
 
     private void Awake()
@@ -38,14 +39,28 @@ public class Interactable : MonoBehaviour
         _rigidbody.isKinematic = true;
         HideOutline();
 
-        _fdbkPickUp.PlayFeedbacks();
-
+        if (_fdbkPickUp != null)
+        {
+            _fdbkPickUp.PlayFeedbacks();
+        }
         
     }
     public void Release()
     {
         _target = null;
         _rigidbody.isKinematic = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Check if we're not being held, hit something (anything), and have enough velocity
+        if (_target == null && _rigidbody.linearVelocity.magnitude >= _velocityThreshold)
+        {
+            if (_fdbkDropped != null)
+            {
+                _fdbkDropped.PlayFeedbacks();
+            }
+        }
     }
 
     public void ShowOutline()
