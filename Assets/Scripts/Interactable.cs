@@ -8,6 +8,8 @@ public class Interactable : MonoBehaviour
     private Rigidbody _rigidbody;
     private Material outlineMaterial;
 
+    private bool _resting = true;
+
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
@@ -35,6 +37,7 @@ public class Interactable : MonoBehaviour
 
     public void SnapTo(Transform target)
     {
+        _resting = false;
         _target = target;
         _rigidbody.isKinematic = true;
         HideOutline();
@@ -53,9 +56,11 @@ public class Interactable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if we're not being held, hit something (anything), and have enough y-velocity
-        if (_target == null && _rigidbody.linearVelocity.y <= _velocityThreshold)
+        // Check if we're not being held, hit something other than the player, and have enough y-velocity
+        if (collision.gameObject.tag != "Player" && _target == null && _resting == false && _rigidbody.linearVelocity.y <= _velocityThreshold)
         {
+            _resting = true;
+
             if (_fdbkDropped != null)
             {
                 _fdbkDropped.PlayFeedbacks();
