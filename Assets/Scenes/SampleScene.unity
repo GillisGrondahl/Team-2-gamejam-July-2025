@@ -249,10 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f537bbdf7f9f674ea6d2d19ec6c32a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _freeze: 0
   _heaveAmplitude: 1
-  _heaveFrequency: 0.1
+  _heavePeriod: 10
   _pitchAmplitude: 8
-  _pitchFrequency: 0.1
+  _pitchPeriod: 10
   _waveVariation: 0.1
   _motionIntensity: 1
 --- !u!1 &330585543
