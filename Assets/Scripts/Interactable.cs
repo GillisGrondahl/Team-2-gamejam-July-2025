@@ -53,8 +53,8 @@ public class Interactable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if we're not being held, hit something (anything), and have enough velocity
-        if (_target == null && _rigidbody.linearVelocity.magnitude >= _velocityThreshold)
+        // Check if we're not being held, hit something (anything), and have enough y-velocity
+        if (_target == null && _rigidbody.linearVelocity.y <= _velocityThreshold)
         {
             if (_fdbkDropped != null)
             {
