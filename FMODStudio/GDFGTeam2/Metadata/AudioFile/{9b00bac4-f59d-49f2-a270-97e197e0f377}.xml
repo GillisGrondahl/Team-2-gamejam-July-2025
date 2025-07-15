@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{9b00bac4-f59d-49f2-a270-97e197e0f377}">
 		<property name="assetPath">
-			<value>20250706_Happy_What Shall We Do_wip.mp3</value>
+			<value>BMG/20250706_Happy_What Shall We Do_wip.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

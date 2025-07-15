@@ -5,7 +5,7 @@
 			<value>PickUp</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -82,6 +82,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{416c10d0-e5a8-47ea-8040-041e3080d2dd}">
+		<property name="volume">
+			<value>10</value>
+		</property>
 		<relationship name="automators">
 			<destination>{17bbdf58-83e6-450f-bd3a-38a9b7b38446}</destination>
 			<destination>{1ce93887-1de0-4f4b-8958-511c50188042}</destination>
@@ -108,7 +111,7 @@
 	</object>
 	<object class="MultiSound" id="{3b959295-95a2-437e-9f13-76f98554bb9a}">
 		<relationship name="sounds">
-			<destination>{d3bb42ff-53ed-483a-b3d6-a6e7b242b011}</destination>
+			<destination>{5c28c907-d07e-49d7-bd49-6a7e5f7deb27}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{3f6b0e60-8d0a-4696-9966-d13190224a0e}">
@@ -136,9 +139,10 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{58c1b22b-a3ef-4284-81cf-1d575cafa157}" />
-	<object class="SingleSound" id="{d3bb42ff-53ed-483a-b3d6-a6e7b242b011}">
-		<relationship name="audioFile">
-			<destination>{a1d72ade-18a0-4544-899b-c0e3238e3fe7}</destination>
+	<object class="MultiSound" id="{5c28c907-d07e-49d7-bd49-6a7e5f7deb27}">
+		<relationship name="sounds">
+			<destination>{3919b79d-ae67-4c38-9091-344874817cd5}</destination>
+			<destination>{de93db18-e9f3-4acb-ace1-3c3882f256d7}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{f17a574f-847a-48bc-b98c-b795c9c44972}" />
@@ -152,6 +156,16 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{e6772ca5-73ad-4fae-bf77-ec0e0e473158}" />
+	<object class="SingleSound" id="{3919b79d-ae67-4c38-9091-344874817cd5}">
+		<relationship name="audioFile">
+			<destination>{f3e7167e-38f0-4c76-895e-38d4c1de7034}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{de93db18-e9f3-4acb-ace1-3c3882f256d7}">
+		<relationship name="audioFile">
+			<destination>{5c77ab7e-57da-4cb2-918a-4164a0b45a95}</destination>
+		</relationship>
+	</object>
 	<object class="AutomationPoint" id="{a8ba2aba-b429-43c0-93ef-c0a6d44ec32f}">
 		<property name="position">
 			<value>0.1963276836158192</value>

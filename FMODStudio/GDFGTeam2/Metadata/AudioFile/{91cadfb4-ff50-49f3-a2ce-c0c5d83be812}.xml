@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{91cadfb4-ff50-49f3-a2ce-c0c5d83be812}">
 		<property name="assetPath">
-			<value>BOATInt_Atmos, INT Small yacht cabin, hatch open,_RogueWaves_YachtMarina.wav</value>
+			<value>AMB/BOATInt_Atmos, INT Small yacht cabin, hatch open,_RogueWaves_YachtMarina.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

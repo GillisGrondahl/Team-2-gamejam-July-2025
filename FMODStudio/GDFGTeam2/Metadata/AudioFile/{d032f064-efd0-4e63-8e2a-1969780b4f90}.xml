@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{d032f064-efd0-4e63-8e2a-1969780b4f90}">
 		<property name="assetPath">
-			<value>WATRWave_Water Lapping against port_Jake Fielding_Industrial Harbor.wav</value>
+			<value>AMB/WATRWave_Water Lapping against port_Jake Fielding_Industrial Harbor.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

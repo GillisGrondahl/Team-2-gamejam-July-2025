@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{dcc09fc5-7d36-40b3-b12c-eb0a07e2c1d1}">
 		<property name="assetPath">
-			<value>WATRSurf_Ocean Medium to Large Rocks 02 Loop_Cascadia Shore Waves.wav</value>
+			<value>AMB/WATRSurf_Ocean Medium to Large Rocks 02 Loop_Cascadia Shore Waves.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
