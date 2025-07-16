@@ -21,7 +21,10 @@ public class AudioManager : MonoBehaviour
     public bool BGM_enabled = true;
     public EventReference BGM_trackEvent;
     public string BGM_pitchName = "Pitch";
-    [Range(0f, 1f)] public float BGM_pitchValue = 0f;
+    [SerializeField] [Range(0f, 1f)] private float BGM_originalPitchValue = 0f;    
+    [SerializeField] [Range(0f, 1f)] private float BGM_pitchOnEarlyWarning = 0.3f;
+    [SerializeField] [Range(0f, 1f)] private float BGM_pitchOnFinalCountdown = 0.5f;
+
     private EventInstance BGM_eventInstance;
 
 
@@ -71,12 +74,15 @@ public class AudioManager : MonoBehaviour
 
         InitializeBGM();
         InitializeAmbience();
+
+        // Subscribe to TimeManager events
+        TimeManager.Instance.OnEarlyWarningReached += HandleEarlyWarningReached;
+        TimeManager.Instance.OnFinalCountdownReached += HandleFinalCountdownReached;
     }
 
 
     private void Update()
     {
-        SetTempo(BGM_pitchValue);
 
         if (!BGM_enabled)
         {
@@ -138,16 +144,31 @@ public class AudioManager : MonoBehaviour
         {
             BGM_eventInstance = RuntimeManager.CreateInstance(BGM_trackEvent);
             eventInstances.Add(BGM_eventInstance);
+            SetTempo(BGM_originalPitchValue);
             BGM_eventInstance.start();
         }
         
     }
 
-    public void SetTempo(float pitch)
+    public void SetTempo(float newPitch)
     {
       
 
-        BGM_eventInstance.setParameterByName(BGM_pitchName, pitch);
+        BGM_eventInstance.setParameterByName(BGM_pitchName, newPitch);
+        //BGM_eventInstance.getParameterByName(BGM_pitchName, out float currentPitch);
+        //Debug.Log($"Pitch of BGM is now {currentPitch}");
+    }
+
+    private void HandleEarlyWarningReached()
+    {
+        Debug.Log("Pitching up on early warning");
+        SetTempo(BGM_pitchOnEarlyWarning);
+    }
+
+    private void HandleFinalCountdownReached()
+    {
+        Debug.Log("Pitching up on final countdown");
+        SetTempo(BGM_pitchOnFinalCountdown);
     }
 
 
