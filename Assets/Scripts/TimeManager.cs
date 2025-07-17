@@ -109,22 +109,19 @@ public class TimeManager : MonoBehaviour
                     OnFinalCountdownTick?.Invoke(); // fire event for every seconds tick during final countdown
 
                     timeDisplayText.color = Color.red;
-                    timeDisplayText.text = GetFormattedTime();
-
 
                     if (debugMode)
                         Debug.Log($"Final countdown: {currentSecond} seconds remaining!");
                 }
                 else
                 {
-                    timeDisplayText.text = GetFormattedTime();
-
-
                     if (debugMode)
                         Debug.Log($"Timer decreased by one second: {currentSecond} seconds remaining!");
                 }
 
             }
+
+            timeDisplayText.text = GetFormattedTime();
         }
 
         // Check if time is up
@@ -144,10 +141,6 @@ public class TimeManager : MonoBehaviour
     }
 
 
-
-    /// <summary>
-    /// Starts the timer
-    /// </summary>
     public void StartTimer()
     {
         remainingTime = levelDurationSeconds;
@@ -160,9 +153,6 @@ public class TimeManager : MonoBehaviour
         timeDisplayText.text = GetFormattedTime();
     }
 
-    /// <summary>
-    /// Toggles pause/unpause state
-    /// </summary>
     public void TogglePause()
     {
         if (hasGameEnded) return; // Can't pause if game has ended
@@ -231,7 +221,6 @@ public class TimeManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Reset time scale when TimeManager is destroyed
         Time.timeScale = 1f;
     }
 }
