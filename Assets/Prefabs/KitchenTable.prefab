@@ -64,7 +64,6 @@ GameObject:
   - component: {fileID: 2040419476406194346}
   - component: {fileID: 741397738596688522}
   - component: {fileID: 4225983193159781676}
-  - component: {fileID: 2274427203644462601}
   m_Layer: 0
   m_Name: Oven-placeholder
   m_TagString: Untagged
@@ -141,27 +140,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2274427203644462601
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775019783921445553}
-  m_Material: {fileID: 13400000, guid: f561fbe3dc855094bbc1d3557050a18b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.8000003, y: 0.80845565, z: 0.7035844}
-  m_Center: {x: 0, y: -0.000000059604645, z: 0.34820783}
 --- !u!1 &2923894488176290296
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,6 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6175135728977403406}
+  - component: {fileID: 2528617261326219867}
   m_Layer: 0
   m_Name: KitchenTable
   m_TagString: Untagged
@@ -311,6 +290,27 @@ Transform:
   - {fileID: 2045058211027683209}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2528617261326219867
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449994690304617743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.3035326, y: 0.70955086, z: 0.8038461}
+  m_Center: {x: -0.09814215, y: 0.35131025, z: -0.00015413761}
 --- !u!1001 &1860242269267972798
 PrefabInstance:
   m_ObjectHideFlags: 0
