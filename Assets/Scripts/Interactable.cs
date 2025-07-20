@@ -1,5 +1,6 @@
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using LineworkLite.Common.Attributes;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Interactable : MonoBehaviour
@@ -7,6 +8,9 @@ public class Interactable : MonoBehaviour
     private Transform _target;
     private Rigidbody _rigidbody;
     private Material outlineMaterial;
+    public Ingredient ingredient;
+    public LayerMask defaultLayer;
+    public LayerMask outlineLayer;
 
     private bool _resting = true;
 
@@ -19,7 +23,7 @@ public class Interactable : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        outlineMaterial = GetComponent<Renderer>().materials[1];
+        //outlineMaterial = GetComponent<Renderer>().materials[1];
     }
 
     private void LateUpdate()
@@ -40,7 +44,9 @@ public class Interactable : MonoBehaviour
         _resting = false;
         _target = target;
         _rigidbody.isKinematic = true;
-        HideOutline();
+        //HideOutline();
+
+       
 
         if (_fdbkPickUp != null)
         {
@@ -52,6 +58,7 @@ public class Interactable : MonoBehaviour
     {
         _target = null;
         _rigidbody.isKinematic = false;
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -70,11 +77,21 @@ public class Interactable : MonoBehaviour
 
     public void ShowOutline()
     {
-        outlineMaterial.SetFloat("_OutlineThickness", 1.1f);
+        gameObject.layer = GetLayerFromMask(outlineLayer.value);
+        //outlineMaterial.SetFloat("_OutlineThickness", 1.1f);
     }
 
     public void HideOutline()
     {
-        outlineMaterial.SetFloat("_OutlineThickness", 0f);
+        gameObject.layer = GetLayerFromMask(defaultLayer.value);
+        //outlineMaterial.SetFloat("_OutlineThickness", 0f);
+    }
+
+    int GetLayerFromMask(int mask)
+    {
+        int layer = 0;
+        while ((mask >>= 1) != 0)
+            layer++;
+        return layer;
     }
 }
