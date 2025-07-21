@@ -76,8 +76,17 @@ public class AudioManager : MonoBehaviour
         InitializeAmbience();
 
         // Subscribe to TimeManager events
-        TimeManager.Instance.OnEarlyWarningReached += HandleEarlyWarningReached;
-        TimeManager.Instance.OnFinalCountdownReached += HandleFinalCountdownReached;
+        if (TimeManager.Instance != null)   // only if we're in the main scene 
+        {
+            TimeManager.Instance.OnEarlyWarningReached += HandleEarlyWarningReached;
+            TimeManager.Instance.OnFinalCountdownReached += HandleFinalCountdownReached;
+        }
+
+        // Subscribe to GameEvent events for audio settings
+        GameEvents.Instance.OnMasterVolumeChanged += HandleMasterVolumeChanged;
+        GameEvents.Instance.OnBGMVolumeChanged += HandleBGMVolumeChanged;
+        GameEvents.Instance.OnAmbienceVolumeChanged += HandleAmbienceVolumeChanged;
+        GameEvents.Instance.OnSFXVolumeChanged += HandleSFXVolumeChanged;
     }
 
 
@@ -95,6 +104,7 @@ public class AudioManager : MonoBehaviour
 
 
         // Basic volume control (events subscription to be implemented later)
+        /*
         masterBus.getVolume(out float currentVolume);
         if (masterVolume != currentVolume)
         {
@@ -115,6 +125,7 @@ public class AudioManager : MonoBehaviour
         {
             SetVolume(SFXBus, SFX_volume);
         }
+        */
 
 
     }
@@ -126,7 +137,34 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    
+    // Volume event handlers
+    private void HandleMasterVolumeChanged(float newVolume)
+    {
+        masterVolume = newVolume;
+        SetVolume(masterBus, masterVolume);
+        Debug.Log($"Master volume changed to: {newVolume}");
+    }
+
+    private void HandleBGMVolumeChanged(float newVolume)
+    {
+        BGM_volume = newVolume;
+        SetVolume(BGMBus, BGM_volume);
+        Debug.Log($"BGM volume changed to: {newVolume}");
+    }
+
+    private void HandleAmbienceVolumeChanged(float newVolume)
+    {
+        AMB_volume = newVolume;
+        SetVolume(AMBBus, AMB_volume);
+        Debug.Log($"Ambience volume changed to: {newVolume}");
+    }
+
+    private void HandleSFXVolumeChanged(float newVolume)
+    {
+        SFX_volume = newVolume;
+        SetVolume(SFXBus, SFX_volume);
+        Debug.Log($"SFX volume changed to: {newVolume}");
+    }
 
 
 
@@ -202,19 +240,23 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Cleanup
-    private void CleanUp()
+    private void OnDestroy()
     {
+        // Clean up FMOD instances
         foreach (EventInstance instance in eventInstances)
         {
             instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             instance.release();
         }
 
-    }
-
-    private void OnDestroy()
-    {
-        CleanUp();
+        // Unsubscribe from events
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.OnMasterVolumeChanged -= HandleMasterVolumeChanged;
+            GameEvents.Instance.OnBGMVolumeChanged -= HandleBGMVolumeChanged;
+            GameEvents.Instance.OnAmbienceVolumeChanged -= HandleAmbienceVolumeChanged;
+            GameEvents.Instance.OnSFXVolumeChanged -= HandleSFXVolumeChanged;
+        }
     }
 
     #endregion
