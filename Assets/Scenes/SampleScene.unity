@@ -3463,10 +3463,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Potato
       objectReference: {fileID: 0}
-    - target: {fileID: 2564883668423414425, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 2941867295424923683, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.18216597
@@ -3506,22 +3502,6 @@ PrefabInstance:
     - target: {fileID: 2941867295424923683, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563539275033819258, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
-      propertyPath: _fdbkPickUp
-      value: 
-      objectReference: {fileID: 820430186}
-    - target: {fileID: 8563539275033819258, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
-      propertyPath: _fdbkDropped
-      value: 
-      objectReference: {fileID: 820430185}
-    - target: {fileID: 8563539275033819258, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
-      propertyPath: defaultLayer.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 8563539275033819258, guid: 384020cc83db6a84ea153a51da4658c8, type: 3}
-      propertyPath: outlineLayer.m_Bits
-      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
