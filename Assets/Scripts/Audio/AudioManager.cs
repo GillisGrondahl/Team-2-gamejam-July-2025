@@ -102,32 +102,6 @@ public class AudioManager : MonoBehaviour
             BGM_eventInstance.setPaused(false);
         }
 
-
-        // Basic volume control (events subscription to be implemented later)
-        /*
-        masterBus.getVolume(out float currentVolume);
-        if (masterVolume != currentVolume)
-        {
-            SetVolume(masterBus, masterVolume);
-        }
-        BGMBus.getVolume(out currentVolume);
-        if (BGM_volume != currentVolume)
-        {
-            SetVolume(BGMBus, BGM_volume);
-        }
-        AMBBus.getVolume(out currentVolume);
-        if (AMB_volume != currentVolume)
-        {
-            SetVolume(AMBBus, AMB_volume);
-        }
-        SFXBus.getVolume(out currentVolume);
-        if (SFX_volume != currentVolume)
-        {
-            SetVolume(SFXBus, SFX_volume);
-        }
-        */
-
-
     }
 
     #region VolumeControl
