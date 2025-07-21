@@ -736,9 +736,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a3ff610dd25164ab08de33ed2ee713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 0.8
-  BGM_volume: 0.457
-  AMB_volume: 0.838
+  masterVolume: 0.737
+  BGM_volume: 0.386
+  AMB_volume: 0.737
   SFX_volume: 0.858
   BGM_enabled: 1
   BGM_trackEvent:
