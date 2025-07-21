@@ -11,6 +11,7 @@ public class RecipeSystem : MonoBehaviour
     public List<Recipe> recipes;
     private Recipe currentRecipe;
     private Recipe compareRecipe;
+    private int currentRecipeIndex = 0;
 
     private void Awake()
     {
@@ -28,12 +29,22 @@ public class RecipeSystem : MonoBehaviour
     {
         if (recipes.Count > 0)
         {
-            currentRecipe = recipes[0]; // Start with the first recipe
+            currentRecipe = recipes[currentRecipeIndex]; // Start with the first recipe
         }
         compareRecipe = ScriptableObject.CreateInstance<Recipe>();
-        foreach(var ingredient in currentRecipe.ingredients)
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        foreach (Transform child in ingredientsList)
         {
-             Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>().Initialize(ingredient);
+            Destroy(child.gameObject);
+        }
+
+        foreach (var ingredient in currentRecipe.ingredients)
+        {
+            Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>().Initialize(ingredient);
         }
     }
 
@@ -49,9 +60,9 @@ public class RecipeSystem : MonoBehaviour
 
     private void CheckRecipeCompletion()
     {
-        if(currentRecipe == null || compareRecipe == null) return;
+        if (currentRecipe == null || compareRecipe == null) return;
 
-        if(compareRecipe.ingredients.Count != currentRecipe.ingredients.Count)
+        if (compareRecipe.ingredients.Count != currentRecipe.ingredients.Count)
         {
             Debug.Log("Recipe not complete: Ingredient count mismatch.");
             return;
@@ -65,5 +76,21 @@ public class RecipeSystem : MonoBehaviour
                 return;
             }
         }
+        Debug.Log("Before check");
+
+        if (++currentRecipeIndex < recipes.Count)
+        {
+            Debug.Log("InCheck");
+            currentRecipe = recipes[currentRecipeIndex];
+            compareRecipe.ClearIngredients();
+            UpdateUI();
+
+            Debug.Log($"Recipe complete! Moving to next recipe: {currentRecipe.recipeName}");
+        }
+        else
+        {
+            Debug.Log($"LEVEL FINISHED!");
+        }
+
     }
 }

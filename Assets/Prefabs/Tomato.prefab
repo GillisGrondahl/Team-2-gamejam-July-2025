@@ -111,7 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4346432d13b62284582ed7e90cb7189f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
+  ingredient: {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  outlineLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _fdbkPickUp: {fileID: 0}
   _fdbkDropped: {fileID: 0}
   _velocityThreshold: 0.5

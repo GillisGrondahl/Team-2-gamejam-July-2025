@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.2798931
+      value: 0.18688694
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7538
+      value: 0.7339
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7966719
+      value: -3.1785202
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carrot
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -66,6 +70,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2293487402512643766}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 421460227334547838}
   m_SourcePrefab: {fileID: 100100000, guid: c5ecd259edc54d846b6fd76fab2e2685, type: 3}
 --- !u!1 &3019524010534787124 stripped
 GameObject:
@@ -112,6 +119,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
+  defaultLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  outlineLayer:
+    serializedVersion: 2
+    m_Bits: 128
   _fdbkPickUp: {fileID: 0}
   _fdbkDropped: {fileID: 0}
   _velocityThreshold: 0.5
+--- !u!65 &421460227334547838
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019524010534787124}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.050720498, y: 0.050720476, z: 0.22669682}
+  m_Center: {x: -0.00028104617, y: 0.0016156686, z: -0.049508803}

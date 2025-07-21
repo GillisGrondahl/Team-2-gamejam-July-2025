@@ -31,6 +31,8 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
+        if(_interactable == null) _canInteract = true;
+
         if (Input.GetKeyDown(KeyCode.E) && OverlapedInteractable != null && _canInteract)
         {
             _interactable = OverlapedInteractable;

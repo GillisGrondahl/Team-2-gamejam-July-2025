@@ -45,9 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7335d2e8eb8e49418a80edf3d74cca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ingredientsList: {fileID: 0}
   ingredientUI: {fileID: 4804737399228660475, guid: bac17e2b0f909e9478c0ee2869e2d1e8, type: 3}
   recipes:
   - {fileID: 11400000, guid: b5a30c42c59ddf04ebf89ea553a6c879, type: 2}
+  - {fileID: 11400000, guid: 79fd334957f7e1c49bfc139d9b75f95d, type: 2}
 --- !u!114 &7700416547957995568
 MonoBehaviour:
   m_ObjectHideFlags: 0

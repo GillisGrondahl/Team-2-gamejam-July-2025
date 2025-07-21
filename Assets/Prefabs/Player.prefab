@@ -253,6 +253,7 @@ MonoBehaviour:
   handTransform: {fileID: 7635936044538149012}
   handRangeMax: 0.8
   handRangeMin: -0.1
+  sensitivity: 1
 --- !u!1 &7773009527413830843
 GameObject:
   m_ObjectHideFlags: 0
