@@ -19,14 +19,14 @@ public class AudioManager : MonoBehaviour
 
     [Header("BGM")]
     public bool BGM_enabled = true;
-    public EventReference BGM_trackEvent;
+    [SerializeField] private List<EventReference> BGM_trackEvents = new List<EventReference>(); 
     public string BGM_pitchName = "Pitch";
     [SerializeField] [Range(0f, 1f)] private float BGM_originalPitchValue = 0f;    
     [SerializeField] [Range(0f, 1f)] private float BGM_pitchOnEarlyWarning = 0.3f;
     [SerializeField] [Range(0f, 1f)] private float BGM_pitchOnFinalCountdown = 0.5f;
 
     private EventInstance BGM_eventInstance;
-
+    private int currentBGMTrackIndex = -1; // Track which BGM is currently playing
 
 
     [Header("Ambience")]
@@ -148,18 +148,40 @@ public class AudioManager : MonoBehaviour
 
     public void InitializeBGM()
     {
-        if (BGM_trackEvent.IsNull)
+        if (BGM_trackEvents == null || BGM_trackEvents.Count == 0)
         {
-            Debug.LogWarning("BGM track is not assigned.");
+            Debug.LogWarning("No BGM tracks are assigned.");
+            return;
         }
-        else
+
+        // Filter out null/empty event references
+        List<EventReference> validTracks = new List<EventReference>();
+        for (int i = 0; i < BGM_trackEvents.Count; i++)
         {
-            BGM_eventInstance = RuntimeManager.CreateInstance(BGM_trackEvent);
-            eventInstances.Add(BGM_eventInstance);
-            SetTempo(BGM_originalPitchValue);
-            BGM_eventInstance.start();
+            if (!BGM_trackEvents[i].IsNull)
+            {
+                validTracks.Add(BGM_trackEvents[i]);
+            }
         }
-        
+
+        if (validTracks.Count == 0)
+        {
+            Debug.LogWarning("No valid BGM tracks found.");
+            return;
+        }
+
+        // Randomly select a track
+        currentBGMTrackIndex = Random.Range(0, validTracks.Count);
+        EventReference selectedTrack = validTracks[currentBGMTrackIndex];
+
+        Debug.Log($"Playing BGM track {currentBGMTrackIndex + 1} of {validTracks.Count}");
+
+        // Create and start the selected track
+        BGM_eventInstance = RuntimeManager.CreateInstance(selectedTrack);
+        eventInstances.Add(BGM_eventInstance);
+        SetTempo(BGM_originalPitchValue);
+        BGM_eventInstance.start();
+
     }
 
     public void SetTempo(float newPitch)

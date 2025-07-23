@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{19734079-ae42-4cc6-9f22-c6ad62cdfcbc}">
 		<property name="name">
-			<value>BGM_new</value>
+			<value>BGM_WhatShallWeDo</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -63,7 +63,7 @@
 	<object class="MarkerTrack" id="{271097b8-3fe7-4f16-b57e-90b2410ee0e5}" />
 	<object class="GroupTrack" id="{409aac37-1425-468a-b701-3dc8ffc0ee77}">
 		<relationship name="modules">
-			<destination>{1973e3e5-d53e-445b-bb9f-2fb2b07499a9}</destination>
+			<destination>{b34a68bd-13c2-461f-8a01-20a43f064a95}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{272f15de-b376-4a9a-90c1-5b8036c1272a}</destination>
@@ -71,7 +71,7 @@
 	</object>
 	<object class="Timeline" id="{aae5bb81-db07-41ce-8089-bdaefaaf5355}">
 		<relationship name="modules">
-			<destination>{1973e3e5-d53e-445b-bb9f-2fb2b07499a9}</destination>
+			<destination>{b34a68bd-13c2-461f-8a01-20a43f064a95}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{34335fd8-6c6a-4635-85e2-52733a475a09}</destination>
@@ -102,12 +102,15 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{05517147-2acc-4c50-9df8-e4bc532a2d0c}" />
-	<object class="SingleSound" id="{1973e3e5-d53e-445b-bb9f-2fb2b07499a9}">
+	<object class="SingleSound" id="{b34a68bd-13c2-461f-8a01-20a43f064a95}">
 		<property name="length">
-			<value>62.328163265306124</value>
+			<value>60.641632653061208</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>2</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{9b00bac4-f59d-49f2-a270-97e197e0f377}</destination>
+			<destination>{66df3919-98fd-4dfa-b83a-f27c3e4cac00}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{272f15de-b376-4a9a-90c1-5b8036c1272a}">
@@ -126,7 +129,7 @@
 	</object>
 	<object class="LoopRegion" id="{34335fd8-6c6a-4635-85e2-52733a475a09}">
 		<property name="position">
-			<value>44</value>
+			<value>42</value>
 		</property>
 		<property name="length">
 			<value>16</value>
