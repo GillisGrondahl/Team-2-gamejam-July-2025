@@ -2,27 +2,28 @@ using UnityEngine;
 using MoreMountains.Feedbacks;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Interactable : MonoBehaviour
+public class Ingredient : MonoBehaviour, IInteractable
 {
+    public IngredientData ingredient;
+    [field: SerializeField] public LayerMask OutlineLayer { get; private set; }
+    public LayerMask OriginalLayer { get; private set; }
+
     private Transform _target;
     private Rigidbody _rigidbody;
-    private Material outlineMaterial;
-    public Ingredient ingredient;
-    public LayerMask defaultLayer;
-    public LayerMask outlineLayer;
 
     private bool _resting = true;
 
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
-    [Tooltip("Minimum velocity to trigger drop feedback")] [SerializeField] private float _velocityThreshold = 0.5f;
+    [Tooltip("Minimum velocity to trigger drop feedback")] 
+    [SerializeField] private float _velocityThreshold = 0.5f;
 
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        //outlineMaterial = GetComponent<Renderer>().materials[1];
+        OriginalLayer = gameObject.layer;
     }
 
     private void LateUpdate()
@@ -38,20 +39,18 @@ public class Interactable : MonoBehaviour
         transform.rotation = _target.rotation;
     }
 
-    public void SnapTo(Transform target)
+    public IInteractable Use(Transform target)
     {
         _resting = false;
         _target = target;
-        _rigidbody.isKinematic = true;
-        //HideOutline();
-
-       
+        _rigidbody.isKinematic = true;          
 
         if (_fdbkPickUp != null)
         {
             _fdbkPickUp.PlayFeedbacks();
         }
-        
+
+        return this;        
     }
     public void Release()
     {
@@ -76,21 +75,11 @@ public class Interactable : MonoBehaviour
 
     public void ShowOutline()
     {
-        gameObject.layer = GetLayerFromMask(outlineLayer.value);
-        //outlineMaterial.SetFloat("_OutlineThickness", 1.1f);
+        gameObject.layer = ((IInteractable)this).GetLayerFromMask(OutlineLayer.value);
     }
 
     public void HideOutline()
     {
-        gameObject.layer = GetLayerFromMask(defaultLayer.value);
-        //outlineMaterial.SetFloat("_OutlineThickness", 0f);
-    }
-
-    int GetLayerFromMask(int mask)
-    {
-        int layer = 0;
-        while ((mask >>= 1) != 0)
-            layer++;
-        return layer;
+        gameObject.layer = ((IInteractable)this).GetLayerFromMask(OriginalLayer.value);
     }
 }

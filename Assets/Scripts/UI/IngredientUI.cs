@@ -6,7 +6,7 @@ public class IngredientUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text ingredientName;
-    public void Initialize(Ingredient ingredient)
+    public void Initialize(IngredientData ingredient)
     {
         ingredientName.text = ingredient.ingredientName;
         icon.sprite = ingredient.icon;

@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 6627421900948070739}
   - component: {fileID: 4027450681253692770}
   - component: {fileID: 8595363070860629871}
+  - component: {fileID: 7478199617908757887}
   m_Layer: 6
   m_Name: Fish
   m_TagString: Untagged
@@ -588,19 +589,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 617276944537455529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4346432d13b62284582ed7e90cb7189f, type: 3}
+  m_Script: {fileID: 11500000, guid: 029d94c26a3beb44ea54173f63703b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 11400000, guid: daf08a20f1ea01d40a60ba7457fb7009, type: 2}
-  defaultLayer:
+  <OutlineLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 64
-  outlineLayer:
-    serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   _fdbkPickUp: {fileID: 7691247314773180031}
   _fdbkDropped: {fileID: 8978932178985870779}
-  _velocityThreshold: 0.2
+  _velocityThreshold: 0.5
 --- !u!64 &8595363070860629871
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -623,6 +621,23 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2586148439552901436, guid: 15fde1c370a890d42bd349306d6f11dc, type: 3}
+--- !u!114 &7478199617908757887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617276944537455529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a50e9aeec59ff5488c36701abe0a0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isSolid: 1
+  _reverseWindTriangles: 0
+  _useGravity: 1
+  _shareVertices: 0
+  _smoothVertices: 0
 --- !u!1 &3373316195441041048
 GameObject:
   m_ObjectHideFlags: 0

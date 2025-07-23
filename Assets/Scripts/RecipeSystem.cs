@@ -8,9 +8,9 @@ public class RecipeSystem : MonoBehaviour
     [SerializeField] Transform ingredientsList;
     [SerializeField] Transform ingredientUI;
 
-    public List<Recipe> recipes;
-    private Recipe currentRecipe;
-    private Recipe compareRecipe;
+    public List<RecipeData> recipes;
+    private RecipeData currentRecipe;
+    private RecipeData compareRecipe;
     private int currentRecipeIndex = 0;
 
     private void Awake()
@@ -31,7 +31,7 @@ public class RecipeSystem : MonoBehaviour
         {
             currentRecipe = recipes[currentRecipeIndex]; // Start with the first recipe
         }
-        compareRecipe = ScriptableObject.CreateInstance<Recipe>();
+        compareRecipe = ScriptableObject.CreateInstance<RecipeData>();
         UpdateUI();
     }
 
@@ -48,7 +48,7 @@ public class RecipeSystem : MonoBehaviour
         }
     }
 
-    public void AddIngredient(Ingredient ingredient)
+    public void AddIngredient(IngredientData ingredient)
     {
         if (currentRecipe == null) return;
 
@@ -62,11 +62,11 @@ public class RecipeSystem : MonoBehaviour
     {
         if (currentRecipe == null || compareRecipe == null) return;
 
-        if (compareRecipe.ingredients.Count != currentRecipe.ingredients.Count)
-        {
-            Debug.Log("Recipe not complete: Ingredient count mismatch.");
-            return;
-        }
+        //if (compareRecipe.ingredients.Count != currentRecipe.ingredients.Count)
+        //{
+        //    Debug.Log("Recipe not complete: Ingredient count mismatch.");
+        //    return;
+        //}
 
         foreach (var ingredient in currentRecipe.ingredients)
         {

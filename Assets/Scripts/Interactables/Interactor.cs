@@ -7,13 +7,13 @@ public class Interactor : MonoBehaviour
     [SerializeField] private Transform snapPoint;
     [SerializeField] private float cooldown = 0.5f;
 
-    public Interactable OverlapedInteractable { get; set; }
-    private Interactable _interactable;
+    public IInteractable OverlapedInteractable { get; set; }
+    private IInteractable _interactable;
     private bool _canInteract = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Interactable>(out var interactable))
+        if (other.gameObject.TryGetComponent<IInteractable>(out var interactable))
         {
             OverlapedInteractable = interactable;
             interactable.ShowOutline();
@@ -22,7 +22,7 @@ public class Interactor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent<Interactable>(out var interactable))
+        if (other.gameObject.TryGetComponent<IInteractable>(out var interactable))
         {
             OverlapedInteractable = null;
             interactable.HideOutline();
@@ -35,8 +35,7 @@ public class Interactor : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && OverlapedInteractable != null && _canInteract)
         {
-            _interactable = OverlapedInteractable;
-            _interactable.SnapTo(snapPoint);
+            _interactable = OverlapedInteractable.Use(snapPoint);
             _canInteract = false;
         }
         if (Input.GetKeyUp(KeyCode.E) && _interactable != null)
