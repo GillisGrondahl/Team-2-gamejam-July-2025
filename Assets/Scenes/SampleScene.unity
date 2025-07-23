@@ -582,13 +582,19 @@ MonoBehaviour:
   AMB_volume: 0.737
   SFX_volume: 0.858
   BGM_enabled: 1
-  BGM_trackEvent:
-    Guid:
+  BGM_trackEvents:
+  - Guid:
+      Data1: -1262600968
+      Data2: 1097721814
+      Data3: 1415552680
+      Data4: -720951240
+    Path: event:/BGM/BGM_SailorsHornpipe
+  - Guid:
       Data1: 426983545
       Data2: 1288089154
       Data3: -1379523937
       Data4: -1124283038
-    Path: event:/BGM/BGM_new
+    Path: event:/BGM/BGM_WhatShallWeDo
   BGM_pitchName: Pitch
   BGM_originalPitchValue: 0
   BGM_pitchOnEarlyWarning: 0.3
