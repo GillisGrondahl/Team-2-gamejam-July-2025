@@ -710,11 +710,11 @@ MonoBehaviour:
         DebugActive: 0
         FMODEventPath:
           Guid:
-            Data1: -899354214
-            Data2: 1154017093
-            Data3: 1995042703
-            Data4: -1569146986
-          Path: event:/SFX/Potato_Dropped
+            Data1: -2103605171
+            Data2: 1325476270
+            Data3: -1051494988
+            Data4: 578269838
+          Path: event:/SFX/Tomato_Dropped
         Volume: 1
         UseIntensityForVolume: 0
         IntensityToVolumeCurve:
