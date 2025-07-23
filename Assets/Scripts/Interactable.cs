@@ -1,6 +1,5 @@
 using UnityEngine;
 using MoreMountains.Feedbacks;
-using LineworkLite.Common.Attributes;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Interactable : MonoBehaviour
