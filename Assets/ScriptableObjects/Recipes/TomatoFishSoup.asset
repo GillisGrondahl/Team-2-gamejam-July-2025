@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5c90a7af3b1534a9141ee82f34199f, type: 3}
   m_Name: TomatoFishSoup
   m_EditorClassIdentifier: 
-  recipeName: PotatoMash
+  recipeName: TomatoFishSoup
   ingredients:
   - {fileID: 11400000, guid: daf08a20f1ea01d40a60ba7457fb7009, type: 2}
   - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
