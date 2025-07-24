@@ -9938,6 +9938,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Path
+      value: event:/SFX/Fish_Dropped
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[8106807541632598120].RandomMultiplier.x
       value: 0.8
       objectReference: {fileID: 0}
@@ -10008,6 +10012,22 @@ PrefabInstance:
     - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[8106807541632598120].Timing.InterruptsOnStop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data1
+      value: 343281262
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data2
+      value: 1199794295
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data3
+      value: 1872942240
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data4
+      value: -1871844175
       objectReference: {fileID: 0}
     - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[8106807541632598120].StopSystemOnStopFeedback
