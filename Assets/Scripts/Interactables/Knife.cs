@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class Knife : MonoBehaviour
@@ -11,6 +12,9 @@ public class Knife : MonoBehaviour
     [SerializeField]
     [Tooltip("The empty game object located at the base of the blade")]
     private GameObject _base = null;
+
+    [SerializeField]
+    private MMF_Player _fdbkKnifeCut;
 
     private Vector3 _triggerEnterTipPosition;
     private Vector3 _triggerEnterBasePosition;
@@ -69,6 +73,8 @@ public class Knife : MonoBehaviour
 
         GameObject[] slices = Slicer.Slice(plane, other.gameObject);
         Destroy(other.gameObject);
+
+        _fdbkKnifeCut.PlayFeedbacks();
     }
 
     private Rigidbody _rigidbody;
