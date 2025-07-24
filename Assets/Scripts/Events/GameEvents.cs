@@ -16,15 +16,15 @@ public class GameEvents : MonoBehaviour
     }
 
     // Game State Events
-    public System.Action OnStartGameClicked;
-    public System.Action OnExitGameClicked;
-    public System.Action OnSettingsClicked;
+    public Action OnStartGameClicked;
+    public Action OnExitGameClicked;
+    public Action OnSettingsClicked;
 
     // Settings Events
-    public System.Action<float> OnMasterVolumeChanged;
-    public System.Action<float> OnBGMVolumeChanged;
-    public System.Action<float> OnAmbienceVolumeChanged;
-    public System.Action<float> OnSFXVolumeChanged;
+    public Action<float> OnMasterVolumeChanged;
+    public Action<float> OnBGMVolumeChanged;
+    public Action<float> OnAmbienceVolumeChanged;
+    public Action<float> OnSFXVolumeChanged;
 
 
 

@@ -1,14 +1,8 @@
 using Assets.Scripts;
 using UnityEngine;
 
-public class Knife : MonoBehaviour, IInteractable
+public class Knife : MonoBehaviour
 {
-    //The number of vertices to create per frame
-    private const int NUM_VERTICES = 12;
-
-    [SerializeField]
-    [Tooltip("The blade object")]
-    private GameObject _blade = null;
 
     [SerializeField]
     [Tooltip("The empty game object located at the tip of the blade")]
@@ -18,108 +12,23 @@ public class Knife : MonoBehaviour, IInteractable
     [Tooltip("The empty game object located at the base of the blade")]
     private GameObject _base = null;
 
-    [SerializeField]
-    [Tooltip("The mesh object with the mesh filter and mesh renderer")]
-    private GameObject _meshParent = null;
-
-    [SerializeField]
-    [Tooltip("The number of frame that the trail should be rendered for")]
-    private int _trailFrameLength = 3;
-
-    [SerializeField]
-    [ColorUsage(true, true)]
-    [Tooltip("The colour of the blade and trail")]
-    private Color _colour = Color.red;
-
-    [SerializeField]
-    [Tooltip("The amount of force applied to each side of a slice")]
-    private float _forceAppliedToCut = 3f;
-
-    private Mesh _mesh;
-    private Vector3[] _vertices;
-    private int[] _triangles;
-    private int _frameCount;
-    private Vector3 _previousTipPosition;
-    private Vector3 _previousBasePosition;
     private Vector3 _triggerEnterTipPosition;
     private Vector3 _triggerEnterBasePosition;
     private Vector3 _triggerExitTipPosition;
 
-    void Start()
+    Transform _originalParent;
+
+    void Awake()
     {
-        ////Init mesh and triangles
-        //_meshParent.transform.position = Vector3.zero;
-        //_mesh = new Mesh();
-        //_meshParent.GetComponent<MeshFilter>().mesh = _mesh;
-
-        //Material trailMaterial = Instantiate(_meshParent.GetComponent<MeshRenderer>().sharedMaterial);
-        //trailMaterial.SetColor("Color_8F0C0815", _colour);
-        //_meshParent.GetComponent<MeshRenderer>().sharedMaterial = trailMaterial;
-
-        //Material bladeMaterial = Instantiate(_blade.GetComponent<MeshRenderer>().sharedMaterial);
-        //bladeMaterial.SetColor("Color_AF2E1BB", _colour);
-        //_blade.GetComponent<MeshRenderer>().sharedMaterial = bladeMaterial;
-
-        //_vertices = new Vector3[_trailFrameLength * NUM_VERTICES];
-        //_triangles = new int[_vertices.Length];
-
-        ////Set starting position for tip and base
-        //_previousTipPosition = _tip.transform.position;
-        //_previousBasePosition = _base.transform.position;
-
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        OriginalLayer = gameObject.layer;
+        _originalParent = transform.parent;
     }
 
-    void LateUpdate()
-    {
-        ////Reset the frame count one we reach the frame length
-        //if (_frameCount == (_trailFrameLength * NUM_VERTICES))
-        //{
-        //    _frameCount = 0;
-        //}
-
-        ////Draw first triangle vertices for back and front
-        //_vertices[_frameCount] = _base.transform.position;
-        //_vertices[_frameCount + 1] = _tip.transform.position;
-        //_vertices[_frameCount + 2] = _previousTipPosition;
-        //_vertices[_frameCount + 3] = _base.transform.position;
-        //_vertices[_frameCount + 4] = _previousTipPosition;
-        //_vertices[_frameCount + 5] = _tip.transform.position;
-
-        ////Draw fill in triangle vertices
-        //_vertices[_frameCount + 6] = _previousTipPosition;
-        //_vertices[_frameCount + 7] = _base.transform.position;
-        //_vertices[_frameCount + 8] = _previousBasePosition;
-        //_vertices[_frameCount + 9] = _previousTipPosition;
-        //_vertices[_frameCount + 10] = _previousBasePosition;
-        //_vertices[_frameCount + 11] = _base.transform.position;
-
-        ////Set triangles
-        //_triangles[_frameCount] = _frameCount;
-        //_triangles[_frameCount + 1] = _frameCount + 1;
-        //_triangles[_frameCount + 2] = _frameCount + 2;
-        //_triangles[_frameCount + 3] = _frameCount + 3;
-        //_triangles[_frameCount + 4] = _frameCount + 4;
-        //_triangles[_frameCount + 5] = _frameCount + 5;
-        //_triangles[_frameCount + 6] = _frameCount + 6;
-        //_triangles[_frameCount + 7] = _frameCount + 7;
-        //_triangles[_frameCount + 8] = _frameCount + 8;
-        //_triangles[_frameCount + 9] = _frameCount + 9;
-        //_triangles[_frameCount + 10] = _frameCount + 10;
-        //_triangles[_frameCount + 11] = _frameCount + 11;
-
-        //_mesh.vertices = _vertices;
-        //_mesh.triangles = _triangles;
-
-        ////Track the previous base and tip positions for the next frame
-        //_previousTipPosition = _tip.transform.position;
-        //_previousBasePosition = _base.transform.position;
-        //_frameCount += NUM_VERTICES;
-
-        FollowTarget();
-    }
+    //void LateUpdate()
+    //{
+    //    FollowTarget();
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -165,71 +74,33 @@ public class Knife : MonoBehaviour, IInteractable
 
         GameObject[] slices = Slicer.Slice(plane, other.gameObject);
         Destroy(other.gameObject);
-
-        //Rigidbody rigidbody = slices[1].GetComponent<Rigidbody>();
-        //Vector3 newNormal = transformedNormal + Vector3.up * _forceAppliedToCut;
-        //rigidbody.AddForce(newNormal, ForceMode.Impulse);
     }
-    [field: SerializeField] public LayerMask OutlineLayer { get; private set; }
 
-    [SerializeField] private Material cutMaterial;
-    public LayerMask OriginalLayer { get; private set; }
     private Rigidbody _rigidbody;
-    private Transform _target;
+    //private Transform _transformToFollow;
     private Collider _collider;
 
-    //private void Start()
+    //private void FollowTarget()
     //{
-    //    _rigidbody = GetComponent<Rigidbody>();
-    //    OriginalLayer = gameObject.layer;
-    //}
-    //private void LateUpdate()
-    //{
-    //    FollowTarget();
+    //    if (_transformToFollow == null) return;
+
+    //    transform.position = _transformToFollow.position;
+    //    transform.rotation = _transformToFollow.rotation;
     //}
 
-    //private void OnCollisionEnter(Collision other)
-    //{
-    //    if (other.gameObject.TryGetComponent(out IInteractable interactable))
-    //    {
-    //        if (interactable is Ingredient ingredient && _target != null)
-    //        {
-    //            Plane cutPlane = new Plane(transform.forward, transform.position);
-    //            MeshCutter.Cut(ingredient.gameObject, cutPlane, cutMaterial);
-    //        }
-    //    }
-    //}
-
-    private void FollowTarget()
+    public void PickUp(Interactor interactor)
     {
-        if (_target == null) return;
-
-        transform.position = _target.position;
-        transform.rotation = _target.rotation;
-    }
-    public IInteractable Use(Transform target)
-    {
-        _target = target;
+        //_transformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
         _rigidbody.isKinematic = true;
         _collider.isTrigger = true;
-
-        return this;
+        transform.SetParent(interactor.transform);
     }
-    public void Release()
+    public void Release(Interactor interactor)
     {
-        _target = null;
+        //_transformToFollow = null;
         _rigidbody.isKinematic = false;
         _collider.isTrigger = false;
+        transform.SetParent(_originalParent.transform);
     }
-
-
-    public void ShowOutline()
-    {
-        gameObject.layer = ((IInteractable)this).GetLayerFromMask(OutlineLayer.value);
-    }
-    public void HideOutline()
-    {
-        gameObject.layer = ((IInteractable)this).GetLayerFromMask(OriginalLayer.value);
-    }
-
 }
+

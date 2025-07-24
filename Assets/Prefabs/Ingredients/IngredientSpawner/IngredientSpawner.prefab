@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1692977364792702639}
   - component: {fileID: 784519372893477888}
   - component: {fileID: 7992021575687488955}
+  - component: {fileID: 6705740775688814185}
   - component: {fileID: 219912300030152495}
   - component: {fileID: 8767983649014256063}
   m_Layer: 6
@@ -110,6 +111,42 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6705740775688814185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785615115743855522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ff7278706bb5847883325a5dc1f30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <OriginalLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <OutlineLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 219912300030152495}
+        m_TargetAssemblyTypeName: IngredientSpawner, Assembly-CSharp
+        m_MethodName: SpawnIngredient
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnStopInteract:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &219912300030152495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,9 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IngredientPrefab: {fileID: 0}
-  <InteractionLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!54 &8767983649014256063
 Rigidbody:
   m_ObjectHideFlags: 0
