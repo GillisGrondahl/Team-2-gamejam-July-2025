@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tip: {fileID: 5081221741436953112}
   _base: {fileID: 2743604744205683842}
+  _cuttingVelocityThreshold: 0.41
   _fdbkKnifeCut: {fileID: 5373882086847543454}
 --- !u!114 &5370691057950868422
 MonoBehaviour:
@@ -519,7 +520,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   RemapRangeFalloff: {x: 0, y: 1}
   IgnoreRangeEvents: 0
-  CooldownDuration: 0
+  CooldownDuration: 0.3
   InitialDelay: 0
   CanPlay: 1
   CanPlayWhileAlreadyPlaying: 1
