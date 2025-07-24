@@ -15,6 +15,7 @@ public class Interactor : MonoBehaviour
 
     private void OnValidate()
     {
+        if (handTransform == null) return;
         transform.localPosition = handTransform.localPosition + offset;
     }
 

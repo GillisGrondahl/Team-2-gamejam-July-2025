@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3828429774352909994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7349609174862326428}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655045709937286875}
   - component: {fileID: 8736779304102982598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,27 +158,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.0297003
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.806
+      value: 0.94140005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8754582
+      value: -3.0232
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalRotation.z
@@ -190,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -203,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       propertyPath: m_Name
       value: Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -217,7 +221,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1956530128713961757}
+      addedObject: {fileID: 574020646791803674}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4858753874861303882}
@@ -238,7 +242,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b6e89cae68582446bf2717d7a9910f3, type: 3}
   m_PrefabInstance: {fileID: 2488597425480134686}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1956530128713961757
+--- !u!54 &574020646791803674
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,7 +309,7 @@ MonoBehaviour:
   <OutlineLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
-  attachTransform: {fileID: 0}
+  attachTransform: {fileID: 5678429221593488968}
   OnInteract:
     m_PersistentCalls:
       m_Calls:

@@ -25,11 +25,6 @@ public class Knife : MonoBehaviour
         _originalParent = transform.parent;
     }
 
-    //void LateUpdate()
-    //{
-    //    FollowTarget();
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         _triggerEnterTipPosition = _tip.transform.position;
@@ -77,27 +72,16 @@ public class Knife : MonoBehaviour
     }
 
     private Rigidbody _rigidbody;
-    //private Transform _transformToFollow;
     private Collider _collider;
-
-    //private void FollowTarget()
-    //{
-    //    if (_transformToFollow == null) return;
-
-    //    transform.position = _transformToFollow.position;
-    //    transform.rotation = _transformToFollow.rotation;
-    //}
 
     public void PickUp(Interactor interactor)
     {
-        //_transformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
         _rigidbody.isKinematic = true;
         _collider.isTrigger = true;
         transform.SetParent(interactor.transform);
     }
     public void Release(Interactor interactor)
     {
-        //_transformToFollow = null;
         _rigidbody.isKinematic = false;
         _collider.isTrigger = false;
         transform.SetParent(_originalParent.transform);
