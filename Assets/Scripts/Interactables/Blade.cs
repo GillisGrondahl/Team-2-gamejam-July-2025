@@ -5,33 +5,67 @@ public class Blade : MonoBehaviour
 {
 
     private bool _isKnifing = false;
+    //private GameObject originalGameObject = null;
+    //private Vector3 cutNormal;
+    //private Vector3 contactPoint;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out Ingredient ingredient) && !_isKnifing)
         {
+            //Debug.Log("Trigger enter Ingredient: " + ingredient.name);
+            //originalGameObject = ingredient.gameObject;
+            //cutNormal = transform.right;
+            //contactPoint = transform.position;
+
             _isKnifing = true;
-            Cutter.Cut(ingredient.gameObject, transform.position, transform.up);
+            Cutter.Cut(ingredient.gameObject, transform.position, transform.right);
             StartCoroutine("WaitForNextSlice");
-            // _cutIngredient = ingredient;
         }
     }
     private IEnumerator WaitForNextSlice()
     {
         yield return new WaitForSeconds(1f);
         _isKnifing = false;
-        //_cutIngredient = null;
     }
 
-    //void OnDrawGizmos()
+    //void OnDrawGizmosSelected()
     //{
-    //    if (transform == null) return;
+    //    if (originalGameObject == null) return;
 
+    //    // Compute the world-space normal and point
+    //    Vector3 normal = originalGameObject.transform.TransformDirection(cutNormal.normalized);
+    //    Vector3 point = contactPoint;
+
+    //    // Draw the contact point
     //    Gizmos.color = Color.red;
-    //    Gizmos.DrawRay(transform.position, transform.forward); // blade forward?
+    //    Gizmos.DrawSphere(point, 0.01f);
+
+    //    // Draw the plane normal
     //    Gizmos.color = Color.green;
-    //    Gizmos.DrawRay(transform.position, transform.up); // blade up?
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawRay(transform.position, transform.right); // blade right?
+    //    Gizmos.DrawLine(point, point + normal * 0.3f);
+
+    //    // Draw a visual representation of the plane
+    //    DrawPlaneGizmo(point, normal, 0.2f);
+    //}
+
+    //void DrawPlaneGizmo(Vector3 center, Vector3 normal, float size)
+    //{
+    //    Vector3 tangent = Vector3.Cross(normal, Vector3.up);
+    //    if (tangent.sqrMagnitude < 0.01f)
+    //        tangent = Vector3.Cross(normal, Vector3.right);
+    //    tangent.Normalize();
+    //    Vector3 bitangent = Vector3.Cross(normal, tangent);
+
+    //    Vector3 corner0 = center + (tangent + bitangent) * size;
+    //    Vector3 corner1 = center + (tangent - bitangent) * size;
+    //    Vector3 corner2 = center + (-tangent - bitangent) * size;
+    //    Vector3 corner3 = center + (-tangent + bitangent) * size;
+
+    //    Gizmos.color = Color.cyan;
+    //    Gizmos.DrawLine(corner0, corner1);
+    //    Gizmos.DrawLine(corner1, corner2);
+    //    Gizmos.DrawLine(corner2, corner3);
+    //    Gizmos.DrawLine(corner3, corner0);
     //}
 }

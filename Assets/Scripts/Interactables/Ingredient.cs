@@ -43,7 +43,12 @@ public class Ingredient : MonoBehaviour
         interactor.OverlapedInteractable = GetComponent<Interactable>();
         _resting = false;
         _transformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
-        _rigidbody.isKinematic = true;
+
+        foreach (var rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.isKinematic = true;
+        }
+        //_rigidbody.isKinematic = true;
         transform.SetParent(interactor.transform);
 
         if (_fdbkPickUp != null)
