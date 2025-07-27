@@ -50,7 +50,7 @@ public class Cutter : MonoBehaviour
         }
         originalGameObject.GetComponent<MeshRenderer>().materials = mats;
 
-        GameObject right = new GameObject();
+        GameObject right = new GameObject(originalGameObject.name + "_Part");
         right.transform.position = originalGameObject.transform.position + (Vector3.up * .05f);
         right.transform.rotation = originalGameObject.transform.rotation;
         right.transform.localScale = originalGameObject.transform.localScale;
@@ -70,6 +70,8 @@ public class Cutter : MonoBehaviour
         {
             col.convex = true;
         }
+
+        right.transform.SetParent(originalGameObject.transform);
 
         var rightRigidbody = right.AddComponent<Rigidbody>();
         //rightRigidbody.AddRelativeForce(-cutPlane.normal * 250f);
