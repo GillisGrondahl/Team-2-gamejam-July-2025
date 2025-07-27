@@ -24,7 +24,7 @@ public class Blade : MonoBehaviour
             Cutter.Cut(ingredient.gameObject, transform.position, transform.right);
             StartCoroutine("WaitForNextSlice");
 
-            // TODO: call MMF Feedback for cutting sounds here
+            // call MMF Feedback for cutting sounds
             _MMFCutting.PlayFeedbacks();
         }
     }
