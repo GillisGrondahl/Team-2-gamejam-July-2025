@@ -45,12 +45,21 @@ public class Interactable : MonoBehaviour
 
     public void ShowOutline()
     {
+
         gameObject.layer = GetLayerFromMask(OutlineLayer.value);
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.layer = GetLayerFromMask(OutlineLayer.value);
+        }
     }
 
     public void HideOutline()
     {
         gameObject.layer = GetLayerFromMask(OriginalLayer.value);
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.layer = GetLayerFromMask(OriginalLayer.value);
+        }
     }
 
     public int GetLayerFromMask(int mask)

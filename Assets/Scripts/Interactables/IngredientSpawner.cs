@@ -7,7 +7,7 @@ public class IngredientSpawner : MonoBehaviour
 
     public void SpawnIngredient(Interactor interactor)
     {
-        var ingredientInstance = Instantiate(IngredientPrefab, interactor.transform.position, interactor.transform.rotation);
+        var ingredientInstance = Instantiate(IngredientPrefab, interactor.transform.position, interactor.transform.rotation, transform.parent);
         ingredientInstance.PickUp(interactor);
     }
 }

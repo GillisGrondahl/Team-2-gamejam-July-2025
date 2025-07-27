@@ -1,17 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 public class RecipeSystem : MonoBehaviour
 {
     public static RecipeSystem Instance { get; private set; }
 
-    [SerializeField] Transform ingredientsList;
-    [SerializeField] Transform ingredientUI;
+    public int wrongIngredientPenalty = 10;
+    public int excessIngredientPenalty = 10;
 
-    public List<RecipeData> recipes;
-    private RecipeData currentRecipe;
-    private RecipeData compareRecipe;
-    private int currentRecipeIndex = 0;
+    [SerializeField] Transform ingredientsList = null;
+    [SerializeField] Transform ingredientUI = null;
+    [SerializeField] TMP_Text qualityText = null;
+
+
+    public List<RecipeData> recipes = null;
+    [SerializeField] private int qualityOfCurrentRecipe = 100;
+    private RecipeData _currentRecipe = null;
+    private List<IngredientData> _currentIngredients = new List<IngredientData>();
+    private Dictionary<IngredientData, int> _requiredIngredientsCount = new Dictionary<IngredientData, int>();
+    private int _currentRecipeIndex = 0;
+    private List<float> _qualityList = new List<float>();
 
     private void Awake()
     {
@@ -29,20 +40,24 @@ public class RecipeSystem : MonoBehaviour
     {
         if (recipes.Count > 0)
         {
-            currentRecipe = recipes[currentRecipeIndex]; // Start with the first recipe
+            _currentRecipe = recipes[_currentRecipeIndex]; // Start with the first recipe
         }
-        compareRecipe = ScriptableObject.CreateInstance<RecipeData>();
+        //_compareRecipe = ScriptableObject.CreateInstance<RecipeData>();
+        _requiredIngredientsCount = _currentRecipe.ingredients
+            .GroupBy(i => i)
+            .ToDictionary(g => g.Key, g => g.Count());
         UpdateUI();
     }
 
     private void UpdateUI()
     {
+        UpdateQualityText();
         foreach (Transform child in ingredientsList)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (var ingredient in currentRecipe.ingredients)
+        foreach (var ingredient in _currentRecipe.ingredients)
         {
             Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>().Initialize(ingredient);
         }
@@ -50,46 +65,73 @@ public class RecipeSystem : MonoBehaviour
 
     public void AddIngredient(IngredientData ingredient)
     {
-        if (currentRecipe == null) return;
+        _currentIngredients.Add(ingredient);
 
-        compareRecipe.AddIngredient(ingredient);
+        if (!_requiredIngredientsCount.ContainsKey(ingredient))
+        {
+            qualityOfCurrentRecipe -= wrongIngredientPenalty;
+            Debug.Log($"'{ingredient}' is not in recipe. -{wrongIngredientPenalty}%");
+        }
+        else
+        {
+            int currentCount = _currentIngredients.Count(i => i == ingredient);
+            int allowedCount = _requiredIngredientsCount[ingredient];
+            if (currentCount > allowedCount)
+            {
+                qualityOfCurrentRecipe -= excessIngredientPenalty;
+                Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{excessIngredientPenalty}%");
+            }
+        }
 
-        Debug.Log($"Added ingredient: {ingredient.ingredientName}");
+
+        UpdateQualityText();
         CheckRecipeCompletion();
+    }
+
+    private void UpdateQualityText()
+    {
+        qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
+    }
+
+    private void AddAndResetQuality()
+    {
+        _qualityList.Add(qualityOfCurrentRecipe);
+        qualityOfCurrentRecipe = 100;
     }
 
     private void CheckRecipeCompletion()
     {
-        if (currentRecipe == null || compareRecipe == null) return;
-
-        //if (compareRecipe.ingredients.Count != currentRecipe.ingredients.Count)
-        //{
-        //    Debug.Log("Recipe not complete: Ingredient count mismatch.");
-        //    return;
-        //}
-
-        foreach (var ingredient in currentRecipe.ingredients)
+        bool missingIngredient = false;
+        foreach (var ingredient in _requiredIngredientsCount)
         {
-            if (!compareRecipe.ingredients.Contains(ingredient))
+            if (_currentIngredients.Count(i => i == ingredient.Key) < ingredient.Value)
             {
-                Debug.Log($"Recipe not complete: Missing ingredient {ingredient.ingredientName}.");
-                return;
+                Debug.Log($"Recipe not complete: Missing {ingredient.Value - _currentIngredients.Count(i => i == ingredient.Key)} of {ingredient.Key.ingredientName}.");
+                missingIngredient = true;
             }
         }
-        Debug.Log("Before check");
 
-        if (++currentRecipeIndex < recipes.Count)
+        if (missingIngredient) return;
+
+        AddAndResetQuality();
+
+        if (++_currentRecipeIndex < recipes.Count)
         {
-            Debug.Log("InCheck");
-            currentRecipe = recipes[currentRecipeIndex];
-            compareRecipe.ClearIngredients();
+            _currentRecipe = recipes[_currentRecipeIndex];
+            _currentIngredients.Clear();
+            _requiredIngredientsCount = _currentRecipe.ingredients
+                .GroupBy(i => i)
+                .ToDictionary(g => g.Key, g => g.Count());
+            
             UpdateUI();
-
-            Debug.Log($"Recipe complete! Moving to next recipe: {currentRecipe.recipeName}");
+            Debug.Log($"Recipe complete! Moving to next recipe: {_currentRecipe.recipeName}");
         }
         else
         {
-            Debug.Log($"LEVEL FINISHED!");
+            float overallQuality = _qualityList.Average();
+
+
+            Debug.Log($"LEVEL FINISHED! Quality: {overallQuality}%");
         }
 
     }

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
-namespace Assets.Scripts
-{
+
     class Slicer
     {
         /// <summary>
@@ -95,4 +91,3 @@ namespace Assets.Scripts
             rb.useGravity = useGravity;
         }
     }
-}
