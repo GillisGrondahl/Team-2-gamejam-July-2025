@@ -1,8 +1,10 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using UnityEngine;
 
 public class Blade : MonoBehaviour
 {
+    [SerializeField] private MMF_Player _MMFCutting;
 
     private bool _isKnifing = false;
     //private GameObject originalGameObject = null;
@@ -21,6 +23,9 @@ public class Blade : MonoBehaviour
             _isKnifing = true;
             Cutter.Cut(ingredient.gameObject, transform.position, transform.right);
             StartCoroutine("WaitForNextSlice");
+
+            // TODO: call MMF Feedback for cutting sounds here
+            _MMFCutting.PlayFeedbacks();
         }
     }
     private IEnumerator WaitForNextSlice()
