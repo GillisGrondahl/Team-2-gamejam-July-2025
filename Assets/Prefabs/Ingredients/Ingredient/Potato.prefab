@@ -8,6 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Path
+      value: event:/SFX/Potato_Dropped
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data1
+      value: -899354214
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data2
+      value: 1154017093
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data3
+      value: 1995042703
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data4
+      value: -1569146986
+      objectReference: {fileID: 0}
     - target: {fileID: 1587120919465020951, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -22,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 13400000, guid: 47d658cf0444ffa4393aa9f8eecc0678, type: 2}
     - target: {fileID: 6805411796304712701, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: m_Name
-      value: Potato 1
+      value: Potato
       objectReference: {fileID: 0}
     - target: {fileID: 7068234766885842221, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: m_LocalPosition.x

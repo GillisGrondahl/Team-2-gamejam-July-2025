@@ -3,15 +3,16 @@ using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance { get; private set; }
 
     [Header("Volume Control")]
-    [Range(0f, 1f)] public float masterVolume = 1f;
-    [Range(0f, 1f)] public float BGM_volume = 1f;
-    [Range(0f, 1f)] public float AMB_volume = 1f;
-    [Range(0f, 1f)] public float SFX_volume = 1f;
+    [Range(0f, 1f)] public float masterVolume = 0.9f;
+    [Range(0f, 1f)] public float BGM_volume = 0.7f;
+    [Range(0f, 1f)] public float AMB_volume = 0.7f;
+    [Range(0f, 1f)] public float SFX_volume = 1.0f;
     private Bus masterBus;
     private Bus BGMBus;
     private Bus AMBBus;
@@ -87,6 +88,12 @@ public class AudioManager : MonoBehaviour
         GameEvents.Instance.OnBGMVolumeChanged += HandleBGMVolumeChanged;
         GameEvents.Instance.OnAmbienceVolumeChanged += HandleAmbienceVolumeChanged;
         GameEvents.Instance.OnSFXVolumeChanged += HandleSFXVolumeChanged;
+
+        // Set initial Volume
+        SetVolume(masterBus, masterVolume);
+        SetVolume(BGMBus, BGM_volume);
+        SetVolume(AMBBus, AMB_volume);
+        SetVolume(SFXBus, SFX_volume);
     }
 
 
