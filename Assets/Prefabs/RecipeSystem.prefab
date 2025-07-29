@@ -220,11 +220,11 @@ MonoBehaviour:
         DebugActive: 0
         FMODEventPath:
           Guid:
-            Data1: 2075378813
-            Data2: 1140843950
-            Data3: 752693122
-            Data4: 1780375675
-          Path: event:/SFX/Hands_To_Supper
+            Data1: 1073663553
+            Data2: 1314663668
+            Data3: -1489970810
+            Data4: 1262006905
+          Path: event:/SFX/Recipe_completed
         Volume: 1
         UseIntensityForVolume: 0
         IntensityToVolumeCurve:
