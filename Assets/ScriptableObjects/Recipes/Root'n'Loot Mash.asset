@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21b484143886a1a4ba5f7d5c98830d7d, type: 3}
-  m_Name: PotatoMash
+  m_Name: Root'n'Loot Mash
   m_EditorClassIdentifier: 
-  recipeName: PotatoMash
+  recipeName: Root'n'Loot Mash
   ingredients:
   - {fileID: 11400000, guid: cb28b1f2b376ef44db4e3b28676424ba, type: 2}
   - {fileID: 11400000, guid: cb28b1f2b376ef44db4e3b28676424ba, type: 2}

@@ -13,7 +13,7 @@
 	</object>
 	<object class="GameParameter" id="{cef5325c-0ee8-4025-a881-d0b566e34bdc}">
 		<property name="initialValue">
-			<value>0</value>
+			<value>0.5</value>
 		</property>
 	</object>
 </objects>
