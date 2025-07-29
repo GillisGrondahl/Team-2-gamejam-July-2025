@@ -4,10 +4,13 @@ using MoreMountains.Feedbacks;
 [RequireComponent(typeof(Rigidbody))]
 public class Ingredient : MonoBehaviour
 {
-    public IngredientData ingredient;
-    private Transform _transformToFollow;
-    private Rigidbody _rigidbody;
-    private Transform _originalParent;
+    public IngredientData ingredient = null;
+    public GameObject splashPrefab = null;
+    private Ingredient _parentIngredient = null;
+    public Transform TransformToFollow = null;
+    public Rigidbody Rigidbody = null;
+    private Transform _originalParent = null;
+    public bool IsAPart = false;
 
     private bool _resting = true;
 
@@ -15,14 +18,27 @@ public class Ingredient : MonoBehaviour
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
 
-    [Tooltip("Minimum velocity to trigger drop feedback")] 
+    [Tooltip("Minimum velocity to trigger drop feedback")]
     [SerializeField] private float _velocityThreshold = 0.5f;
-
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _originalParent = transform.parent;
+        Rigidbody = GetComponent<Rigidbody>();
+        if (transform.parent != null)
+        {
+            _originalParent = transform.parent;
+            _parentIngredient = transform.parent.GetComponent<Ingredient>();
+        }
+    }
+
+    private void Start()
+    {
+        if (Rigidbody == null)
+            Rigidbody = GetComponent<Rigidbody>();
+        if (_originalParent == null)
+            _originalParent = transform.parent;
+        if (_parentIngredient == null)
+            _parentIngredient = transform.parent.GetComponent<Ingredient>();
     }
 
     private void LateUpdate()
@@ -32,47 +48,76 @@ public class Ingredient : MonoBehaviour
 
     private void FollowTarget()
     {
-        if (_transformToFollow == null) return;
+        if (TransformToFollow == null) return;
 
-        transform.position = _transformToFollow.position;
-        transform.rotation = _transformToFollow.rotation;
+        transform.position = TransformToFollow.position;
+        transform.rotation = TransformToFollow.rotation;
     }
 
     public void PickUp(Interactor interactor)
     {
-        interactor.OverlapedInteractable = GetComponent<Interactable>();
-        _resting = false;
-        _transformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
-
-        foreach (var rb in GetComponentsInChildren<Rigidbody>())
+        if (IsAPart)
         {
-            rb.isKinematic = true;
+            _parentIngredient.PickUp(interactor);
+            return;
         }
-        //_rigidbody.isKinematic = true;
+
+        interactor.OverlapedInteractable = GetComponent<Interactable>();
+
+        foreach (var ingredient in GetComponentsInChildren<Ingredient>())
+        {
+            ingredient.TransformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
+            ingredient.Rigidbody.isKinematic = true;
+        }
+        _resting = false;
+
         transform.SetParent(interactor.transform);
 
         if (_fdbkPickUp != null)
         {
             _fdbkPickUp.PlayFeedbacks();
-        }        
+        }
     }
     public void Release(Interactor interactor)
     {
-        _transformToFollow = null;
-        _rigidbody.isKinematic = false;
+        if (IsAPart)
+        {
+            _parentIngredient.Release(interactor);
+            return;
+        }
+
+        foreach (var ingredient in GetComponentsInChildren<Ingredient>())
+        {
+            ingredient.TransformToFollow = null;
+            ingredient.Rigidbody.isKinematic = false;
+        }
+
+        //TransformToFollow = null;
+        //Rigidbody.isKinematic = false;
         transform.SetParent(_originalParent.transform);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         // Check if we're not being held, hit something other than the player, and have enough y-velocity
-        if (collision.gameObject.tag != "Player" && _transformToFollow == null && _resting == false && _rigidbody.linearVelocity.y <= _velocityThreshold)
+        if (collision.gameObject.tag != "Player" && TransformToFollow == null && _resting == false && Rigidbody.linearVelocity.y <= _velocityThreshold)
         {
             _resting = true;
 
             if (_fdbkDropped != null)
             {
                 _fdbkDropped.PlayFeedbacks();
+            }
+        }
+
+        if(collision.gameObject.tag == "Table")
+        {
+            var table = collision.gameObject;
+
+            if (splashPrefab != null && Rigidbody.linearVelocity.magnitude > 0.1f)
+            {
+                var contact = collision.contacts[0];
+                var splash = Instantiate(splashPrefab, contact.point + contact.normal * 0.01f, Quaternion.LookRotation(-contact.normal), table.transform);
             }
         }
     }

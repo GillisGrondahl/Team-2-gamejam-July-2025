@@ -1687,7 +1687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.85
+      value: 0.7417
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1695,11 +1695,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1711,7 +1711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4675003929486277588, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1721,6 +1721,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6072413828647249780, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
+      propertyPath: splashPrefab
+      value: 
+      objectReference: {fileID: 8564321168281063336, guid: 81d0491ba8b599a45843f5ebe27f532d, type: 3}
     - target: {fileID: 7188282214576976196, guid: db9fc0a778ad7b340a3a693ec70d738a, type: 3}
       propertyPath: managedReferences[998730614237298748].Active
       value: 1
@@ -3606,6 +3610,10 @@ PrefabInstance:
     - target: {fileID: 7449994690304617743, guid: f2fb56d87e53ec446a8c8cbb8d7812df, type: 3}
       propertyPath: m_Name
       value: KitchenTable
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449994690304617743, guid: f2fb56d87e53ec446a8c8cbb8d7812df, type: 3}
+      propertyPath: m_TagString
+      value: Table
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

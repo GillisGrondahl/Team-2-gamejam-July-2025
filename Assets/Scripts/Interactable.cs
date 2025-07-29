@@ -4,13 +4,13 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    [field: SerializeField] LayerMask OriginalLayer { get; set; }
-    [field: SerializeField] LayerMask OutlineLayer { get; set; }
+    [field: SerializeField] public LayerMask OriginalLayer { get; set; }
+    [field: SerializeField] public LayerMask OutlineLayer { get; set; }
     [SerializeField] Transform attachTransform;
 
     [Header("Events")]
-    public UnityEvent<Interactor> OnInteract;
-    public UnityEvent<Interactor> OnStopInteract;
+    public UnityEvent<Interactor> OnInteract = new UnityEvent<Interactor>();
+    public UnityEvent<Interactor> OnStopInteract = new UnityEvent<Interactor>();
 
     private void Awake()
     {
@@ -68,6 +68,12 @@ public class Interactable : MonoBehaviour
         while ((mask >>= 1) != 0)
             layer++;
         return layer;
+    }
+
+    private void OnDestroy()
+    {
+        OnInteract.RemoveAllListeners();
+        OnStopInteract.RemoveAllListeners();
     }
 
 }
