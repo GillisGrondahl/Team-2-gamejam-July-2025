@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using UnityEngine;
 public class RecipeSystem : MonoBehaviour
 {
     public static RecipeSystem Instance { get; private set; }
+
+    [SerializeField] private MMF_Player _MMFRecipeCompleted;
 
     public int wrongIngredientPenalty = 10;
     public int excessIngredientPenalty = 10;
@@ -125,6 +128,9 @@ public class RecipeSystem : MonoBehaviour
             
             UpdateUI();
             Debug.Log($"Recipe complete! Moving to next recipe: {_currentRecipe.recipeName}");
+
+            // Call MMF feedback for recipe completed
+            _MMFRecipeCompleted.PlayFeedbacks();
         }
         else
         {
