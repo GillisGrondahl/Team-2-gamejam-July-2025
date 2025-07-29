@@ -7,10 +7,12 @@ public class IngredientChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Ingredient>(out var interactable))
+        if (other.TryGetComponent<Ingredient>(out var ingredient))
         {
-            RecipeSystem.Instance.AddIngredient(interactable.ingredient);
-            Destroy(interactable.gameObject);
+            if (ingredient.IsAPart)
+                ingredient = ingredient.ParentIngredient;
+            RecipeSystem.Instance.AddIngredient(ingredient.ingredient);
+            Destroy(ingredient.gameObject);
 
             // call MMF Feedback for playing sounds when dropping in pot
             _MMFDropInPot.PlayFeedbacks();

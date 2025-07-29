@@ -6,7 +6,7 @@ public class Ingredient : MonoBehaviour
 {
     public IngredientData ingredient = null;
     public GameObject splashPrefab = null;
-    private Ingredient _parentIngredient = null;
+    public Ingredient ParentIngredient = null;
     public Transform TransformToFollow = null;
     public Rigidbody Rigidbody = null;
     private Transform _originalParent = null;
@@ -27,7 +27,7 @@ public class Ingredient : MonoBehaviour
         if (transform.parent != null)
         {
             _originalParent = transform.parent;
-            _parentIngredient = transform.parent.GetComponent<Ingredient>();
+            ParentIngredient = transform.parent.GetComponent<Ingredient>();
         }
     }
 
@@ -37,8 +37,8 @@ public class Ingredient : MonoBehaviour
             Rigidbody = GetComponent<Rigidbody>();
         if (_originalParent == null)
             _originalParent = transform.parent;
-        if (_parentIngredient == null)
-            _parentIngredient = transform.parent.GetComponent<Ingredient>();
+        if (ParentIngredient == null)
+            ParentIngredient = transform.parent.GetComponent<Ingredient>();
     }
 
     private void LateUpdate()
@@ -58,7 +58,7 @@ public class Ingredient : MonoBehaviour
     {
         if (IsAPart)
         {
-            _parentIngredient.PickUp(interactor);
+            ParentIngredient.PickUp(interactor);
             return;
         }
 
@@ -82,7 +82,7 @@ public class Ingredient : MonoBehaviour
     {
         if (IsAPart)
         {
-            _parentIngredient.Release(interactor);
+            ParentIngredient.Release(interactor);
             return;
         }
 
