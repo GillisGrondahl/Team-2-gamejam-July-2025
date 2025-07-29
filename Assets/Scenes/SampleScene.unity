@@ -2373,11 +2373,11 @@ MonoBehaviour:
         DebugActive: 0
         FMODEventPath:
           Guid:
-            Data1: -895553013
-            Data2: 1265617436
-            Data3: -268243051
-            Data4: 482022944
-          Path: event:/SFX/PickUp
+            Data1: -1667344992
+            Data2: 1333126847
+            Data3: -203452265
+            Data4: -190714660
+          Path: event:/SFX/Countdown_LastTick
         Volume: 1
         UseIntensityForVolume: 0
         IntensityToVolumeCurve:
