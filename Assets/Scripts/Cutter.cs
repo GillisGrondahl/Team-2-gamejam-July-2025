@@ -70,10 +70,17 @@ public class Cutter : MonoBehaviour
         {
             col.convex = true;
         }
+        var rightIngredient = right.AddComponent<Ingredient>();
+        rightIngredient.IsAPart = true;
+        var rightInteractable = right.AddComponent<Interactable>();
+        rightInteractable.OnInteract.AddListener(rightIngredient.PickUp);
+        rightInteractable.OnStopInteract.AddListener(rightIngredient.Release);
+        rightInteractable.OriginalLayer = originalGameObject.GetComponent<Interactable>().OriginalLayer;
+        rightInteractable.OutlineLayer = originalGameObject.GetComponent<Interactable>().OutlineLayer;
 
         right.transform.SetParent(originalGameObject.transform);
 
-        var rightRigidbody = right.AddComponent<Rigidbody>();
+        //var rightRigidbody = right.AddComponent<Rigidbody>();
         //rightRigidbody.AddRelativeForce(-cutPlane.normal * 250f);
 
         isBusy = false;
