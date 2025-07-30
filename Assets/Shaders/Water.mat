@@ -43,14 +43,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 0.9
-    - _Amplitude: 0
-    - _Frequency: 0
+    - _Amplitude: 0.92
+    - _Frequency: 1.67
     - _FresnelPower: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 0
+    - _Speed: 0.12
     m_Colors:
-    - _Color: {r: 0, g: 0.6075771, b: 1, a: 1}
+    - _Color: {r: 0.15339974, g: 0.32011044, b: 0.5849056, a: 1}
     - _ScrollSpeed: {r: 0.005, g: 0.05, b: 0, a: 0}
     - _XZ: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
