@@ -1331,6 +1331,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
+--- !u!65 &883012681 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3530994810030385576, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
+  m_PrefabInstance: {fileID: 840887044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &919975415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5049585129044771823, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
@@ -2739,6 +2744,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6017331804413415196, guid: c0f39cf8b3b50bd48b4b8c0a9877e532, type: 3}
+      propertyPath: playerZone
+      value: 
+      objectReference: {fileID: 883012681}
     - target: {fileID: 9171844199796460900, guid: c0f39cf8b3b50bd48b4b8c0a9877e532, type: 3}
       propertyPath: m_Name
       value: Player
