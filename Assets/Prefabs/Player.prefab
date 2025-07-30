@@ -349,8 +349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseProfile: {fileID: 11400000, guid: bcf6524ce6451f34cb7106d0c00da9a5, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 0.1
-  FrequencyGain: 0.005
+  AmplitudeGain: 0.26
+  FrequencyGain: 0.01
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &6504745973302034895
 MonoBehaviour:
@@ -425,5 +425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae53687634b61c49a446a2ffea765e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  maxSpeed: 2
+  acceleration: 2
+  deceleration: 2
   showCursor: 0
+  jitterIntensity: 0.7
+  jitterFrequency: 1.1
