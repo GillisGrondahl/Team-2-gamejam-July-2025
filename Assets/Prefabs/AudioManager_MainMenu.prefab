@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6244623586669308147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8623593298384893883}
+  - component: {fileID: 6448629973054700967}
+  - component: {fileID: 5849087735677211071}
+  m_Layer: 0
+  m_Name: AudioManager_MainMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8623593298384893883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244623586669308147}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.58843, y: 2.70654, z: -0.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6448629973054700967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244623586669308147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a3ff610dd25164ab08de33ed2ee713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolume: 0.9
+  BGM_volume: 0.7
+  AMB_volume: 0.7
+  SFX_volume: 0.9
+  BGM_enabled: 1
+  BGM_trackEvents:
+  - Guid:
+      Data1: -1262600968
+      Data2: 1097721814
+      Data3: 1415552680
+      Data4: -720951240
+    Path: event:/BGM/BGM_SailorsHornpipe
+  - Guid:
+      Data1: 426983545
+      Data2: 1288089154
+      Data3: -1379523937
+      Data4: -1124283038
+    Path: event:/BGM/BGM_WhatShallWeDo
+  BGM_pitchName: Pitch
+  BGM_originalPitchValue: 0
+  BGM_pitchOnEarlyWarning: 0.3
+  BGM_pitchOnFinalCountdown: 0.5
+  AMB_trackEvent:
+    Guid:
+      Data1: -760500940
+      Data2: 1243595926
+      Data3: -424208719
+      Data4: 1209409010
+    Path: event:/Ambience/AMB_Track1
+--- !u!114 &5849087735677211071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244623586669308147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdc94155902a654aafbeeaa864899c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

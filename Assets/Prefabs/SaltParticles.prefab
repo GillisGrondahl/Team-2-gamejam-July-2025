@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5041748527536485447}
   - component: {fileID: 2414425395605604579}
   - component: {fileID: 4479276276165573697}
-  - component: {fileID: 8484586128883065172}
   m_Layer: 0
   m_Name: SaltParticles
   m_TagString: Untagged
@@ -51,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4835,16 +4834,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &8484586128883065172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5377604024103511272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bfee4f6e13c98e44ab430ce9fff5fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ps: {fileID: 2414425395605604579}
