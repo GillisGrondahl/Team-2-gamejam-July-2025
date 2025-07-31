@@ -1,18 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class Knife : MonoBehaviour
+public class Tool : MonoBehaviour
 {
-    Transform _originalParent;
-
+    private Transform _originalParent;
     private Rigidbody _rigidbody;
     private Collider _collider;
 
-    private bool _isKnifing = false;
-    private Ingredient _cutIngredient = null;
-
-
-    void Awake()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
@@ -31,5 +26,6 @@ public class Knife : MonoBehaviour
         _collider.isTrigger = false;
         transform.SetParent(_originalParent.transform);
     }
+
 }
 

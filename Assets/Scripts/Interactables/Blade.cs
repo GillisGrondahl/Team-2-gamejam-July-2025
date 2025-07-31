@@ -7,19 +7,12 @@ public class Blade : MonoBehaviour
     [SerializeField] private MMF_Player _MMFCutting;
 
     private bool _isKnifing = false;
-    //private GameObject originalGameObject = null;
-    //private Vector3 cutNormal;
-    //private Vector3 contactPoint;
 
     private void OnTriggerEnter(Collider other)
     {
+        if(enabled == false) return;
         if (other.gameObject.TryGetComponent(out Ingredient ingredient) && !_isKnifing)
         {
-            //Debug.Log("Trigger enter Ingredient: " + ingredient.name);
-            //originalGameObject = ingredient.gameObject;
-            //cutNormal = transform.right;
-            //contactPoint = transform.position;
-
             _isKnifing = true;
             Cutter.Cut(ingredient.gameObject, transform.position, transform.right);
             StartCoroutine("WaitForNextSlice");
