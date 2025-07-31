@@ -51,7 +51,6 @@ public class Ingredient : MonoBehaviour
         if (TransformToFollow == null) return;
 
         transform.position = TransformToFollow.position;
-        transform.rotation = TransformToFollow.rotation;
     }
 
     public void PickUp(Interactor interactor)
@@ -114,7 +113,7 @@ public class Ingredient : MonoBehaviour
         {
             var table = collision.gameObject;
 
-            if (splashPrefab != null && Rigidbody.linearVelocity.magnitude > 0.1f)
+            if (splashPrefab != null && Rigidbody.linearVelocity.magnitude > _velocityThreshold)
             {
                 var contact = collision.contacts[0];
                 var splash = Instantiate(splashPrefab, contact.point + contact.normal * 0.01f, Quaternion.LookRotation(-contact.normal), table.transform);
