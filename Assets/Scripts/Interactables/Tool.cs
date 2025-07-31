@@ -16,6 +16,7 @@ public class Tool : MonoBehaviour
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
+    [SerializeField] private MMF_Player _fbdkDroppedInPot;
 
     protected virtual void Awake()
     {
@@ -57,8 +58,28 @@ public class Tool : MonoBehaviour
                 _fdbkDropped.PlayFeedbacks();
             }
         }
+    }
+    private void OnTriggerEnter(Collider trigger)
+    {   
+        if (trigger.gameObject.tag == "PotChecker")
+        {
+            Debug.Log("Tool dropped in pot");
 
- 
+            if (_fbdkDroppedInPot != null)
+            {
+                _fbdkDroppedInPot.PlayFeedbacks();
+            }
+
+            if (_fdbkDropped != null)
+            {
+                _fdbkDropped.PlayFeedbacks();
+            }
+
+            _resting = true;
+
+        }
+
+
     }
 
 }

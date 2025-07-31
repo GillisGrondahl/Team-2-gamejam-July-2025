@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{abe2de0d-9342-4f04-a631-f81e692aabe7}">
+		<property name="assetPath">
+			<value>SFX/Parrot_Insults/parrot_YouGrogsnorter.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.165986394557823</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f5b6c4f3-3661-42af-a193-793c1a6624a6}</destination>
+		</relationship>
+	</object>
+</objects>
