@@ -10632,7 +10632,7 @@ PrefabInstance:
     - target: {fileID: 8552922195803648397, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: splashPrefab
       value: 
-      objectReference: {fileID: 8564321168281063336, guid: d284bfdbf1f31e846b2e561db21c282f, type: 3}
+      objectReference: {fileID: 8254020644920033969, guid: 539d22516cd52bf4ba0ff32ad71637cd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
