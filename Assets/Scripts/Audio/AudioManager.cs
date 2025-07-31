@@ -55,6 +55,9 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        // Subscribe to game events
+        GameEvents.Instance.OnStartGameClicked += HandleLevelStart;
+
         // Ensure banks are loaded (redundant if auto-loading works, but safe)
         if (!RuntimeManager.HasBankLoaded("Master"))
         {
@@ -73,7 +76,6 @@ public class AudioManager : MonoBehaviour
         AMBBus = RuntimeManager.GetBus("bus:/Ambience");
         SFXBus = RuntimeManager.GetBus("bus:/SFX");
 
-        InitializeBGM();
         InitializeAmbience();
 
         // Subscribe to TimeManager events
@@ -94,6 +96,14 @@ public class AudioManager : MonoBehaviour
         SetVolume(BGMBus, BGM_volume);
         SetVolume(AMBBus, AMB_volume);
         SetVolume(SFXBus, SFX_volume);
+    }
+
+    private void HandleLevelStart()
+    {
+        InitializeBGM();
+
+        AMB_EventInstance.setParameterByName("WavesOnly", 0); // add the other ambience tracks when the level starts
+
     }
 
 
@@ -155,6 +165,19 @@ public class AudioManager : MonoBehaviour
 
     public void InitializeBGM()
     {
+        // Clean up existing BGM instance if it exists
+        if (BGM_eventInstance.isValid())
+        {
+            BGM_eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            BGM_eventInstance.release();
+            // Remove from tracking list if it exists there
+            if (eventInstances.Contains(BGM_eventInstance))
+            {
+                eventInstances.Remove(BGM_eventInstance);
+            }
+        }
+
+
         if (BGM_trackEvents == null || BGM_trackEvents.Count == 0)
         {
             Debug.LogWarning("No BGM tracks are assigned.");
@@ -227,6 +250,9 @@ public class AudioManager : MonoBehaviour
         {
             AMB_EventInstance = RuntimeManager.CreateInstance(AMB_trackEvent);
             eventInstances.Add(AMB_EventInstance);
+
+            AMB_EventInstance.setParameterByName("WavesOnly", 1); // Waves only for the main menu
+
 
             AMB_EventInstance.start();
         }
