@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ public class RecipeSystem : MonoBehaviour
     public int wrongIngredientPenalty = 10;
     public int excessIngredientPenalty = 10;
 
+    [SerializeField] TMP_Text recipeNameText = null;
     [SerializeField] Transform ingredientsList = null;
     [SerializeField] Transform ingredientUI = null;
     [SerializeField] TMP_Text qualityText = null;
+    [SerializeField] MMProgressBar qualityBar = null;
 
 
     public List<RecipeData> recipes = null;
@@ -54,6 +57,9 @@ public class RecipeSystem : MonoBehaviour
 
     private void UpdateUI()
     {
+        // Update recipe name
+        recipeNameText.text = _currentRecipe.recipeName;
+
         UpdateQualityText();
         foreach (Transform child in ingredientsList)
         {
@@ -93,7 +99,8 @@ public class RecipeSystem : MonoBehaviour
 
     private void UpdateQualityText()
     {
-        qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
+        //qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
+        qualityBar.UpdateBar(qualityOfCurrentRecipe / 100f, 0f, 1f);
     }
 
     private void AddAndResetQuality()
