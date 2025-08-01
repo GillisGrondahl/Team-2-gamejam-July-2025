@@ -7,6 +7,7 @@ public class Tool : MonoBehaviour
     private Transform _originalParent;
     private Rigidbody _rigidbody;
     private Collider _collider;
+    private Vector3 _startingPosition;
 
     private bool _resting = true;
 
@@ -23,6 +24,7 @@ public class Tool : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _originalParent = transform.parent;
+        _startingPosition = transform.position;
     }
 
     public void PickUp(Interactor interactor)
@@ -60,10 +62,12 @@ public class Tool : MonoBehaviour
         }
     }
     private void OnTriggerEnter(Collider trigger)
-    {   
-        if (trigger.gameObject.tag == "PotChecker")
+    {
+        if (trigger.gameObject.TryGetComponent<IngredientChecker>(out var ingredientChecker))
         {
             Debug.Log("Tool dropped in pot");
+
+            transform.position = _startingPosition;
 
             if (_fbdkDroppedInPot != null)
             {
