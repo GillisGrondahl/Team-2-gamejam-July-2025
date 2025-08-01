@@ -9,6 +9,9 @@ public class HandFollower : MonoBehaviour
     [SerializeField] private float maxLinearSpeed = 10f;
     [SerializeField] private float maxAngularSpeed = 20f;
 
+    [SerializeField] private Transform handOpen = null;
+    [SerializeField] private Transform handClosed = null;
+
     private Rigidbody rb;
 
     void Start()
@@ -34,5 +37,11 @@ public class HandFollower : MonoBehaviour
         float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
         Vector3 desiredAngularVel = rotationAxis.normalized * angleInRadians * rotationStiffness;
         rb.angularVelocity = Vector3.ClampMagnitude(desiredAngularVel, maxAngularSpeed);
+    }
+
+    public void CloseHand(bool close)
+    {
+        handOpen.gameObject.SetActive(!close);
+        handClosed.gameObject.SetActive(close);
     }
 }

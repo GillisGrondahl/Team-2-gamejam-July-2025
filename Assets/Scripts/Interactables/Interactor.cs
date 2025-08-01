@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Interactor : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float cooldown = 0.5f;
     private Interactable _interactable;
     private bool _canInteract = true;
+    private HandFollower hand;
 
     Collider[] handColliders = null;
     Collider[] interactableColliders = null;
@@ -22,7 +24,8 @@ public class Interactor : MonoBehaviour
 
     private void Start()
     {
-        handColliders = handTransform.GetComponents<Collider>();
+        handColliders = handTransform.GetComponentsInChildren<Collider>(true);
+        hand = handTransform.GetComponent<HandFollower>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,7 +57,7 @@ public class Interactor : MonoBehaviour
             _canInteract = false;
             _interactable = OverlapedInteractable;
             interactableColliders = _interactable.GetComponentsInChildren<Collider>();
-
+            hand.CloseHand(true);
             IngoreCollisionWithInteractable(true);
         }
         if (Input.GetKeyUp(KeyCode.E) && _interactable != null)
@@ -62,6 +65,7 @@ public class Interactor : MonoBehaviour
             _interactable.StopInteract(this);
             IngoreCollisionWithInteractable(false);
             _interactable = null;
+            hand.CloseHand(false);
             StartCoroutine(Cooldown());
         }
     }
@@ -71,10 +75,10 @@ public class Interactor : MonoBehaviour
     {
         foreach (var handCollider in handColliders)
         {
-            //Debug.Log($"Hand Colliders: {handCollider.name}");
+            Debug.Log($"Hand Colliders: {handCollider.name}");
             foreach (var interactableCollider in interactableColliders)
             {
-                //Debug.Log($"Interactable Colliders: {interactableCollider.name}");
+                Debug.Log($"Interactable Colliders: {interactableCollider.name}");
                 Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
             }
         }
