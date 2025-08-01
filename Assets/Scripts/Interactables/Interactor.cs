@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Interactor : MonoBehaviour
 {
@@ -12,11 +12,20 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float cooldown = 0.5f;
     private Interactable _interactable;
     private bool _canInteract = true;
+    private HandFollower hand;
+
+    Collider[] handColliders = null;
+    Collider[] interactableColliders = null;
 
     private void OnValidate()
     {
-        if (handTransform == null) return;
-        transform.localPosition = handTransform.localPosition + offset;
+        FollowHand();
+    }
+
+    private void Start()
+    {
+        handColliders = handTransform.GetComponentsInChildren<Collider>(true);
+        hand = handTransform.GetComponent<HandFollower>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +46,7 @@ public class Interactor : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if (_interactable == null) _canInteract = true;
@@ -46,18 +56,44 @@ public class Interactor : MonoBehaviour
             OverlapedInteractable.Interact(this);
             _canInteract = false;
             _interactable = OverlapedInteractable;
+            interactableColliders = _interactable.GetComponentsInChildren<Collider>();
+            hand.CloseHand(true);
+            IngoreCollisionWithInteractable(true);
         }
         if (Input.GetKeyUp(KeyCode.E) && _interactable != null)
         {
             _interactable.StopInteract(this);
+            IngoreCollisionWithInteractable(false);
             _interactable = null;
+            hand.CloseHand(false);
             StartCoroutine(Cooldown());
         }
     }
 
-    private void FixedUpdate()
+
+    private void IngoreCollisionWithInteractable(bool toggle)
     {
-        transform.localPosition = handTransform.localPosition + offset;
+        foreach (var handCollider in handColliders)
+        {
+            Debug.Log($"Hand Colliders: {handCollider.name}");
+            foreach (var interactableCollider in interactableColliders)
+            {
+                Debug.Log($"Interactable Colliders: {interactableCollider.name}");
+                Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        FollowHand();
+    }
+
+    private void FollowHand()
+    {
+        if (handTransform == null) return;
+        transform.position = handTransform.TransformPoint(offset);
+        transform.rotation = handTransform.rotation;
     }
 
     private IEnumerator Cooldown()
