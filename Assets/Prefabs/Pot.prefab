@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 2780090710350439036}
   m_Layer: 0
   m_Name: PotChecker
-  m_TagString: Untagged
+  m_TagString: PotChecker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

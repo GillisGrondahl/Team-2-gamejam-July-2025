@@ -1,15 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using MoreMountains.Feedbacks;
+
 
 [RequireComponent(typeof(VelocityTracker))]
 public class SaltShaker : Tool
 {
+    [Header("Salt Shaker")]
     [SerializeField] Transform saltParticles;
     [SerializeField] float velocityThreshold = 2.0f;
     [SerializeField] float shakeCooldown = 1.0f;
     [SerializeField] bool isOnCooldown = false;
     [SerializeField] Transform saltSpawnPoint;
 
+    [Header("MMFeedbacks")]
+    [SerializeField] MMF_Player _MMFShaking;
 
     private VelocityTracker _velocityTracker;
 
@@ -33,6 +38,9 @@ public class SaltShaker : Tool
     {
         if (saltParticles == null || isOnCooldown) return;
         Instantiate(saltParticles, transform.position, Quaternion.Euler(90f, 0f, 0f));
+
+        // call MMF Feedback for shaking
+        _MMFShaking.PlayFeedbacks();
 
         isOnCooldown = true;
         StartCoroutine(Cooldown());
