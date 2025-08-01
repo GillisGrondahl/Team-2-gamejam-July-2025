@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,8 +17,10 @@ public class Interactable : MonoBehaviour
     private void Awake()
     {
         gameObject.layer = GetLayerFromMask(OriginalLayer.value);
-      
+
     }
+
+
     public void Interact(Interactor interactor)
     {
         interactor.OverlapedInteractable = this;
@@ -41,6 +44,7 @@ public class Interactable : MonoBehaviour
             transform.position = interactor.SnapPoint.position - (transform.rotation * toAttachPos);
         }
     }
+
 
     public void StopInteract(Interactor interactor)
     {

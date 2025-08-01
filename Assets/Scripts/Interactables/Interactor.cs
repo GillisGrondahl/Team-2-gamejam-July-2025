@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,10 +12,17 @@ public class Interactor : MonoBehaviour
     private Interactable _interactable;
     private bool _canInteract = true;
 
+    Collider[] handColliders = null;
+    Collider[] interactableColliders = null;
+
     private void OnValidate()
     {
-        if (handTransform == null) return;
-        transform.localPosition = handTransform.localPosition + offset;
+        FollowHand();
+    }
+
+    private void Start()
+    {
+        handColliders = handTransform.GetComponents<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +43,7 @@ public class Interactor : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if (_interactable == null) _canInteract = true;
@@ -46,18 +53,43 @@ public class Interactor : MonoBehaviour
             OverlapedInteractable.Interact(this);
             _canInteract = false;
             _interactable = OverlapedInteractable;
+            interactableColliders = _interactable.GetComponentsInChildren<Collider>();
+
+            IngoreCollisionWithInteractable(true);
         }
         if (Input.GetKeyUp(KeyCode.E) && _interactable != null)
         {
             _interactable.StopInteract(this);
+            IngoreCollisionWithInteractable(false);
             _interactable = null;
             StartCoroutine(Cooldown());
         }
     }
 
-    private void FixedUpdate()
+
+    private void IngoreCollisionWithInteractable(bool toggle)
     {
-        transform.localPosition = handTransform.localPosition + offset;
+        foreach (var handCollider in handColliders)
+        {
+            //Debug.Log($"Hand Colliders: {handCollider.name}");
+            foreach (var interactableCollider in interactableColliders)
+            {
+                //Debug.Log($"Interactable Colliders: {interactableCollider.name}");
+                Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        FollowHand();
+    }
+
+    private void FollowHand()
+    {
+        if (handTransform == null) return;
+        transform.position = handTransform.TransformPoint(offset);
+        transform.rotation = handTransform.rotation;
     }
 
     private IEnumerator Cooldown()
