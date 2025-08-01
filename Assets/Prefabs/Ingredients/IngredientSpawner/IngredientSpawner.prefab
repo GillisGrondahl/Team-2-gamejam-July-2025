@@ -129,6 +129,8 @@ MonoBehaviour:
   <OutlineLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
+  attachTransform: {fileID: 0}
+  pickable: 0
   OnInteract:
     m_PersistentCalls:
       m_Calls:

@@ -61,8 +61,6 @@ public class Ingredient : MonoBehaviour
             return;
         }
 
-        interactor.OverlapedInteractable = GetComponent<Interactable>();
-
         foreach (var ingredient in GetComponentsInChildren<Ingredient>())
         {
             ingredient.TransformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
@@ -91,8 +89,6 @@ public class Ingredient : MonoBehaviour
             ingredient.Rigidbody.isKinematic = false;
         }
 
-        //TransformToFollow = null;
-        //Rigidbody.isKinematic = false;
         transform.SetParent(_originalParent.transform);
     }
 

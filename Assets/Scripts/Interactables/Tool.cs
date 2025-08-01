@@ -12,8 +12,8 @@ public class Tool : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _originalParent = transform.parent;
-
     }
+
     public void PickUp(Interactor interactor)
     {
         _rigidbody.isKinematic = true;

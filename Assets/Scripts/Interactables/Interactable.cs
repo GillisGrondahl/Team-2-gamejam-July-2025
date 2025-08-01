@@ -7,6 +7,7 @@ public class Interactable : MonoBehaviour
     [field: SerializeField] public LayerMask OriginalLayer { get; set; }
     [field: SerializeField] public LayerMask OutlineLayer { get; set; }
     [SerializeField] Transform attachTransform;
+    [SerializeField] bool pickable = true;
 
     [Header("Events")]
     public UnityEvent<Interactor> OnInteract = new UnityEvent<Interactor>();
@@ -20,8 +21,9 @@ public class Interactable : MonoBehaviour
     public void Interact(Interactor interactor)
     {
         interactor.OverlapedInteractable = this;
-
         OnInteract?.Invoke(interactor);
+
+        if (!pickable) return;
 
         if (attachTransform == null)
         {
