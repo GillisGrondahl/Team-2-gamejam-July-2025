@@ -76,6 +76,7 @@ public class RecipeSystem : MonoBehaviour
     {
         _currentIngredients.Add(ingredient);
 
+        Debug.Log(ingredient.ingredientName + " added to recipe.");
         if (!_requiredIngredientsCount.ContainsKey(ingredient))
         {
             qualityOfCurrentRecipe -= wrongIngredientPenalty;

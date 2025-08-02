@@ -78,10 +78,14 @@ public class Cutter : MonoBehaviour
         rightInteractable.OriginalLayer = originalGameObject.GetComponent<Interactable>().OriginalLayer;
         rightInteractable.OutlineLayer = originalGameObject.GetComponent<Interactable>().OutlineLayer;
 
-        right.transform.SetParent(originalGameObject.transform);
+        Transform parentToSet = originalGameObject.transform;
 
-        //var rightRigidbody = right.AddComponent<Rigidbody>();
-        //rightRigidbody.AddRelativeForce(-cutPlane.normal * 250f);
+        if(originalGameObject.TryGetComponent<Ingredient>(out var parentIngredient) &&
+            parentIngredient.ParentIngredient != null)
+        {
+            parentToSet = parentIngredient.ParentIngredient.transform;
+        }
+        right.transform.SetParent(parentToSet);
 
         isBusy = false;
     }

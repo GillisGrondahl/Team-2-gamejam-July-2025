@@ -77,7 +77,6 @@ public class Interactor : MonoBehaviour
         if (interactableParent != null && interactableParent.TryGetComponent<Interactable>(out var interactableComponent))
         {
             _interactable = interactableComponent;
-
         }
 
         interactableColliders = _interactable.GetComponentsInChildren<Collider>();
@@ -88,10 +87,10 @@ public class Interactor : MonoBehaviour
     {
         foreach (var handCollider in handColliders)
         {
-            Debug.Log($"Hand Colliders: {handCollider.name}");
+            //Debug.Log($"Hand Colliders: {handCollider.name}");
             foreach (var interactableCollider in interactableColliders)
             {
-                Debug.Log($"Interactable Colliders: {interactableCollider.name}");
+                //Debug.Log($"Interactable Colliders: {interactableCollider.name}");
                 Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
             }
         }
