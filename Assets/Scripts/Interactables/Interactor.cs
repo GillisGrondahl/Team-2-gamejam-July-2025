@@ -51,13 +51,14 @@ public class Interactor : MonoBehaviour
     {
         if (_interactable == null) _canInteract = true;
 
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))&& OverlapedInteractable != null && _canInteract)
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)) && OverlapedInteractable != null && _canInteract)
         {
             OverlapedInteractable.Interact(this);
             _canInteract = false;
             _interactable = OverlapedInteractable;
             hand.CloseHand(true);
-            interactableColliders = _interactable.GetComponentsInChildren<Collider>();
+
+            GetColliders();
             IngoreCollisionWithInteractable(true);
         }
         if ((Input.GetKeyUp(KeyCode.E) || Input.GetMouseButtonUp(0)) && _interactable != null)
@@ -68,6 +69,18 @@ public class Interactor : MonoBehaviour
             hand.CloseHand(false);
             StartCoroutine(Cooldown());
         }
+    }
+
+    private void GetColliders()
+    {
+        var interactableParent = _interactable.transform.parent;
+        if (interactableParent != null && interactableParent.TryGetComponent<Interactable>(out var interactableComponent))
+        {
+            _interactable = interactableComponent;
+
+        }
+
+        interactableColliders = _interactable.GetComponentsInChildren<Collider>();
     }
 
 

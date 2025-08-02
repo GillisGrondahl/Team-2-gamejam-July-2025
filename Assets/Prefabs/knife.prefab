@@ -617,6 +617,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attachTransform: {fileID: 3604211290336510790}
+  pickable: 1
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -734,7 +735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1254764880526025559
 Transform:
   m_ObjectHideFlags: 0

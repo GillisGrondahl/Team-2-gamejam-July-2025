@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class IngredientChecker : MonoBehaviour
 {
-    [SerializeField] private MMF_Player _MMFDropInPot;
+    [SerializeField] private MMF_Player _MMFIngredientDropInPot;
+    [SerializeField] private MMF_Player _MMFToolDropInPot;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +16,14 @@ public class IngredientChecker : MonoBehaviour
             Destroy(ingredient.gameObject);
 
             // call MMF Feedback for playing sounds when dropping in pot
-            _MMFDropInPot.PlayFeedbacks();
+            _MMFIngredientDropInPot.PlayFeedbacks();
+        }
+        else if (other.TryGetComponent<Tool>(out var tool))
+        {
+            RecipeSystem.Instance.AddIngredient(ScriptableObject.CreateInstance<IngredientData>());
+            
+            _MMFToolDropInPot.PlayFeedbacks();
+            tool.ResetPosition();
         }
     }
 }

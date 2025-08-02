@@ -17,7 +17,7 @@ public class Tool : MonoBehaviour
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
-    [SerializeField] private MMF_Player _fbdkDroppedInPot;
+    //[SerializeField] private MMF_Player _fbdkDroppedInPot;
 
     protected virtual void Awake()
     {
@@ -61,30 +61,37 @@ public class Tool : MonoBehaviour
             }
         }
     }
-    private void OnTriggerEnter(Collider trigger)
+
+    public void ResetPosition()
     {
-        if (trigger.gameObject.TryGetComponent<IngredientChecker>(out var ingredientChecker))
-        {
-            Debug.Log("Tool dropped in pot");
-
-            transform.position = _startingPosition;
-
-            if (_fbdkDroppedInPot != null)
-            {
-                _fbdkDroppedInPot.PlayFeedbacks();
-            }
-
-            if (_fdbkDropped != null)
-            {
-                _fdbkDropped.PlayFeedbacks();
-            }
-
-            _resting = true;
-
-        }
-
-
+        transform.position = _startingPosition;
+        _resting = true;
     }
+
+    //private void OnTriggerEnter(Collider trigger)
+    //{
+    //    if (trigger.gameObject.TryGetComponent<IngredientChecker>(out var ingredientChecker))
+    //    {
+    //        Debug.Log("Tool dropped in pot");
+
+    //        transform.position = _startingPosition;
+
+    //        if (_fbdkDroppedInPot != null)
+    //        {
+    //            _fbdkDroppedInPot.PlayFeedbacks();
+    //        }
+
+    //        if (_fdbkDropped != null)
+    //        {
+    //            _fdbkDropped.PlayFeedbacks();
+    //        }
+
+    //        _resting = true;
+
+    //    }
+
+
+    //}
 
 }
 
