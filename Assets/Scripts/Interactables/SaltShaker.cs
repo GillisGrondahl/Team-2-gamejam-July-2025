@@ -37,7 +37,7 @@ public class SaltShaker : Tool
     public void Use()
     {
         if (saltParticles == null || isOnCooldown) return;
-        Instantiate(saltParticles, transform.position, Quaternion.Euler(90f, 0f, 0f));
+        Instantiate(saltParticles, saltSpawnPoint.position, Quaternion.Euler(90f, 0f, 0f), _originalParent);
 
         // call MMF Feedback for shaking
         _MMFShaking.PlayFeedbacks();

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
-    private Transform _originalParent;
-    private Rigidbody _rigidbody;
-    private Collider _collider;
-    private Vector3 _startingPosition;
+    protected Transform _originalParent;
+    protected Rigidbody _rigidbody;
+    protected Collider _collider;
+    protected Vector3 _startingPosition;
 
     private bool _resting = true;
 

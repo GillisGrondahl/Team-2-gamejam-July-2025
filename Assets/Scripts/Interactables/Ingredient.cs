@@ -23,7 +23,7 @@ public class Ingredient : MonoBehaviour
 
     private void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        TryGetComponent(out Rigidbody);
         if (transform.parent != null)
         {
             _originalParent = transform.parent;
@@ -34,11 +34,11 @@ public class Ingredient : MonoBehaviour
     private void Start()
     {
         if (Rigidbody == null)
-            Rigidbody = GetComponent<Rigidbody>();
+            TryGetComponent(out Rigidbody);
         if (_originalParent == null)
             _originalParent = transform.parent;
-        if (ParentIngredient == null)
-            ParentIngredient = transform.parent.GetComponent<Ingredient>();
+        if (ParentIngredient == null && transform.parent != null)
+            transform.parent.TryGetComponent(out ParentIngredient);
     }
 
     private void LateUpdate()
