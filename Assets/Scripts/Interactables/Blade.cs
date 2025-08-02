@@ -19,6 +19,12 @@ public class Blade : MonoBehaviour
 
             // call MMF Feedback for cutting sounds
             _MMFCutting.PlayFeedbacks();
+
+            // if it's an onion and it has the OnionCry component, play the crying postprocessing feedback
+            if (other.gameObject.TryGetComponent(out OnionCry onionCry))
+            {
+                onionCry.PlayCry();
+            }
         }
     }
     private IEnumerator WaitForNextSlice()

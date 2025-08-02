@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Salt
   m_EditorClassIdentifier: 
   ingredientName: Salt
-  icon: {fileID: 21300000, guid: bb95d35478bad4043a416ded82b2c14e, type: 3}
+  icon: {fileID: 21300000, guid: 3bce79ac1df244849b8d16101c1721a4, type: 3}

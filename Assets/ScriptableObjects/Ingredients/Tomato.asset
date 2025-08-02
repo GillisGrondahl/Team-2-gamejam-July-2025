@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   ingredientName: Tomato
-  icon: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+  icon: {fileID: 21300000, guid: fcf8146b6f6c7034db1bab8cd01970fa, type: 3}
