@@ -51,16 +51,16 @@ public class Interactor : MonoBehaviour
     {
         if (_interactable == null) _canInteract = true;
 
-        if (Input.GetKeyDown(KeyCode.E) && OverlapedInteractable != null && _canInteract)
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))&& OverlapedInteractable != null && _canInteract)
         {
             OverlapedInteractable.Interact(this);
             _canInteract = false;
             _interactable = OverlapedInteractable;
-            interactableColliders = _interactable.GetComponentsInChildren<Collider>();
             hand.CloseHand(true);
+            interactableColliders = _interactable.GetComponentsInChildren<Collider>();
             IngoreCollisionWithInteractable(true);
         }
-        if (Input.GetKeyUp(KeyCode.E) && _interactable != null)
+        if ((Input.GetKeyUp(KeyCode.E) || Input.GetMouseButtonUp(0)) && _interactable != null)
         {
             _interactable.StopInteract(this);
             IngoreCollisionWithInteractable(false);
