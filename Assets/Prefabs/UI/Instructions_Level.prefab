@@ -1558,8 +1558,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.831}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9, y: -157}
-  m_SizeDelta: {x: 336.5856, y: 50}
+  m_AnchoredPosition: {x: -27, y: -171}
+  m_SizeDelta: {x: 536.0162, y: 79.9398}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6866327824097823265
 CanvasRenderer:
@@ -1589,7 +1589,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Follow the recipes
+  m_text: Make all the meals the captain asks for - follow the recipes closely!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2bd3d952aa710748815d98e95016fed, type: 2}
   m_sharedMaterial: {fileID: 9145627039681584977, guid: c2bd3d952aa710748815d98e95016fed, type: 2}
