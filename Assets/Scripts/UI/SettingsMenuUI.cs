@@ -14,7 +14,7 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] private Slider sfxVolumeSlider;
 
 
-    void Start()
+    void OnEnable()
     {
         GameEvents.Instance.OnSettingsClicked += HandleSettingsClicked;
 
@@ -37,7 +37,12 @@ public class SettingsMenuUI : MonoBehaviour
 
     }
 
-    
+    private void OnDisable()
+    {
+        GameEvents.Instance.OnSettingsClicked -= HandleSettingsClicked;
+    }
+
+
     void HandleSettingsClicked()
     {
         settingsMenu.SetActive(true);

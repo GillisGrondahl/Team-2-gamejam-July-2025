@@ -69,7 +69,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    private void ToggleIngameMenu()
+    public void ToggleIngameMenu()
     {
         if (!_ingameMenuShown)
         {
@@ -80,6 +80,7 @@ public class TimeManager : MonoBehaviour
         {
             ingameMenu.SetActive(false);
             _ingameMenuShown = false;
+            UnpauseGame();
         }
     }
 
