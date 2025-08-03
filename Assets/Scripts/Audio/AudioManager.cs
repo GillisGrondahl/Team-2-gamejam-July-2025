@@ -103,6 +103,10 @@ public class AudioManager : MonoBehaviour
             timeManager.OnEarlyWarningReached += HandleEarlyWarningReached;
             timeManager.OnFinalCountdownReached += HandleFinalCountdownReached;
         }
+        //SetTempo(BGM_originalPitchValue);
+        InitializeBGM();
+
+
     }
 
     public void HandleLevelStart()
