@@ -1,6 +1,7 @@
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 
@@ -44,7 +45,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null )
         {
-            Debug.Log("More than one AudioManager in the scene!");  
+            Destroy(instance.gameObject);
         }
         instance = this;
 
