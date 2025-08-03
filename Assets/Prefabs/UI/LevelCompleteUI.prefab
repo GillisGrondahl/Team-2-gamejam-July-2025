@@ -743,8 +743,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreToComplete: 0.6
-  _starOutline: {fileID: 21300000, guid: 93cec53bbf41c7b42b577e5696dd02ee, type: 3}
-  _starFilled: {fileID: 21300000, guid: 8d5678570718be544a918b03092a0620, type: 3}
+  _starOutline: {fileID: 21300000, guid: f3e79f39960af1c47b03c1b17d806988, type: 3}
+  _starFilled: {fileID: 21300000, guid: 5874fd3ca5fdae949a2107de9964d3a6, type: 3}
   _star1: {fileID: 3365513215399647185}
   _star2: {fileID: 6963243609912028507}
   _star3: {fileID: 7927668494057064533}
