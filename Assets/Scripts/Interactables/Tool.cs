@@ -24,7 +24,7 @@ public class Tool : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _originalParent = transform.parent;
-        _startingPosition = transform.position;
+        _startingPosition = transform.localPosition;
     }
 
     public void PickUp(Interactor interactor)
@@ -64,7 +64,8 @@ public class Tool : MonoBehaviour
 
     public void ResetPosition()
     {
-        transform.position = _startingPosition;
+        transform.parent = _originalParent;
+        transform.localPosition = _startingPosition;
         _resting = true;
     }
 

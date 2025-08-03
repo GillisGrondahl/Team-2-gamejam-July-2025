@@ -4881,6 +4881,7 @@ MonoBehaviour:
   ParentIngredient: {fileID: 0}
   TransformToFollow: {fileID: 0}
   Rigidbody: {fileID: 0}
+  cutable: 0
   IsAPart: 0
   _fdbkPickUp: {fileID: 0}
   _fdbkDropped: {fileID: 0}

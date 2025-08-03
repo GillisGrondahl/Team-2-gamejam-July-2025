@@ -209,12 +209,14 @@ public class RecipeSystem : MonoBehaviour
 
             levelComplete.EvaluateScore(OverallQuality);
 
+            TimeManager.Instance.TogglePause();
             Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
+
         }
         else
         {
             levelComplete.EvaluateScore(0f);
-
+            TimeManager.Instance.TogglePause();
             Debug.Log("LEVEL FAILED!");
         }
     }
