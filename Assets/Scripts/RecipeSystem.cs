@@ -21,6 +21,8 @@ public class RecipeSystem : MonoBehaviour
     [SerializeField] TMP_Text qualityText = null;
     [SerializeField] MMProgressBar qualityBar = null;
 
+    [SerializeField] GameObject levelCompleteUI = null;
+
 
     public List<RecipeData> recipes = null;
     [SerializeField] private int qualityOfCurrentRecipe = 100;
@@ -49,11 +51,17 @@ public class RecipeSystem : MonoBehaviour
 
     private void Start()
     {
+        TimeManager.Instance.OnTimeUp += OnTimerEnd;
+
         if (recipes.Count > 0)
             GetNewRecipe();
     }
 
 
+    private void OnDestroy()
+    {
+            TimeManager.Instance.OnTimeUp -= OnTimerEnd;
+    }
 
     private void GetNewRecipe()
     {
@@ -181,12 +189,39 @@ public class RecipeSystem : MonoBehaviour
         }
         else
         {
+            _MMFRecipeCompleted.PlayFeedbacks();
+            EndLevel(true);
+
+        }
+
+    }
+
+    private void EndLevel(bool allRecipesDone)
+    {
+        levelCompleteUI.SetActive(true);
+        LevelComplete levelComplete = levelCompleteUI.GetComponent<LevelComplete>();
+        levelComplete.SetNrMealsCompletedText(_currentRecipeIndex, recipes.Count);
+
+
+        if (allRecipesDone)
+        {
             OverallQuality = _qualityList.Average();
 
+            levelComplete.EvaluateScore(OverallQuality);
 
             Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
         }
+        else
+        {
+            levelComplete.EvaluateScore(0f);
 
+            Debug.Log("LEVEL FAILED!");
+        }
+    }
+
+    private void OnTimerEnd()
+    {
+        EndLevel(false);
     }
 
     private class RecipePosition
