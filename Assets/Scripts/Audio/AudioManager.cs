@@ -98,11 +98,18 @@ public class AudioManager : MonoBehaviour
         SetVolume(SFXBus, SFX_volume);
     }
 
-    private void HandleLevelStart()
+    public void HandleLevelStart()
     {
         InitializeBGM();
 
         AMB_EventInstance.setParameterByName("WavesOnly", 0); // add the other ambience tracks when the level starts
+
+    }
+
+    public void HandleLevelStop()
+    {
+        BGM_eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        AMB_EventInstance.setParameterByName("WavesOnly", 1); // add the other ambience tracks when the level starts
 
     }
 
