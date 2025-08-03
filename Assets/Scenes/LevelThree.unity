@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e4ac1858fb45543bf610af742b0d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDurationSeconds: 60
+  levelDurationSeconds: 240
   earlyWarning: 15
   finalCountdownTicks: 5
   timeDisplayText: {fileID: 370859477}
@@ -1109,6 +1109,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6817602059322215226, guid: 47929802e33fbd844845449047fb85b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8165794321758342352, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_Name
       value: GameUI Canvas
@@ -1177,6 +1181,10 @@ PrefabInstance:
     - target: {fileID: 1125857081678959339, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: showCursor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1158080815813728467, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1956334102833184303, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1313,8 +1321,28 @@ PrefabInstance:
       objectReference: {fileID: 414117312}
     - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
       propertyPath: recipes.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
+      propertyPath: 'recipes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 33b091281b2007749a654032f4061c21, type: 2}
+    - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
+      propertyPath: 'recipes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d6057da6d2059e34aa24dd08288ab9c9, type: 2}
+    - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
+      propertyPath: 'recipes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b6549a92dc65b4b41b9622385a0f83ce, type: 2}
+    - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
+      propertyPath: 'recipes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 83d999219351ca74ca37aeb5bb54d9ae, type: 2}
+    - target: {fileID: 3623283484687077539, guid: a1f13a053940b6444adadec0de6d0ad6, type: 3}
+      propertyPath: 'recipes.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2912b436a0e2b0341a57f9d6cf749ae0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
