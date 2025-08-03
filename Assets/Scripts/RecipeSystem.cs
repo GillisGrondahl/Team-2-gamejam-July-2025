@@ -1,14 +1,14 @@
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 public class RecipeSystem : MonoBehaviour
 {
     public static RecipeSystem Instance { get; private set; }
+
+    public float OverallQuality { get; private set; } = 100f;
 
     [SerializeField] private MMF_Player _MMFRecipeCompleted;
 
@@ -24,11 +24,13 @@ public class RecipeSystem : MonoBehaviour
 
     public List<RecipeData> recipes = null;
     [SerializeField] private int qualityOfCurrentRecipe = 100;
-    private RecipeData _currentRecipe = null;
+    //private RecipeData _currentRecipe = null;
     private List<IngredientData> _currentIngredients = new List<IngredientData>();
     private Dictionary<IngredientData, int> _requiredIngredientsCount = new Dictionary<IngredientData, int>();
     private int _currentRecipeIndex = 0;
     private List<float> _qualityList = new List<float>();
+
+    private List<RecipePosition> currentRecipe = new();
 
     private void Awake()
     {
@@ -45,12 +47,20 @@ public class RecipeSystem : MonoBehaviour
     private void Start()
     {
         if (recipes.Count > 0)
+            GetNewRecipe();
+    }
+
+    private void GetNewRecipe()
+    {
+        currentRecipe = new List<RecipePosition>();
+        foreach (var recipePosition in recipes[_currentRecipeIndex].requiredIngredientsPices.ToList())
         {
-            _currentRecipe = recipes[_currentRecipeIndex]; // Start with the first recipe
+             currentRecipe.Add(new RecipePosition(recipePosition.Key, recipePosition.Value, false));
         }
-        //_compareRecipe = ScriptableObject.CreateInstance<RecipeData>();
-        _requiredIngredientsCount = _currentRecipe.ingredients
-            .GroupBy(i => i)
+        //_currentRecipe = recipes[_currentRecipeIndex];
+        _currentIngredients.Clear();
+        _requiredIngredientsCount = currentRecipe
+            .GroupBy(i => i.Ingredient)
             .ToDictionary(g => g.Key, g => g.Count());
         UpdateUI();
     }
@@ -58,7 +68,7 @@ public class RecipeSystem : MonoBehaviour
     private void UpdateUI()
     {
         // Update recipe name
-        recipeNameText.text = _currentRecipe.recipeName;
+        recipeNameText.text = recipes[_currentRecipeIndex].recipeName;
 
         UpdateQualityText();
         foreach (Transform child in ingredientsList)
@@ -66,13 +76,14 @@ public class RecipeSystem : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var ingredient in _currentRecipe.ingredients)
+        foreach (var position in currentRecipe)
         {
-            Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>().Initialize(ingredient);
+            Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>()
+                .Initialize(position.Ingredient, position.PicesCount);
         }
     }
 
-    public void AddIngredient(IngredientData ingredient)
+    public void AddIngredient(IngredientData ingredient, int amountOfpices)
     {
         _currentIngredients.Add(ingredient);
 
@@ -86,7 +97,11 @@ public class RecipeSystem : MonoBehaviour
         {
             int currentCount = _currentIngredients.Count(i => i == ingredient);
             int allowedCount = _requiredIngredientsCount[ingredient];
-            if (currentCount > allowedCount)
+
+            int allowedAmountOfPices = currentRecipe.
+                FirstOrDefault(i => i.Ingredient == ingredient && !i.IsDone).PicesCount;
+
+            if (currentCount > allowedCount || amountOfpices != allowedAmountOfPices)
             {
                 qualityOfCurrentRecipe -= excessIngredientPenalty;
                 Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{excessIngredientPenalty}%");
@@ -128,25 +143,33 @@ public class RecipeSystem : MonoBehaviour
 
         if (++_currentRecipeIndex < recipes.Count)
         {
-            _currentRecipe = recipes[_currentRecipeIndex];
-            _currentIngredients.Clear();
-            _requiredIngredientsCount = _currentRecipe.ingredients
-                .GroupBy(i => i)
-                .ToDictionary(g => g.Key, g => g.Count());
-            
-            UpdateUI();
-            Debug.Log($"Recipe complete! Moving to next recipe: {_currentRecipe.recipeName}");
+            GetNewRecipe();
+            Debug.Log($"Recipe complete! Moving to next recipe: {recipes[_currentRecipeIndex].recipeName}");
 
             // Call MMF feedback for recipe completed
             _MMFRecipeCompleted.PlayFeedbacks();
         }
         else
         {
-            float overallQuality = _qualityList.Average();
+            OverallQuality = _qualityList.Average();
 
 
-            Debug.Log($"LEVEL FINISHED! Quality: {overallQuality}%");
+            Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
         }
 
+    }
+
+    private struct RecipePosition
+    {
+        public IngredientData Ingredient { get; private set; }
+        public int PicesCount { get; private set; }
+        public bool IsDone { get; set; }
+
+        public RecipePosition(IngredientData ingredient, int picesCount, bool isDone)
+        {
+            Ingredient = ingredient;
+            PicesCount = picesCount;
+            IsDone = isDone;
+        }
     }
 }
