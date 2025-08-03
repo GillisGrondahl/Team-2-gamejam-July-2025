@@ -9,11 +9,17 @@ public class Countdown : MonoBehaviour
 
     private void Start()
     {
-        if (TimeManager.Instance != null)
+        GameEvents.Instance.TimeManagerInstantiated += HandleTimeManagerInitiated;
+
+    }
+
+    private void HandleTimeManagerInitiated(TimeManager timeManager)
+    {
+        if (timeManager != null)
         {
-            TimeManager.Instance.OnFinalCountdownReached += OnCountdownReached;
-            TimeManager.Instance.OnFinalCountdownTick += OnCountdownTick;
-            TimeManager.Instance.OnTimeUp += OnTimeUp;
+            timeManager.OnFinalCountdownReached += OnCountdownReached;
+            timeManager.OnFinalCountdownTick += OnCountdownTick;
+            timeManager.OnTimeUp += OnTimeUp;
         }
     }
 

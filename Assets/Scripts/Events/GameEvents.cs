@@ -20,6 +20,8 @@ public class GameEvents : MonoBehaviour
     public Action OnExitGameClicked;
     public Action OnSettingsClicked;
 
+    public Action<TimeManager> TimeManagerInstantiated;
+
     // Settings Events
     public Action<float> OnMasterVolumeChanged;
     public Action<float> OnBGMVolumeChanged;

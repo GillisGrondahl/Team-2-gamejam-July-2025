@@ -51,6 +51,7 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
+        GameEvents.Instance.TimeManagerInstantiated?.Invoke(this);
         StartTimer();
     }
 
