@@ -1109,6 +1109,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7267642914644113800, guid: 47929802e33fbd844845449047fb85b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8165794321758342352, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_Name
       value: GameUI Canvas

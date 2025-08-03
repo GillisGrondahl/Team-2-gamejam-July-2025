@@ -1198,10 +1198,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 1125857081678959339, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
-      propertyPath: showCursor
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1158080815813728467, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_Enabled
       value: 0

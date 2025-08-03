@@ -13,6 +13,13 @@ public class LevelComplete : MonoBehaviour
 
     public void EvaluateScore(float score)
     {
+
+        if (!Cursor.visible)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         if (score >= _scoreToComplete)
         {
             SetEvaluationText("brilliantly");

@@ -31,6 +31,8 @@ public class PlayerInstructions : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 TimeManager.Instance.UnpauseGame();
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         });
     }
