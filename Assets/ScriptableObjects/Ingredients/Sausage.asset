@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Sausage
   m_EditorClassIdentifier: 
   ingredientName: Sausage
-  icon: {fileID: 21300014, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
+  icon: {fileID: 21300000, guid: b571e1b044c387247bffe6702a3dbd33, type: 3}
