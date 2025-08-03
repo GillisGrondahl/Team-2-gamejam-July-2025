@@ -58,6 +58,7 @@ public class AudioManager : MonoBehaviour
     {
         // Subscribe to game events
         GameEvents.Instance.OnStartGameClicked += HandleLevelStart;
+        GameEvents.Instance.TimeManagerInstantiated += HandleTimeManagerInitiated;
 
         // Ensure banks are loaded (redundant if auto-loading works, but safe)
         if (!RuntimeManager.HasBankLoaded("Master"))
@@ -79,12 +80,7 @@ public class AudioManager : MonoBehaviour
 
         InitializeAmbience();
 
-        // Subscribe to TimeManager events
-        if (TimeManager.Instance != null)   // only if we're in the main scene 
-        {
-            TimeManager.Instance.OnEarlyWarningReached += HandleEarlyWarningReached;
-            TimeManager.Instance.OnFinalCountdownReached += HandleFinalCountdownReached;
-        }
+
 
         // Subscribe to GameEvent events for audio settings
         GameEvents.Instance.OnMasterVolumeChanged += HandleMasterVolumeChanged;
@@ -99,9 +95,21 @@ public class AudioManager : MonoBehaviour
         SetVolume(SFXBus, SFX_volume);
     }
 
+    public void HandleTimeManagerInitiated(TimeManager timeManager)
+    {
+        // Subscribe to TimeManager events
+        if (timeManager != null)   // only if we're in the main scene 
+        {
+            timeManager.OnEarlyWarningReached += HandleEarlyWarningReached;
+            timeManager.OnFinalCountdownReached += HandleFinalCountdownReached;
+        }
+    }
+
     public void HandleLevelStart()
     {
         InitializeBGM();
+
+
 
         AMB_EventInstance.setParameterByName("WavesOnly", 0); // add the other ambience tracks when the level starts
 
