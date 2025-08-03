@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4479276276165573697}
   - component: {fileID: 8945914639443494918}
   - component: {fileID: 1006312769830067305}
-  - component: {fileID: 5656637267609526263}
+  - component: {fileID: 7945112880470093891}
   m_Layer: 0
   m_Name: SaltParticles
   m_TagString: Untagged
@@ -4885,8 +4885,8 @@ MonoBehaviour:
   _fdbkPickUp: {fileID: 0}
   _fdbkDropped: {fileID: 0}
   _velocityThreshold: 0.5
---- !u!135 &5656637267609526263
-SphereCollider:
+--- !u!65 &7945112880470093891
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4904,5 +4904,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
