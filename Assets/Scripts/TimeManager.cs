@@ -161,6 +161,7 @@ public class TimeManager : MonoBehaviour
 
         // Pause/unpause Unity's time scale
         Time.timeScale = isGamePaused ? 0f : 1f;
+        
 
         // Fire appropriate event
         if (isGamePaused)
