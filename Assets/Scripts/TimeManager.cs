@@ -65,6 +65,21 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    public void ToggleIngameMenu()
+    {
+        if (!_ingameMenuShown)
+        {
+            ingameMenu.SetActive(true);
+            _ingameMenuShown = true;
+        }
+        else
+        {
+            ingameMenu.SetActive(false);
+            _ingameMenuShown = false;
+            UnpauseGame();
+        }
+    }
+
 
     private void UpdateTimer()
     {
