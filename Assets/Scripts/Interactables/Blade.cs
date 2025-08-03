@@ -11,7 +11,7 @@ public class Blade : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(enabled == false) return;
-        if (other.gameObject.TryGetComponent(out Ingredient ingredient) && !_isKnifing)
+        if (other.gameObject.TryGetComponent(out Ingredient ingredient) && ingredient.cutable && !_isKnifing)
         {
             _isKnifing = true;
             Cutter.Cut(ingredient.gameObject, transform.position, transform.right);

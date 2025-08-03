@@ -9,6 +9,7 @@ public class Ingredient : MonoBehaviour
     public Ingredient ParentIngredient = null;
     public Transform TransformToFollow = null;
     public Rigidbody Rigidbody = null;
+    public bool cutable = true;
     private Transform _originalParent = null;
     public bool IsAPart = false;
 
