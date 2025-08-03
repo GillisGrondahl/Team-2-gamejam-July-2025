@@ -7,6 +7,7 @@ public class IngredientUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image tickMark;
+    [SerializeField] private Image knife;
     [SerializeField] private TMP_Text ingredientName;
     public IngredientData Ingredient { get; private set; }
     public void Initialize(IngredientData ingredient, int pices)
@@ -18,6 +19,7 @@ public class IngredientUI : MonoBehaviour
         if (pices > 1)
         {
             ingredientName.text = $"{Ingredient.ingredientName} cut in {pices} pices";
+            knife.gameObject.SetActive(true);
         }
     }
 
