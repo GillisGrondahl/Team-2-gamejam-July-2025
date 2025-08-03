@@ -5,9 +5,15 @@ public class OnionCry : MonoBehaviour
 {
     [SerializeField] private MMF_Player _MMFOnionCry;
 
+    private bool _isCut = false;
+
     public void PlayCry()
     {
-        _MMFOnionCry.PlayFeedbacks();
+        if (_isCut == false)
+        {
+            _MMFOnionCry.PlayFeedbacks();
+            _isCut = true;
+        }
     }
 
 
