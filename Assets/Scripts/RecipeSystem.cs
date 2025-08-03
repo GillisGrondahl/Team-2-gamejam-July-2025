@@ -25,12 +25,15 @@ public class RecipeSystem : MonoBehaviour
     public List<RecipeData> recipes = null;
     [SerializeField] private int qualityOfCurrentRecipe = 100;
     //private RecipeData _currentRecipe = null;
-    private List<IngredientData> _currentIngredients = new List<IngredientData>();
+    //private List<IngredientData> _currentIngredients = new List<IngredientData>();
+    private List<RecipePosition> _currentIngredients = new();
     private Dictionary<IngredientData, int> _requiredIngredientsCount = new Dictionary<IngredientData, int>();
     private int _currentRecipeIndex = 0;
     private List<float> _qualityList = new List<float>();
 
     private List<RecipePosition> currentRecipe = new();
+
+    private List<(RecipePosition recipe, IngredientUI ui)> _positionUiPairs = new();
 
     private void Awake()
     {
@@ -50,12 +53,14 @@ public class RecipeSystem : MonoBehaviour
             GetNewRecipe();
     }
 
+
+
     private void GetNewRecipe()
     {
         currentRecipe = new List<RecipePosition>();
         foreach (var recipePosition in recipes[_currentRecipeIndex].requiredIngredientsPices.ToList())
         {
-             currentRecipe.Add(new RecipePosition(recipePosition.Key, recipePosition.Value, false));
+            currentRecipe.Add(new RecipePosition(recipePosition.Key, recipePosition.Value, false));
         }
         //_currentRecipe = recipes[_currentRecipeIndex];
         _currentIngredients.Clear();
@@ -69,6 +74,7 @@ public class RecipeSystem : MonoBehaviour
     {
         // Update recipe name
         recipeNameText.text = recipes[_currentRecipeIndex].recipeName;
+        _positionUiPairs.Clear();
 
         UpdateQualityText();
         foreach (Transform child in ingredientsList)
@@ -78,16 +84,18 @@ public class RecipeSystem : MonoBehaviour
 
         foreach (var position in currentRecipe)
         {
-            Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>()
-                .Initialize(position.Ingredient, position.PicesCount);
+            var ui = Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>();
+            ui.Initialize(position.Ingredient, position.PicesCount);
+
+            _positionUiPairs.Add((position, ui));
         }
     }
 
     public void AddIngredient(IngredientData ingredient, int amountOfpices)
     {
-        _currentIngredients.Add(ingredient);
+        var currentPosition = new RecipePosition(ingredient, amountOfpices, false);
+        _currentIngredients.Add(currentPosition);
 
-        Debug.Log(ingredient.ingredientName + " added to recipe.");
         if (!_requiredIngredientsCount.ContainsKey(ingredient))
         {
             qualityOfCurrentRecipe -= wrongIngredientPenalty;
@@ -95,17 +103,31 @@ public class RecipeSystem : MonoBehaviour
         }
         else
         {
-            int currentCount = _currentIngredients.Count(i => i == ingredient);
+            int currentCount = _currentIngredients.Count(p => p.Ingredient == ingredient);
             int allowedCount = _requiredIngredientsCount[ingredient];
 
-            int allowedAmountOfPices = currentRecipe.
-                FirstOrDefault(i => i.Ingredient == ingredient && !i.IsDone).PicesCount;
+            var allowedIngredient = currentRecipe.FirstOrDefault(i => i.Ingredient == ingredient && !i.IsDone);
+            int allowedAmountOfPices = allowedIngredient?.PicesCount ?? 1;
 
-            if (currentCount > allowedCount || amountOfpices != allowedAmountOfPices)
+            var recipePosition = currentRecipe.FirstOrDefault(p => p.Ingredient == ingredient
+            && p.PicesCount == amountOfpices
+            && !p.IsDone);
+
+            if (recipePosition != null)
+            {
+                recipePosition.IsDone = true;
+            }
+            else if (amountOfpices != allowedAmountOfPices)
+            {
+                qualityOfCurrentRecipe -= excessIngredientPenalty;
+                Debug.Log($"Wrong amount of '{ingredient}' pices! Allowed: {allowedAmountOfPices}, now: {amountOfpices} -{excessIngredientPenalty}%");
+            }
+            else if (currentCount > allowedCount)
             {
                 qualityOfCurrentRecipe -= excessIngredientPenalty;
                 Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{excessIngredientPenalty}%");
             }
+
         }
 
 
@@ -117,6 +139,11 @@ public class RecipeSystem : MonoBehaviour
     {
         //qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
         qualityBar.UpdateBar(qualityOfCurrentRecipe / 100f, 0f, 1f);
+
+        foreach (var (recipe, ui) in _positionUiPairs)
+        {
+            ui.SetTickMark(recipe.IsDone);
+        }
     }
 
     private void AddAndResetQuality()
@@ -130,12 +157,15 @@ public class RecipeSystem : MonoBehaviour
         bool missingIngredient = false;
         foreach (var ingredient in _requiredIngredientsCount)
         {
-            if (_currentIngredients.Count(i => i == ingredient.Key) < ingredient.Value)
+            if (_currentIngredients.Count(p => p.Ingredient == ingredient.Key) < ingredient.Value)
             {
-                Debug.Log($"Recipe not complete: Missing {ingredient.Value - _currentIngredients.Count(i => i == ingredient.Key)} of {ingredient.Key.ingredientName}.");
+                Debug.Log($"Recipe not complete: Missing {ingredient.Value - _currentIngredients.Count(p => p.Ingredient == ingredient.Key)} of {ingredient.Key.ingredientName}.");
                 missingIngredient = true;
             }
         }
+
+        if (currentRecipe.All(p => p.IsDone))
+            missingIngredient = false;
 
         if (missingIngredient) return;
 
@@ -159,7 +189,7 @@ public class RecipeSystem : MonoBehaviour
 
     }
 
-    private struct RecipePosition
+    private class RecipePosition
     {
         public IngredientData Ingredient { get; private set; }
         public int PicesCount { get; private set; }

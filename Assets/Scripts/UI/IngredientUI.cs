@@ -6,17 +6,28 @@ using UnityEngine.UI;
 public class IngredientUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
+    [SerializeField] private Image tickMark;
     [SerializeField] private TMP_Text ingredientName;
+    public IngredientData Ingredient { get; private set; }
     public void Initialize(IngredientData ingredient, int pices)
     {
-        ingredientName.text = ingredient.ingredientName;
-        icon.sprite = ingredient.icon;
+        Ingredient = ingredient;
+        ingredientName.text = Ingredient.ingredientName;
+        icon.sprite = Ingredient.icon;
 
         if (pices > 1)
         {
-            ingredientName.text = $"{ingredient.ingredientName} cut in {pices} pices";
+            ingredientName.text = $"{Ingredient.ingredientName} cut in {pices} pices";
         }
+    }
 
+    public void SetTickMark(bool value)
+    {
+        tickMark.gameObject.SetActive(value);
+    }
 
+    public bool GetTickMarkStatus()
+    {
+        return tickMark.gameObject.activeSelf;
     }
 }
