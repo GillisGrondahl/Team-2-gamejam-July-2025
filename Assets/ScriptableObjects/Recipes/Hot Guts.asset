@@ -18,3 +18,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 777c528d8a03f874093136aa308d7f37, type: 2}
   - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
   - {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
+  requiredIngredientsPices:
+    keys:
+    - {fileID: 11400000, guid: 777c528d8a03f874093136aa308d7f37, type: 2}
+    - {fileID: 11400000, guid: 777c528d8a03f874093136aa308d7f37, type: 2}
+    - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
+    - {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
+    values: 01000000010000000100000001000000
