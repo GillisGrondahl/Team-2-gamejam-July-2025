@@ -635,7 +635,6 @@ MonoBehaviour:
   earlyWarning: 15
   finalCountdownTicks: 5
   timeDisplayText: {fileID: 370859477}
-  ingameMenu: {fileID: 1043473633}
   debugMode: 0
   remainingTime: 0
   isInEarlyWarning: 0
@@ -1285,6 +1284,10 @@ PrefabInstance:
     - target: {fileID: 1125857081678959339, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: showCursor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1158080815813728467, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1956334102833184303, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_LocalPosition.x

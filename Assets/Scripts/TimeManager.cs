@@ -26,7 +26,6 @@ public class TimeManager : MonoBehaviour
     [Header("UI References")]
     [Tooltip("Text component to display remaining time")]
     [SerializeField] private TMP_Text timeDisplayText;
-    [SerializeField] private GameObject ingameMenu;
 
     [Header("Debug")]
     [Tooltip("Show time info in console")]
@@ -37,8 +36,6 @@ public class TimeManager : MonoBehaviour
     public bool isGamePaused = false;
     public bool isGameRunning = false;
     public bool hasGameEnded = false;
-
-    private bool _ingameMenuShown = false;
 
     // Events
     public System.Action OnTimeUp;
@@ -64,7 +61,6 @@ public class TimeManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ToggleIngameMenu();
             TogglePause();
         }
     }
