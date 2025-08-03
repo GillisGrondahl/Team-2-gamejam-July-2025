@@ -16,12 +16,15 @@ public class SettingsMenuUI : MonoBehaviour
 
     void OnEnable()
     {
-        GameEvents.Instance.OnSettingsClicked += HandleSettingsClicked;
+        //GameEvents.Instance.OnSettingsClicked += HandleSettingsClicked;
 
+        /*
         exitButton.onClick.AddListener(() =>
         {
             CloseSettingsMenu();
         });
+
+        */
 
         masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeSliderChanged);
         bgmVolumeSlider.onValueChanged.AddListener(OnBGMVolumeSliderChanged);
@@ -39,9 +42,10 @@ public class SettingsMenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEvents.Instance.OnSettingsClicked -= HandleSettingsClicked;
+        // GameEvents.Instance.OnSettingsClicked -= HandleSettingsClicked;
     }
 
+    /*
 
     void HandleSettingsClicked()
     {
@@ -53,6 +57,7 @@ public class SettingsMenuUI : MonoBehaviour
     {
         settingsMenu.SetActive(false);
     }
+    */
 
     void OnMasterVolumeSliderChanged(float newVolume)
     {
