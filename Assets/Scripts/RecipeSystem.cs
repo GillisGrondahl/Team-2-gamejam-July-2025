@@ -151,10 +151,10 @@ public class RecipeSystem : MonoBehaviour
         }
         else
         {
-            overallQuality = _qualityList.Average();
+            OverallQuality = _qualityList.Average();
 
 
-            Debug.Log($"LEVEL FINISHED! Quality: {overallQuality}%");
+            Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
         }
 
     }
