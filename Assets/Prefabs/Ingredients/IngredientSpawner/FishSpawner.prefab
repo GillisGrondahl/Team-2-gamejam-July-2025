@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4733942661197497586}
   - component: {fileID: 9111079369554387716}
   - component: {fileID: 3274828734209462058}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Fish (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 9222231379043984462}
   - component: {fileID: 1384702569331616319}
   - component: {fileID: 6655159526590016837}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 6083501398340866226}
   - component: {fileID: 65117006561480913}
   - component: {fileID: 4553789748038266482}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Fish (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

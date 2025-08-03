@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6705740775688814185}
   - component: {fileID: 219912300030152495}
   - component: {fileID: 8767983649014256063}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: IngredientSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3247927284027085152}
   - component: {fileID: 644927929746746711}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: CreateColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
