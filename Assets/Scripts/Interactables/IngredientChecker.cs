@@ -10,9 +10,14 @@ public class IngredientChecker : MonoBehaviour
     {
         if (other.TryGetComponent<Ingredient>(out var ingredient))
         {
+            int pices = 1;
             if (ingredient.IsAPart)
+            {
                 ingredient = ingredient.ParentIngredient;
-            RecipeSystem.Instance.AddIngredient(ingredient.ingredient);
+                pices = ingredient.GetComponentsInChildren<Ingredient>().Length;
+            }
+            Debug.Log($"Ingredient {ingredient.ingredient.ingredientName} has {pices} pices.");
+            RecipeSystem.Instance.AddIngredient(ingredient.ingredient, pices);
             Destroy(ingredient.gameObject);
 
             // call MMF Feedback for playing sounds when dropping in pot
@@ -20,8 +25,8 @@ public class IngredientChecker : MonoBehaviour
         }
         else if (other.TryGetComponent<Tool>(out var tool))
         {
-            RecipeSystem.Instance.AddIngredient(ScriptableObject.CreateInstance<IngredientData>());
-            
+            RecipeSystem.Instance.AddIngredient(ScriptableObject.CreateInstance<IngredientData>(), 1);
+
             _MMFToolDropInPot.PlayFeedbacks();
             tool.ResetPosition();
         }
