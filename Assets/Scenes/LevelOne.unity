@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e4ac1858fb45543bf610af742b0d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDurationSeconds: 60
+  levelDurationSeconds: 90
   earlyWarning: 15
   finalCountdownTicks: 5
   timeDisplayText: {fileID: 370859477}
