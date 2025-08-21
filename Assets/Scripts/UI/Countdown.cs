@@ -5,7 +5,6 @@ public class Countdown : MonoBehaviour
 {
     [SerializeField] private MMF_Player _countdownReachedFeedback;
     [SerializeField] private MMF_Player _countdownTickFeedback;
-    [SerializeField] private MMF_Player _timeUpFeedback;
 
     private void Start()
     {
@@ -37,7 +36,6 @@ public class Countdown : MonoBehaviour
 
     private void OnTimeUp()
     {
-        if (_timeUpFeedback == null) return;
-        _timeUpFeedback.PlayFeedbacks();
+
     }
 }

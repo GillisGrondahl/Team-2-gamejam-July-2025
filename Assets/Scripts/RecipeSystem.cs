@@ -11,6 +11,7 @@ public class RecipeSystem : MonoBehaviour
     public float OverallQuality { get; private set; } = 100f;
 
     [SerializeField] private MMF_Player _MMFRecipeCompleted;
+    [SerializeField] private MMF_Player _MMFLevelEnd;
 
     public int wrongIngredientPenalty = 10;
     public int excessIngredientPenalty = 10;
@@ -202,6 +203,7 @@ public class RecipeSystem : MonoBehaviour
         LevelComplete levelComplete = levelCompleteUI.GetComponent<LevelComplete>();
         levelComplete.SetNrMealsCompletedText(_currentRecipeIndex, recipes.Count);
 
+        _MMFLevelEnd.PlayFeedbacks();
 
         if (allRecipesDone)
         {
