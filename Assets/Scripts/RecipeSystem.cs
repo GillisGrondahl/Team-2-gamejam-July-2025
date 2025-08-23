@@ -52,17 +52,13 @@ public class RecipeSystem : MonoBehaviour
 
     private void Start()
     {
-        TimeManager.Instance.OnTimeUp += OnTimerEnd;
 
         if (recipes.Count > 0)
             GetNewRecipe();
     }
 
 
-    private void OnDestroy()
-    {
-            TimeManager.Instance.OnTimeUp -= OnTimerEnd;
-    }
+
 
     private void GetNewRecipe()
     {
@@ -85,7 +81,7 @@ public class RecipeSystem : MonoBehaviour
         recipeNameText.text = recipes[_currentRecipeIndex].recipeName;
         _positionUiPairs.Clear();
 
-        UpdateQualityText();
+        UpdateLevelProgressText();
         foreach (Transform child in ingredientsList)
         {
             Destroy(child.gameObject);
@@ -139,15 +135,22 @@ public class RecipeSystem : MonoBehaviour
 
         }
 
+        UpdateRecipeProgress();
+        UpdateLevelProgressText();
 
-        UpdateQualityText();
         CheckRecipeCompletion();
     }
 
-    private void UpdateQualityText()
+    private void UpdateLevelProgressText()
     {
-        //qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
-        qualityBar.UpdateBar(qualityOfCurrentRecipe / 100f, 0f, 1f);
+        //qualityBar.UpdateBar(qualityOfCurrentRecipe / 100f, 0f, 1f);
+        float recipeProgress = (float)_currentRecipeIndex / recipes.Count;
+        qualityBar.UpdateBar(recipeProgress, 0f, 1f);
+        Debug.Log($"{_currentRecipeIndex} / {recipes.Count}");
+    }
+
+    private void UpdateRecipeProgress()
+    { 
 
         foreach (var (recipe, ui) in _positionUiPairs)
         {
@@ -180,6 +183,8 @@ public class RecipeSystem : MonoBehaviour
 
         AddAndResetQuality();
 
+        UpdateLevelProgressText();
+
         if (++_currentRecipeIndex < recipes.Count)
         {
             GetNewRecipe();
@@ -201,7 +206,6 @@ public class RecipeSystem : MonoBehaviour
     {
         levelCompleteUI.SetActive(true);
         LevelComplete levelComplete = levelCompleteUI.GetComponent<LevelComplete>();
-        levelComplete.SetNrMealsCompletedText(_currentRecipeIndex, recipes.Count);
 
         _MMFLevelEnd.PlayFeedbacks();
 
@@ -209,18 +213,13 @@ public class RecipeSystem : MonoBehaviour
         {
             OverallQuality = _qualityList.Average();
 
-            levelComplete.EvaluateScore(OverallQuality);
+            levelComplete.EvaluateScore(TimeManager.Instance.currentTime);
 
             TimeManager.Instance.TogglePause();
             Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
 
         }
-        else
-        {
-            levelComplete.EvaluateScore(0f);
-            TimeManager.Instance.TogglePause();
-            Debug.Log("LEVEL FAILED!");
-        }
+
     }
 
     private void OnTimerEnd()

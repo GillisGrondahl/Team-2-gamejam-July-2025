@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 2319756915112834905}
   - component: {fileID: 5526349005758845631}
   m_Layer: 5
-  m_Name: QualityScore
+  m_Name: ProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Quality:'
+  m_text: 'Progress:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2bd3d952aa710748815d98e95016fed, type: 2}
   m_sharedMaterial: {fileID: 9145627039681584977, guid: c2bd3d952aa710748815d98e95016fed, type: 2}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 3459908463681937810}
   - component: {fileID: 3895366036249290847}
   m_Layer: 5
-  m_Name: QualityContainer
+  m_Name: ProgressContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
