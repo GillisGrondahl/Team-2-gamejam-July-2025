@@ -7,7 +7,7 @@ public class HandPivotController : MonoBehaviour
     [SerializeField] private float minYaw = -60f, maxYaw = 60f;
     [SerializeField] private Transform handPoint;
     [SerializeField] private float handReachMin = 0.1f, handReachMax = 1.0f;
-    [SerializeField] private float scrollSpeed = 0.1f;
+    [SerializeField] private float reachSpeed = 0.1f;
 
     private float pitch = 0f, yaw = 0f;
     private float handZOffset = 0.5f;
@@ -33,12 +33,31 @@ public class HandPivotController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
 
-        if (Input.mouseScrollDelta.y != 0)
+        //if (Input.mouseScrollDelta.y != 0)
+        //{
+        //    handZOffset += Input.mouseScrollDelta.y * scrollSpeed;
+        //    handZOffset = Mathf.Clamp(handZOffset, handReachMin, handReachMax);
+        //    UpdateHandPointPosition();
+        //}
+
+        float reach = 0;
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            handZOffset += Input.mouseScrollDelta.y * scrollSpeed;
-            handZOffset = Mathf.Clamp(handZOffset, handReachMin, handReachMax);
-            UpdateHandPointPosition();
+            reach = 1f;
         }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            reach = -1f;
+        }
+        else if (Input.mouseScrollDelta.y != 0)
+        {
+            reach = Input.mouseScrollDelta.y;
+        }
+
+        handZOffset += reach * reachSpeed;
+        handZOffset = Mathf.Clamp(handZOffset, handReachMin, handReachMax);
+        UpdateHandPointPosition();
+
     }
 
     private void UpdateHandPointPosition()

@@ -275,8 +275,8 @@ GameObject:
   - component: {fileID: 4464079119967310640}
   - component: {fileID: 2672256976263185428}
   - component: {fileID: 7722201001718767843}
-  m_Layer: 10
-  m_Name: Colliders
+  m_Layer: 8
+  m_Name: FoodStops
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

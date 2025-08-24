@@ -43,14 +43,24 @@ public class HandMovement : MonoBehaviour
         yaw = Mathf.Clamp(yaw, minYaw, maxYaw);
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        // Scroll to push/pull hand forward
-        if (Input.mouseScrollDelta.y != 0)
+        // Push/pull hand
+        float testScroll = 0;
+        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            float scroll = Input.mouseScrollDelta.y * 0.1f;
-            Vector3 localPos = handTransform.localPosition + Vector3.forward * scroll;
-            localPos.z = Mathf.Clamp(localPos.z, handReachMin, handReachMax);
-            handTransform.localPosition = new Vector3(0f, 0f, localPos.z);
+            testScroll = 0.1f;
         }
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            testScroll = -0.1f;
+        }
+        else if (Input.mouseScrollDelta.y != 0)
+        {
+            testScroll = Input.mouseScrollDelta.y * 0.1f;
+        }
+
+        Vector3 localPos = handTransform.localPosition + Vector3.forward * testScroll;
+        localPos.z = Mathf.Clamp(localPos.z, handReachMin, handReachMax);
+        handTransform.localPosition = new Vector3(0f, 0f, localPos.z);
     }
 
     void FixedUpdate()

@@ -36,7 +36,7 @@ public class Tool : MonoBehaviour
         _resting = false;
 
 
-        if (_fdbkPickUp != null)
+        if (_fdbkPickUp != null && !_fdbkPickUp.IsPlaying && !_fdbkDropped.IsPlaying)
         {
             _fdbkPickUp.PlayFeedbacks();
         }
@@ -55,7 +55,7 @@ public class Tool : MonoBehaviour
         {
             _resting = true;
 
-            if (_fdbkDropped != null)
+            if (_fdbkDropped != null && !_fdbkPickUp.IsPlaying && !_fdbkDropped.IsPlaying)
             {
                 _fdbkDropped.PlayFeedbacks();
             }
@@ -67,6 +67,14 @@ public class Tool : MonoBehaviour
         transform.parent = _originalParent;
         transform.localPosition = _startingPosition;
         _resting = true;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R) && _resting)
+        {
+            ResetPosition();
+        }
     }
 
     //private void OnTriggerEnter(Collider trigger)

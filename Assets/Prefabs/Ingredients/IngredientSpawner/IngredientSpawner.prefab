@@ -106,7 +106,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3247927284027085152}
   - component: {fileID: 644927929746746711}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: CreateColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}

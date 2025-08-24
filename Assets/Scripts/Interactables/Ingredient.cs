@@ -71,7 +71,7 @@ public class Ingredient : MonoBehaviour
 
         transform.SetParent(interactor.transform);
 
-        if (_fdbkPickUp != null)
+        if (_fdbkPickUp != null && !_fdbkPickUp.IsPlaying && !_fdbkDropped.IsPlaying)
         {
             _fdbkPickUp.PlayFeedbacks();
         }
@@ -100,7 +100,7 @@ public class Ingredient : MonoBehaviour
         {
             _resting = true;
 
-            if (_fdbkDropped != null)
+            if (_fdbkDropped != null && !_fdbkPickUp.IsPlaying && !_fdbkDropped.IsPlaying)
             {
                 _fdbkDropped.PlayFeedbacks();
             }

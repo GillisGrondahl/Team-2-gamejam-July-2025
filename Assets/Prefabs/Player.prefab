@@ -54,7 +54,7 @@ MonoBehaviour:
   handPoint: {fileID: 5212029000041809385}
   handReachMin: -0.2
   handReachMax: 1
-  scrollSpeed: 0.1
+  reachSpeed: 0.02
 --- !u!54 &7394384744268144838
 Rigidbody:
   m_ObjectHideFlags: 0
