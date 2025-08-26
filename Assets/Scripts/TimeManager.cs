@@ -17,6 +17,11 @@ public class TimeManager : MonoBehaviour
     }
     
 
+    [Header("Time Settings")]
+    [Tooltip("Level duration in seconds")]
+    [SerializeField] private float levelDurationSeconds = 30f;
+    [SerializeField] private float earlyWarning = 10f;
+    [SerializeField] private int finalCountdownTicks = 5;
 
     [Header("UI References")]
     [Tooltip("Text component to display remaining time")]
@@ -27,7 +32,8 @@ public class TimeManager : MonoBehaviour
     [Tooltip("Show time info in console")]
     [SerializeField] private bool debugMode = false;
 
-    public float currentTime;
+    public float remainingTime;
+    public bool isInEarlyWarning = false;
     public bool isGamePaused = false;
     public bool isGameRunning = false;
     public bool hasGameEnded = false;
@@ -36,10 +42,10 @@ public class TimeManager : MonoBehaviour
 
 
     // Events
-    public System.Action OnTimeUp;  // TODO: remove
-    public System.Action OnEarlyWarningReached; // TODO: remove
-    public System.Action OnFinalCountdownReached;  // TODO: remove
-    public System.Action OnFinalCountdownTick;  // TODO: remove
+    public System.Action OnTimeUp;
+    public System.Action OnEarlyWarningReached;
+    public System.Action OnFinalCountdownReached;
+    public System.Action OnFinalCountdownTick; 
     public System.Action OnGamePaused;
     public System.Action OnGameUnpaused;
 
@@ -91,28 +97,83 @@ public class TimeManager : MonoBehaviour
         if (!isGameRunning || isGamePaused || hasGameEnded)
             return;
 
-        float previousTime = currentTime;
-        currentTime += Time.deltaTime;
+        float previousTime = remainingTime;
+        remainingTime -= Time.deltaTime;
 
-
-        // Fire event every time we cross a whole second boundary
-        int previousSecond = Mathf.CeilToInt(previousTime);
-        int currentSecond = Mathf.CeilToInt(currentTime);
+        // Check for stages (early warning & final countdown)
+        if (remainingTime > 0f)
+        {
+            // Fire event every time we cross a whole second boundary
+            int previousSecond = Mathf.CeilToInt(previousTime);
+            int currentSecond = Mathf.CeilToInt(remainingTime);
             
 
-        // Check for crossing seconds boundaries and update UI
-        if (previousSecond != currentSecond)    
-        {
+            // Check for crossing seconds boundaries
+            if (previousSecond != currentSecond)    
+            {
+                // check for early warning
+                if (currentSecond <= earlyWarning)
+                {
+                    if (!isInEarlyWarning)
+                    {
+                        OnEarlyWarningReached?.Invoke(); //fire event for reaching early warning - but only the first time
+                    }
+                    isInEarlyWarning = true;
+                }
+
+                // check for final countdown
+                if (currentSecond <= finalCountdownTicks && currentSecond > 0) //check for last few seconds for updating timer TMP's color & playing sound
+                {
+                    if (currentSecond == finalCountdownTicks)
+                    {
+                        OnFinalCountdownReached?.Invoke(); //fire event for reaching final countdown
+
+                        if (debugMode)
+                            Debug.Log("Final countdown reached!");
+                    }
+                    OnFinalCountdownTick?.Invoke(); // fire event for every seconds tick during final countdown
+
+                    timeDisplayText.color = Color.red;
+
+                    if (debugMode)
+                        Debug.Log($"Final countdown: {currentSecond} seconds remaining!");
+                }
+                else
+                {
+                    if (debugMode)
+                        Debug.Log($"Timer decreased by one second: {currentSecond} seconds remaining!");
+                }
+
+            }
+
             timeDisplayText.text = GetFormattedTime();
         }
 
+        // Check if time is up
+        if (remainingTime <= 0f)
+        {
+            remainingTime = 0f;
+
+            hasGameEnded = true;
+            isGameRunning = false;
+
+            // Fire the time up event
+            OnTimeUp?.Invoke();
+
+            if (debugMode)
+                Debug.Log("Countdown reached zero");
+        }
     }
 
 
     public void StartTimer()
     {
-         isGameRunning = true;
+        remainingTime = levelDurationSeconds;
+        isGameRunning = true;
         hasGameEnded = false;
+
+        if (debugMode)
+            Debug.Log($"Timer started: {levelDurationSeconds} seconds");
 
         timeDisplayText.text = GetFormattedTime();
     }
@@ -137,7 +198,8 @@ public class TimeManager : MonoBehaviour
             OnGameUnpaused?.Invoke();
         }
 
-
+        if (debugMode)
+            Debug.Log($"Game {(isGamePaused ? "paused" : "unpaused")}");
     }
 
     /// <summary>
@@ -178,8 +240,8 @@ public class TimeManager : MonoBehaviour
     /// </summary>
     public string GetFormattedTime()
     {
-        int minutes = Mathf.FloorToInt(currentTime / 60f);
-        int seconds = Mathf.FloorToInt(currentTime % 60f);
+        int minutes = Mathf.FloorToInt(remainingTime / 60f);
+        int seconds = Mathf.FloorToInt(remainingTime % 60f);
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 

@@ -4,13 +4,14 @@ using UnityEngine.UI;
 
 public class LevelComplete : MonoBehaviour
 {
+    [SerializeField] private float _scoreToComplete = 0.6f;
     [SerializeField] private Sprite _starOutline, _starFilled;
     [SerializeField] private Image _star1, _star2, _star3, _star4, _star5;
-    [SerializeField] private TMP_Text _evaluationText, _timeCompleted;
+    [SerializeField] private TMP_Text _evaluationText, _NrMealsCompletedText;
     [SerializeField] private Button _continueButton, _retryButton;
 
 
-    public void EvaluateScore(float time)
+    public void EvaluateScore(float score)
     {
 
         if (!Cursor.visible)
@@ -19,36 +20,20 @@ public class LevelComplete : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if (time <= LevelDifficultyManager.Instance.levelDifficultySO.timeToComplete5Star)
+        if (score >= _scoreToComplete)
         {
-            SetStars(5);
             SetEvaluationText("brilliantly");
-        }
-        else if (time <= LevelDifficultyManager.Instance.levelDifficultySO.timetoComplete4Star)
-        {
-            SetStars(4);
-            SetEvaluationText("brilliantly");
-        }
-        else if (time <= LevelDifficultyManager.Instance.levelDifficultySO.timeToComplete3Star)
-        {
-            SetStars(3);
-            SetEvaluationText("mediocre");
-        }
-        else if (time <= LevelDifficultyManager.Instance.levelDifficultySO.timeToComplete2Star)
-        {
-            SetStars(2);
-            SetEvaluationText("miserably");
+            _continueButton.interactable = true;
         }
         else
         {
-            SetStars(1);
             SetEvaluationText("miserably");
+            _continueButton.interactable = false;
+            _retryButton.interactable = true;
         }
 
-        _continueButton.interactable = true; // progress no matter the time
-        _retryButton.interactable = true;
+        SetStars(Mathf.RoundToInt(score / 20f));
 
-        SetTimeCompletedText();
     }
 
     public void SetEvaluationText(string text)
@@ -66,9 +51,8 @@ public class LevelComplete : MonoBehaviour
         _star5.sprite = stars >= 5 ? _starFilled : _starOutline;
     }
 
-
-    public void SetTimeCompletedText()
+    public void SetNrMealsCompletedText(int mealsCompleted, int maxMeals)
     {
-        _timeCompleted.text = TimeManager.Instance.GetFormattedTime();
+        _NrMealsCompletedText.text = "Meals completed: " + mealsCompleted.ToString() + "/" + maxMeals.ToString();
     }
 }
