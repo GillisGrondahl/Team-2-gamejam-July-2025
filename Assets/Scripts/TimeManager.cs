@@ -19,7 +19,8 @@ public class TimeManager : MonoBehaviour
 
     [Header("Time Settings")]
     [Tooltip("Level duration in seconds")]
-    [SerializeField] private float levelDurationSeconds = 30f;
+    //[SerializeField] private float levelDurationSeconds = 30f;
+    private float levelDurationSeconds;
     [SerializeField] private float earlyWarning = 10f;
     [SerializeField] private int finalCountdownTicks = 5;
 
@@ -52,6 +53,7 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         GameEvents.Instance.TimeManagerInstantiated?.Invoke(this);
+        levelDurationSeconds = (float)LevelDifficultyManager.Instance.levelDifficultyData.timeToComplete;
         StartTimer();
     }
 

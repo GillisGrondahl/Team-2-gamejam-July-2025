@@ -23,9 +23,9 @@ public class ShipMotion : MonoBehaviour
     [Tooltip("Adds randomness to wave timing for more natural motion")]
     [SerializeField] private float _waveVariation = 0.1f;
 
-    [Tooltip("Speed multiplier for overall motion intensity")]
-    [Range(0f, 3f)]
-    [SerializeField] private float _motionIntensity = 1f;
+    //[Tooltip("Speed multiplier for overall motion intensity")]
+    //[Range(0f, 3f)] [SerializeField] private float _motionIntensity = 1f;
+    private float _motionIntensity = 1f;
 
     private Vector3 _initialPosition;
     private Vector3 _initialRotation;
@@ -34,6 +34,9 @@ public class ShipMotion : MonoBehaviour
 
     void Start()
     {
+        // get motion intensity from difficulty manager
+        _motionIntensity = LevelDifficultyManager.Instance.levelDifficultyData.waveMotionIntensity;
+
         // Store the initial position and rotation
         _initialPosition = transform.position;
         _initialRotation = transform.eulerAngles;
@@ -81,7 +84,7 @@ public class ShipMotion : MonoBehaviour
         float _pitchFrequency = 1f / _pitchPeriod;
 
         // Calculate pitching
-        float _pitchMotion = Mathf.Sin(_time * _pitchFrequency * 2f * Mathf.PI + _pitchOffset) * _pitchAmplitude;
+        float _pitchMotion = Mathf.Sin(_time * _pitchFrequency * 2f * Mathf.PI + _pitchOffset) * (_pitchAmplitude * _motionIntensity);
 
         // wave variation for more chaotic waves
         float _pitchVariation = Mathf.Sin(_time * _pitchFrequency * 0.8f * 2f * Mathf.PI + _pitchOffset + 2f) * (_pitchAmplitude * _waveVariation);
