@@ -18,12 +18,12 @@ public class IngredientChecker : MonoBehaviour
             if (other.TryGetComponent<Ingredient>(out var ingredient))
             {
 
-                if (ingredient.IsAPart)
+                if (ingredient.ParentIngredient != null)
                 {
                     ingredient = ingredient.ParentIngredient;
                 }
 
-                int pices = ingredient.GetComponentsInChildren<Ingredient>().Length;
+                int pices = ingredient.ingredientParts.Count;
                 Debug.Log($"Ingredient {ingredient.ingredient.ingredientName} has {pices} pices.");
                 RecipeSystem.Instance.AddIngredient(ingredient.ingredient, pices);
                 Destroy(ingredient.gameObject);

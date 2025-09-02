@@ -1,9 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class Interactor : MonoBehaviour
 {
+
+    public Vector3 CurrentVelocity { get; private set; }
+
     [SerializeField] private Transform handTransform;
     [SerializeField] private Vector3 offset;
     [field: SerializeField] public Transform SnapPoint { get; private set; }
@@ -13,9 +18,10 @@ public class Interactor : MonoBehaviour
     private Interactable _interactable;
     private bool _canInteract = true;
     private HandFollower hand;
+    private Vector3 _lastPosition;
 
-    Collider[] handColliders = null;
-    Collider[] interactableColliders = null;
+    List<Collider> handColliders = null;
+    List<Collider> interactableColliders = new();
 
     private void OnValidate()
     {
@@ -24,7 +30,7 @@ public class Interactor : MonoBehaviour
 
     private void Start()
     {
-        handColliders = handTransform.GetComponentsInChildren<Collider>(true);
+        handColliders = handTransform.GetComponentsInChildren<Collider>(true).ToList();
         hand = handTransform.GetComponent<HandFollower>();
     }
 
@@ -58,29 +64,32 @@ public class Interactor : MonoBehaviour
             _interactable = OverlapedInteractable;
             hand.CloseHand(true);
 
-            GetColliders();
+            interactableColliders = transform.GetComponentsInChildren<Collider>().Skip(1).ToList();
+            //GetColliders();
             IngoreCollisionWithInteractable(true);
         }
         if ((Input.GetKeyUp(KeyCode.E) || Input.GetMouseButtonUp(0)) && _interactable != null)
         {
             _interactable.StopInteract(this);
             IngoreCollisionWithInteractable(false);
+            interactableColliders.Clear();
             _interactable = null;
             hand.CloseHand(false);
             StartCoroutine(Cooldown());
         }
     }
 
-    private void GetColliders()
-    {
-        var interactableParent = _interactable.transform.parent;
-        if (interactableParent != null && interactableParent.TryGetComponent<Interactable>(out var interactableComponent))
-        {
-            _interactable = interactableComponent;
-        }
+    //private void GetColliders()
+    //{
+    //    //var interactableParent = _interactable.transform.parent;
+    //    //if (interactableParent != null && interactableParent.TryGetComponent<Interactable>(out var interactableComponent))
+    //    //{
+    //    //    _interactable = interactableComponent;
+    //    //}
 
-        interactableColliders = _interactable.GetComponentsInChildren<Collider>();
-    }
+    //    //interactableColliders = _interactable.GetComponentsInChildren<Collider>().ToList();
+    //    interactableColliders = transform.GetComponentsInChildren<Collider>().Skip(1).ToList();
+    //}
 
 
     private void IngoreCollisionWithInteractable(bool toggle)
@@ -94,6 +103,12 @@ public class Interactor : MonoBehaviour
                 Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        CurrentVelocity = (transform.position - _lastPosition) / Time.fixedDeltaTime;
+        _lastPosition = transform.position;
     }
 
     private void LateUpdate()

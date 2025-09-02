@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 863787793397444627}
   - component: {fileID: 8399414685415520940}
   - component: {fileID: 7504712190187157382}
+  - component: {fileID: 4263806051922974611}
   m_Layer: 6
   m_Name: knife
   m_TagString: Untagged
@@ -672,6 +673,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4263806051922974611}
+        m_TargetAssemblyTypeName: Throwable, Assembly-CSharp
+        m_MethodName: Throw
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7504712190187157382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +700,18 @@ MonoBehaviour:
   _velocityThreshold: 0.5
   _fdbkPickUp: {fileID: 5512754213654711749}
   _fdbkDropped: {fileID: 1859002994299858345}
-  _fbdkDroppedInPot: {fileID: 6235293699516566975}
+--- !u!114 &4263806051922974611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809751110322441986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d776ae0fb6d894048b69c2460667452a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3766938216619704463
 GameObject:
   m_ObjectHideFlags: 0

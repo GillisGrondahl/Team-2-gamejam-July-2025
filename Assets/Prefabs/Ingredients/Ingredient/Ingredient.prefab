@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 6773264950490052680}
   - component: {fileID: 8186995504109845552}
   - component: {fileID: 8552922195803648397}
+  - component: {fileID: 6551568959011398357}
   m_Layer: 6
   m_Name: Ingredient
   m_TagString: Untagged
@@ -532,6 +533,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attachTransform: {fileID: 0}
+  pickable: 1
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -562,6 +564,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6551568959011398357}
+        m_TargetAssemblyTypeName: Throwable, Assembly-CSharp
+        m_MethodName: Throw
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8552922195803648397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,12 +589,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 0}
+  splashPrefab: {fileID: 0}
+  ParentIngredient: {fileID: 0}
   TransformToFollow: {fileID: 0}
   Rigidbody: {fileID: 0}
+  cutable: 1
   IsAPart: 0
   _fdbkPickUp: {fileID: 4699068371201697725}
   _fdbkDropped: {fileID: 272410748585832224}
   _velocityThreshold: 0.5
+--- !u!114 &6551568959011398357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805411796304712701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d776ae0fb6d894048b69c2460667452a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8930804774521163156
 GameObject:
   m_ObjectHideFlags: 0

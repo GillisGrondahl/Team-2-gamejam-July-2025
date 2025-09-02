@@ -1,5 +1,6 @@
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Ingredient : MonoBehaviour
@@ -9,10 +10,12 @@ public class Ingredient : MonoBehaviour
     public Ingredient ParentIngredient = null;
     public Transform TransformToFollow = null;
     public Rigidbody Rigidbody = null;
-    public bool cutable = true;
+    public bool cutable = true; // Change to property
     private Transform _originalParent = null;
-    public bool IsAPart = false;
 
+    public List<Ingredient> ingredientParts = new List<Ingredient>();
+
+    //Move MMF to it's own feedback class
     private bool _resting = true;
 
     [Header("MM Feedbacks")]
@@ -28,21 +31,21 @@ public class Ingredient : MonoBehaviour
         if (transform.parent != null)
         {
             _originalParent = transform.parent;
-            ParentIngredient = transform.parent.GetComponent<Ingredient>();
         }
     }
 
     private void Start()
     {
         if (Rigidbody == null)
+        {
             TryGetComponent(out Rigidbody);
+            Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        }
         if (_originalParent == null)
             _originalParent = transform.parent;
-        if (ParentIngredient == null && transform.parent != null)
-            transform.parent.TryGetComponent(out ParentIngredient);
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         FollowTarget();
     }
@@ -56,41 +59,50 @@ public class Ingredient : MonoBehaviour
 
     public void PickUp(Interactor interactor)
     {
-        if (IsAPart)
+        if (ParentIngredient != null)
         {
             ParentIngredient.PickUp(interactor);
             return;
         }
 
-        foreach (var ingredient in GetComponentsInChildren<Ingredient>())
+        TransformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
+        Rigidbody.isKinematic = true;
+        transform.SetParent(interactor.transform);
+
+        foreach (var ingredient in ingredientParts)
         {
             ingredient.TransformToFollow = interactor.SnapPoint != null ? interactor.SnapPoint : interactor.transform;
             ingredient.Rigidbody.isKinematic = true;
+            ingredient.transform.SetParent(interactor.transform);
         }
         _resting = false;
 
-        transform.SetParent(interactor.transform);
 
         if (_fdbkPickUp != null && !_fdbkPickUp.IsPlaying && !_fdbkDropped.IsPlaying)
         {
             _fdbkPickUp.PlayFeedbacks();
         }
     }
+
     public void Release(Interactor interactor)
     {
-        if (IsAPart)
+        if (ParentIngredient != null)
         {
             ParentIngredient.Release(interactor);
             return;
         }
 
-        foreach (var ingredient in GetComponentsInChildren<Ingredient>())
+        TransformToFollow = null;
+        Rigidbody.isKinematic = false;
+        transform.SetParent(_originalParent.transform);
+
+        foreach (var ingredient in ingredientParts)
         {
             ingredient.TransformToFollow = null;
             ingredient.Rigidbody.isKinematic = false;
+            ingredient.transform.SetParent(_originalParent.transform);
         }
 
-        transform.SetParent(_originalParent.transform);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -106,7 +118,7 @@ public class Ingredient : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.tag == "Table")
+        if (collision.gameObject.tag == "Table")
         {
             var table = collision.gameObject;
 
@@ -116,5 +128,11 @@ public class Ingredient : MonoBehaviour
                 var splash = Instantiate(splashPrefab, contact.point + contact.normal * 0.01f, Quaternion.LookRotation(-contact.normal), table.transform);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        foreach(var ingredient in ingredientParts)
+            Destroy(ingredient.gameObject);
     }
 }

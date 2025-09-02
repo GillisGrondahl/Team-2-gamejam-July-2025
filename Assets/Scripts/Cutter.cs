@@ -49,43 +49,48 @@ public class Cutter : MonoBehaviour
             mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
         }
         originalGameObject.GetComponent<MeshRenderer>().materials = mats;
+        var originalIngredient = originalGameObject.GetComponent<Ingredient>();
 
-        GameObject right = new GameObject(originalGameObject.name + "_Part");
-        right.transform.position = originalGameObject.transform.position + (Vector3.up * .05f);
-        right.transform.rotation = originalGameObject.transform.rotation;
-        right.transform.localScale = originalGameObject.transform.localScale;
-        right.AddComponent<MeshRenderer>();
+        GameObject part = new GameObject(originalGameObject.name + "_Part");
+        part.transform.position = originalGameObject.transform.position + (Vector3.up * .05f);
+        part.transform.rotation = originalGameObject.transform.rotation;
+        part.transform.localScale = originalGameObject.transform.localScale;
+        part.AddComponent<MeshRenderer>();
 
         mats = new Material[finishedRightMesh.subMeshCount];
         for (int i = 0; i < finishedRightMesh.subMeshCount; i++)
         {
             mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
         }
-        right.GetComponent<MeshRenderer>().materials = mats;
-        right.AddComponent<MeshFilter>().mesh = finishedRightMesh;
-
-        right.AddComponent<MeshCollider>().sharedMesh = finishedRightMesh;
-        var cols = right.GetComponents<MeshCollider>();
+        part.GetComponent<MeshRenderer>().materials = mats;
+        part.AddComponent<MeshFilter>().mesh = finishedRightMesh;
+        part.AddComponent<MeshCollider>().sharedMesh = finishedRightMesh;
+        var cols = part.GetComponents<MeshCollider>();
         foreach (var col in cols)
         {
             col.convex = true;
         }
-        var rightIngredient = right.AddComponent<Ingredient>();
-        rightIngredient.IsAPart = true;
-        var rightInteractable = right.AddComponent<Interactable>();
-        rightInteractable.OnInteract.AddListener(rightIngredient.PickUp);
-        rightInteractable.OnStopInteract.AddListener(rightIngredient.Release);
-        rightInteractable.OriginalLayer = originalGameObject.GetComponent<Interactable>().OriginalLayer;
-        rightInteractable.OutlineLayer = originalGameObject.GetComponent<Interactable>().OutlineLayer;
 
-        Transform parentToSet = originalGameObject.transform;
+        var partIngredient = part.AddComponent<Ingredient>();
 
-        if(originalGameObject.TryGetComponent<Ingredient>(out var parentIngredient) &&
-            parentIngredient.ParentIngredient != null)
-        {
-            parentToSet = parentIngredient.ParentIngredient.transform;
-        }
-        right.transform.SetParent(parentToSet);
+        partIngredient.ParentIngredient = originalIngredient.ParentIngredient != null ?
+            originalIngredient.ParentIngredient : originalIngredient;
+        partIngredient.ParentIngredient.ingredientParts.Add(partIngredient);
+
+        var partInteractable = part.AddComponent<Interactable>();
+        partInteractable.OnInteract.AddListener(partIngredient.PickUp);
+        partInteractable.OnStopInteract.AddListener(partIngredient.Release);
+        partInteractable.OriginalLayer = originalGameObject.GetComponent<Interactable>().OriginalLayer;
+        partInteractable.OutlineLayer = originalGameObject.GetComponent<Interactable>().OutlineLayer;
+
+        //Transform parentToSet = originalGameObject.transform;
+
+        //if (originalGameObject.TryGetComponent<Ingredient>(out var parentIngredient) &&
+        //    parentIngredient.ParentIngredient != null)
+        //{
+        //    parentToSet = parentIngredient.ParentIngredient.transform;
+        //}
+        part.transform.SetParent(originalGameObject.transform.parent); //ship
 
         isBusy = false;
     }
