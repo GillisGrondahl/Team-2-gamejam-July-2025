@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb6c94149a3e0e44c988075692896f91, type: 3}
-  m_Name: DifficultyLevel3
+  m_Script: {fileID: 11500000, guid: eddb603a44c19e645b6871e526e8fb15, type: 3}
+  m_Name: Difficulty_Level3
   m_EditorClassIdentifier: 
-  timeToComplete1Star: 300
-  timeToComplete2Star: 240
-  timeToComplete3Star: 180
-  timetoComplete4Star: 120
-  timeToComplete5Star: 90
+  timeToComplete: 330
+  waveMotionIntensity: 1.4

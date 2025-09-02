@@ -1,10 +1,11 @@
 using UnityEngine;
 
+
 public class LevelDifficultyManager : MonoBehaviour
 {
     public static LevelDifficultyManager Instance { get; private set; }
 
-    public LevelDifficultySO levelDifficultySO;
+    public LevelDifficultyData levelDifficultyData;
 
     private void Awake()
     {
