@@ -12,7 +12,7 @@ public class IngredientChecker : MonoBehaviour
 
         if (rb != null)
         {
-            if (Vector3.Dot(rb.linearVelocity.normalized, Vector3.down) < 0.8f)
+            if (Vector3.Dot(rb.linearVelocity.normalized, Vector3.down) < 0.6f)
                 return;
 
             if (other.TryGetComponent<Ingredient>(out var ingredient))

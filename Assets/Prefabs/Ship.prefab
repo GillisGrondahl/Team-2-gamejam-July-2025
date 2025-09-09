@@ -73,7 +73,6 @@ MonoBehaviour:
   _pitchAmplitude: 8
   _pitchPeriod: 10
   _waveVariation: 0.1
-  _motionIntensity: 1
 --- !u!1001 &479411050217647379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1612,14 +1611,6 @@ PrefabInstance:
     - target: {fileID: 43855877574135554, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
       propertyPath: m_Name
       value: Room
-      objectReference: {fileID: 0}
-    - target: {fileID: 3530994810030385576, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
-      propertyPath: m_Size.x
-      value: 5.3068824
-      objectReference: {fileID: 0}
-    - target: {fileID: 3530994810030385576, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
-      propertyPath: m_Center.x
-      value: 2.0383766
       objectReference: {fileID: 0}
     - target: {fileID: 5049585129044771823, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
       propertyPath: m_LocalPosition.x

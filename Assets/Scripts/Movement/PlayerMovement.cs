@@ -1,7 +1,12 @@
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Inputs")]
+    [SerializeField] private InputReader input;
+
+    [Header("Zone Restriction")]
     [SerializeField] private BoxCollider playerZone;  // Reference to the PlayerZone collider
 
     [Header("Movement")]
@@ -22,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
+        input.EnableInputActions();
         Cursor.lockState = showCursor? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = showCursor;
 
@@ -34,12 +39,20 @@ public class PlayerMovement : MonoBehaviour
                 playerZone = zoneObject.GetComponent<BoxCollider>();
             }
         }
+    }
 
+    private void OnEnable()
+    {
+        input.Move += UpdateDirection;
+    }
+
+    private void OnDisable()
+    {
+        input.Move -= UpdateDirection;
     }
 
     private void Update()
     {
-        HandleInput();
         UpdateMovement();
         if (jitterEnabled)
         {
@@ -47,15 +60,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HandleInput()
-    {
-        inputDirection = 0f;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            inputDirection = -1f;
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            inputDirection = 1f;
-    }
+    private void UpdateDirection(Vector2 direction) => inputDirection = direction.x; 
 
     private void UpdateMovement()
     {
@@ -68,9 +73,6 @@ public class PlayerMovement : MonoBehaviour
             Vector3 movement = Vector3.right * currentVelocity * Time.deltaTime;
             Vector3 newPosition = transform.position + movement;
 
-            // Allow movement if:
-            // 1. New position is within zone, OR
-            // 2. Player is outside zone but moving back towards it
             bool currentlyInZone = IsWithinPlayerZone(transform.position);
             bool newPositionInZone = IsWithinPlayerZone(newPosition);
 
