@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2569931035432700533}
-  - component: {fileID: 7947309105513990610}
   - component: {fileID: 7394384744268144838}
   m_Layer: 0
   m_Name: HandPivot
@@ -34,27 +33,6 @@ Transform:
   - {fileID: 5212029000041809385}
   m_Father: {fileID: 950232374691278063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7947309105513990610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5503987834294660575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d50b9e19f6970f419f0b49608ec2675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensitivity: 2
-  minPitch: -45
-  maxPitch: 45
-  minYaw: -60
-  maxYaw: 60
-  handPoint: {fileID: 5212029000041809385}
-  handReachMin: -0.2
-  handReachMax: 1
-  reachSpeed: 0.02
 --- !u!54 &7394384744268144838
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -245,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 950232374691278063}
   - component: {fileID: 6017331804413415196}
+  - component: {fileID: 3007366589477008067}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -283,13 +262,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerZone: {fileID: 0}
+  input: {fileID: 11400000, guid: 41765659817585a428c9de9c834728db, type: 2}
   maxSpeed: 2
   acceleration: 2
   deceleration: 2
-  showCursor: 0
+  showCursor: 1
   jitterEnabled: 1
   jitterIntensity: 0.7
   jitterFrequency: 1.1
+--- !u!114 &3007366589477008067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9171844199796460900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d50b9e19f6970f419f0b49608ec2675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handPivot: {fileID: 2569931035432700533}
+  sensitivity: 0.2
+  minPitch: -45
+  maxPitch: 45
+  minYaw: -60
+  maxYaw: 60
+  handPoint: {fileID: 5212029000041809385}
+  handReachMin: -0.2
+  handReachMax: 1
+  reachSpeed: 0.02
+  input: {fileID: 11400000, guid: 41765659817585a428c9de9c834728db, type: 2}
 --- !u!1001 &2877582393600200799
 PrefabInstance:
   m_ObjectHideFlags: 0
