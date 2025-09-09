@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -67,4 +68,18 @@ public class SimpleOceanWaves : MonoBehaviour
             }
         }
     }
+
+    //MaybeLater
+    //public float GetHeightAtPosition(Vector3 worldPosition)
+    //{
+    //    Vector3 localPos = transform.InverseTransformPoint(worldPosition);
+    //    Debug.Log((Mathf.Sqrt(vertices.Length) - 1));
+    //    int x = Mathf.FloorToInt((localPos.x + 0.5f) * (Mathf.Sqrt(vertices.Length) - 1));
+    //    int z = Mathf.FloorToInt((localPos.z + 0.5f) * (Mathf.Sqrt(vertices.Length) - 1));
+
+    //    if (x >= Mathf.Sqrt(vertices.Length) || z >= Mathf.Sqrt(vertices.Length)) return 0f;
+
+    //    int index = (int)(z * (Mathf.Sqrt(vertices.Length) - 1) + x);
+    //    return vertices[index].y;
+    //}
 }

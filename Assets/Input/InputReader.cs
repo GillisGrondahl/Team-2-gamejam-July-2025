@@ -17,6 +17,7 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public event UnityAction<bool> Interact = delegate { };
     public event UnityAction<float> Reach = delegate { };
     public event UnityAction<Vector2> Look = delegate { };
+    public event UnityAction<Vector2> MousePosition = delegate { };
 
     public InputSystem_Actions inputActions;
 
@@ -59,5 +60,10 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public void OnLook(InputAction.CallbackContext context)
     {
         Look.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        MousePosition.Invoke(context.ReadValue<Vector2>());
     }
 }

@@ -1583,6 +1583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1b67ef8b8415a4cb074dfd8796269f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: 41765659817585a428c9de9c834728db, type: 2}
   buttonCollider: {fileID: 6212629658217471668}
   onClick:
     m_PersistentCalls:

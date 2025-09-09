@@ -1,8 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class DiegeticMenuButton : MonoBehaviour
 {
+
+    [Header("Inputs")]
+    [SerializeField] private InputReader input;
+
     [Header("Collider Reference")]
     [SerializeField] private BoxCollider buttonCollider;
 
@@ -17,6 +22,25 @@ public class DiegeticMenuButton : MonoBehaviour
     [SerializeField] Camera playerCamera;
 
     public bool isHovering = false;
+    private Vector2 mousePosition = Vector2.zero;
+    private bool mouseClick = false;
+
+    private void Awake()
+    {
+        input.EnableInputActions();
+    }
+
+    private void OnEnable()
+    {
+        input.MousePosition += UpdateMousePosition;
+        input.Interact += UpdateInteraction;
+    }
+
+    private void OnDisable()
+    {
+        input.MousePosition -= UpdateMousePosition;
+        input.Interact -= UpdateInteraction;
+    }
 
     void Start()
     {
@@ -30,17 +54,19 @@ public class DiegeticMenuButton : MonoBehaviour
         CheckForInteraction();
     }
 
+    void UpdateMousePosition(Vector2 position) => mousePosition = position;
+    void UpdateInteraction(bool click) => mouseClick = click;
+
     private void CheckForInteraction()
     {
         if (playerCamera == null || buttonCollider == null) return;
 
         // Create ray from camera center
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        Ray ray = playerCamera.ScreenPointToRay(mousePosition);
 
         // Check if ray hits this button's collider
         bool hitThisButton = false;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, raycastLayers))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, raycastLayers))
         {
             if (hit.collider == buttonCollider)
             {
@@ -54,7 +80,7 @@ public class DiegeticMenuButton : MonoBehaviour
                 }
 
                 // Handle click
-                if (Input.GetMouseButtonDown(0) && requireMouseButton) //TODO: Migrate to new InputSystem
+                if (mouseClick && requireMouseButton) //TODO: Migrate to new InputSystem
                 {
                     onClick.Invoke();
                 }
