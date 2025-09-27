@@ -25,7 +25,7 @@ public class RecipeSystem : MonoBehaviour
     [SerializeField] GameObject levelCompleteUI = null;
 
 
-    public List<RecipeData> recipes = null;
+    private List<RecipeData> recipes = null;
     [SerializeField] private int qualityOfCurrentRecipe = 100;
     //private RecipeData _currentRecipe = null;
     //private List<IngredientData> _currentIngredients = new List<IngredientData>();
@@ -54,6 +54,8 @@ public class RecipeSystem : MonoBehaviour
     {
         TimeManager.Instance.OnTimeUp += OnTimerEnd;
 
+        GetRecipesFromDifficultyData();
+
         if (recipes.Count > 0)
             GetNewRecipe();
     }
@@ -62,6 +64,28 @@ public class RecipeSystem : MonoBehaviour
     private void OnDestroy()
     {
             TimeManager.Instance.OnTimeUp -= OnTimerEnd;
+    }
+
+    private void GetRecipesFromDifficultyData()
+    {
+        if (LevelDifficultyManager.Instance == null)
+        {
+            Debug.LogError("LevelDifficultyManager.Instance is null! Make sure it's initialized before RecipeSystem.");
+            return;
+        }
+
+        if (LevelDifficultyManager.Instance.levelDifficultyData == null)
+        {
+            Debug.LogError("LevelDifficultyData is null on LevelDifficultyManager!");
+            return;
+        }
+
+        recipes = LevelDifficultyManager.Instance.levelDifficultyData.levelRecipes;
+
+        if (recipes == null || recipes.Count == 0)
+        {
+            Debug.LogWarning("No recipes defined in LevelDifficultyData for this level!");
+        }
     }
 
     private void GetNewRecipe()
