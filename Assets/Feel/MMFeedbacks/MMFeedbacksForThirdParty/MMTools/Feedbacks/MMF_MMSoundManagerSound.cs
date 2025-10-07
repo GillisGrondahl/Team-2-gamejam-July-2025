@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.Serialization;
 
 namespace MoreMountains.Feedbacks
 {    
@@ -148,21 +149,37 @@ namespace MoreMountains.Feedbacks
 		[Tooltip("if this is true, this sound will stop playing when stopping the feedback")]
 		public bool StopSoundOnFeedbackStop = false;
         
-		[MMFInspectorGroup("Fade", true, 30)]
+		[MMFInspectorGroup("Fade In", true, 30)]
 		/// whether or not to fade this sound in when playing it
 		[Tooltip("whether or not to fade this sound in when playing it")]
-		public bool Fade = false;
+		[FormerlySerializedAs("Fade")]
+		public bool FadeIn = false;
 		/// if fading, the volume at which to start the fade
 		[Tooltip("if fading, the volume at which to start the fade")]
-		[MMCondition("Fade", true)]
-		public float FadeInitialVolume = 0f;
+		[MMCondition("FadeIn", true)]
+		[FormerlySerializedAs("FadeInitialVolume")]
+		public float FadeInInitialVolume = 0f;
 		/// if fading, the duration of the fade, in seconds
 		[Tooltip("if fading, the duration of the fade, in seconds")]
-		[MMCondition("Fade", true)]
-		public float FadeDuration = 1f;
+		[MMCondition("FadeIn", true)]
+		[FormerlySerializedAs("FadeDuration")]
+		public float FadeInDuration = 1f;
 		/// if fading, the tween over which to fade the sound 
 		[Tooltip("if fading, the tween over which to fade the sound ")]
-		public MMTweenType FadeTween = new MMTweenType(MMTween.MMTweenCurve.EaseInOutQuartic, "Fade");
+		[FormerlySerializedAs("FadeTween")]
+		public MMTweenType FadeInTween = new MMTweenType(MMTween.MMTweenCurve.EaseInOutQuartic, "FadeIn");
+		
+		[MMFInspectorGroup("Fade Out", true, 30)]
+		/// whether or not to fade this sound in when stopping the feedback
+		[Tooltip("whether or not to fade this sound in when stopping the feedback")]
+		public bool FadeOutOnStop = false;
+		/// if fading out, the duration of the fade, in seconds
+		[Tooltip("if fading out, the duration of the fade, in seconds")]
+		[MMCondition("FadeOutOnStop", true)]
+		public float FadeOutDuration = 1f;
+		/// if fading out, the tween over which to fade the sound 
+		[Tooltip("if fading out, the tween over which to fade the sound ")]
+		public MMTweenType FadeOutTween = new MMTweenType(MMTween.MMTweenCurve.EaseInOutQuartic, "FadeOutOnStop");
         
 		[MMFInspectorGroup("Solo", true, 32)]
 		/// whether or not this sound should play in solo mode over its destination track. If yes, all other sounds on that track will be muted when this sound starts playing
@@ -297,6 +314,7 @@ namespace MoreMountains.Feedbacks
 		protected Vector3 _gizmoCenter;
 		protected MMShufflebag<int> _randomUniqueShuffleBag;
 		protected AudioClip _lastPlayedClip;
+		protected Coroutine _isPlayingCoroutine;
 		
 		protected override void CustomInitialization(MMF_Player owner)
 		{
@@ -375,7 +393,29 @@ namespace MoreMountains.Feedbacks
 			{
 				return;
 			}
-            
+
+			if (FadeOutOnStop)
+			{
+				Owner.StartCoroutine(FadeOutCo());
+				return;
+			}
+			
+			StopSound();
+		}
+
+		protected virtual IEnumerator FadeOutCo()
+		{
+			if (_playedAudioSource == null)
+			{
+				yield break;
+			}
+			MMSoundManager.Instance.FadeSound(_playedAudioSource, FadeOutDuration, _playedAudioSource.volume, 0f, FadeOutTween);
+			yield return MMCoroutine.WaitFor(FadeOutDuration);
+			StopSound();
+		}
+
+		protected virtual void StopSound()
+		{
 			if (StopSoundOnFeedbackStop && (_playedAudioSource != null))
 			{
 				_playedAudioSource.Stop();
@@ -383,6 +423,12 @@ namespace MoreMountains.Feedbacks
 				{
 					MMSoundManager.Instance.FreeSound(_playedAudioSource);	
 				}
+				if (_isPlayingCoroutine != null)
+				{
+					Owner.StopCoroutine(_isPlayingCoroutine);
+					_isPlayingCoroutine = null;
+				}
+				_playedAudioSource = null;
 			}
 		}
 
@@ -416,10 +462,10 @@ namespace MoreMountains.Feedbacks
 			Persistent = SoundDataSO.Persistent;
 			DoNotPlayIfClipAlreadyPlaying = SoundDataSO.DoNotPlayIfClipAlreadyPlaying;
 			StopSoundOnFeedbackStop = SoundDataSO.StopSoundOnFeedbackStop;
-			Fade = SoundDataSO.Fade;
-			FadeInitialVolume = SoundDataSO.FadeInitialVolume;
-			FadeDuration = SoundDataSO.FadeDuration;
-			FadeTween = SoundDataSO.FadeTween;
+			FadeIn = SoundDataSO.Fade;
+			FadeInInitialVolume = SoundDataSO.FadeInitialVolume;
+			FadeInDuration = SoundDataSO.FadeDuration;
+			FadeInTween = SoundDataSO.FadeTween;
 			SoloSingleTrack = SoundDataSO.SoloSingleTrack;
 			SoloAllTracks = SoundDataSO.SoloAllTracks;
 			AutoUnSoloOnEnd = SoundDataSO.AutoUnSoloOnEnd;
@@ -490,10 +536,10 @@ namespace MoreMountains.Feedbacks
 			_options.Loop = Loop;
 			_options.Volume = volume;
 			_options.ID = ID;
-			_options.Fade = Fade;
-			_options.FadeInitialVolume = FadeInitialVolume;
-			_options.FadeDuration = FadeDuration;
-			_options.FadeTween = FadeTween;
+			_options.Fade = FadeIn;
+			_options.FadeInitialVolume = FadeInInitialVolume;
+			_options.FadeDuration = FadeInDuration;
+			_options.FadeTween = FadeInTween;
 			_options.Persistent = Persistent;
 			_options.RecycleAudioSource = RecycleAudioSource;
 			_options.AudioGroup = AudioGroup;
@@ -528,7 +574,7 @@ namespace MoreMountains.Feedbacks
 			
 			_playedAudioSource = MMSoundManagerSoundPlayEvent.Trigger(sfx, _options);
 
-			Owner.StartCoroutine(IsPlayingCoroutine());
+			_isPlayingCoroutine = Owner.StartCoroutine(IsPlayingCoroutine());
 
 			_lastPlayTimestamp = FeedbackTime;
 			_lastPlayedClip = sfx;
@@ -630,7 +676,7 @@ namespace MoreMountains.Feedbacks
 		/// <summary>
 		/// A test method that creates an audiosource, plays it, and destroys itself after play
 		/// </summary>
-		protected virtual async void TestPlaySound()
+		public virtual async void TestPlaySound()
 		{
 			AudioClip tmpAudioClip = null;
 			
@@ -796,9 +842,9 @@ namespace MoreMountains.Feedbacks
 				}
 			}
 			
-			if (string.IsNullOrEmpty(FadeTween.ConditionPropertyName))
+			if (string.IsNullOrEmpty(FadeInTween.ConditionPropertyName))
 			{
-				FadeTween.ConditionPropertyName = "Fade";
+				FadeInTween.ConditionPropertyName = "Fade";
 			}
 		}
 
