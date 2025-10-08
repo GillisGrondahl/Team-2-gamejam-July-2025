@@ -7,6 +7,8 @@ public class LevelDifficultyManager : MonoBehaviour
 
     public LevelDifficultyData levelDifficultyData;
 
+    public bool landlubberMode = false;  // landlubber mode: accessability setting where the ship movement is frozen
+
     private void Awake()
     {
         if (Instance == null)
