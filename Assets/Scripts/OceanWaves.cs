@@ -20,6 +20,8 @@ public class SimpleOceanWaves : MonoBehaviour
 
     void Start()
     {
+
+
         // Get the existing mesh from the MeshFilter
         mesh = GetComponent<MeshFilter>().mesh;
 

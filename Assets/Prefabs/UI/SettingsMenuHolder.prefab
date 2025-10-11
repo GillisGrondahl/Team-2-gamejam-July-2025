@@ -55,6 +55,8 @@ MonoBehaviour:
   bgmVolumeSlider: {fileID: 7322013115989061915}
   ambienceVolumeSlider: {fileID: 7480181777015145334}
   sfxVolumeSlider: {fileID: 6182793973045327204}
+  landlubberMode: {fileID: 6451159558743528215}
+  oneArmedMode: {fileID: 4675909159204789000}
 --- !u!1 &452632024011311709
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +975,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8722831633852151520}
+        m_TargetAssemblyTypeName: SettingsMenuUI, Assembly-CSharp
+        m_MethodName: OnLandlubberModeToggled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &4952795614498703729
 GameObject:
@@ -1352,7 +1366,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8722831633852151520}
+        m_TargetAssemblyTypeName: SettingsMenuUI, Assembly-CSharp
+        m_MethodName: OnOneHandedModeToggled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1001 &1846282415137613463
 PrefabInstance:

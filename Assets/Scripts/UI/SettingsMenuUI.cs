@@ -13,6 +13,9 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] private Slider ambienceVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
 
+    [SerializeField] private Toggle landlubberMode;
+    [SerializeField] private Toggle oneArmedMode;
+
 
     void OnEnable()
     {
@@ -45,19 +48,20 @@ public class SettingsMenuUI : MonoBehaviour
         // GameEvents.Instance.OnSettingsClicked -= HandleSettingsClicked;
     }
 
-    /*
-
-    void HandleSettingsClicked()
+    
+    public void OnLandlubberModeToggled()
     {
-        settingsMenu.SetActive(true);
+        LevelDifficultyManager.Instance.landlubberMode = landlubberMode.isOn;
+        GameEvents.Instance.OnLandlubberModeToggled?.Invoke(landlubberMode.isOn);
+        Debug.Log("Landlubber mode toggled: " + landlubberMode.isOn);
     }
 
-
-    void CloseSettingsMenu()
+    public void OnOneHandedModeToggled(bool isOn)
     {
-        settingsMenu.SetActive(false);
+        GameEvents.Instance.OnOneArmedModeToggled?.Invoke(oneArmedMode.isOn);
+        Debug.Log("One-armed mode toggled: " + oneArmedMode.isOn);
+
     }
-    */
 
     void OnMasterVolumeSliderChanged(float newVolume)
     {

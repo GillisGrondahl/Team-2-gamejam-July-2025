@@ -18,11 +18,13 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public event UnityAction<float> Reach = delegate { };
     public event UnityAction<Vector2> Look = delegate { };
     public event UnityAction<Vector2> MousePosition = delegate { };
+    public event UnityAction<bool> OneArmedRMB = delegate { };
 
     public InputSystem_Actions inputActions;
 
     public Vector2 Direction => inputActions.Player.Move.ReadValue<Vector2>();
     public bool IsInteractKeyPressed => inputActions.Player.Interact.IsPressed();
+    public bool IsOneArmedRMBPressed => inputActions.Player.OneArmedRMB.IsPressed();
 
     public void EnableInputActions()
     {
@@ -32,6 +34,19 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
             inputActions.Player.SetCallbacks(this);
         }
         inputActions.Enable();
+    }
+
+    public void OnOneArmedRMB(InputAction.CallbackContext context)
+    {
+        switch (context.phase)
+        {
+            case InputActionPhase.Started:
+                OneArmedRMB.Invoke(true);
+                break;
+            case InputActionPhase.Canceled:
+                OneArmedRMB.Invoke(false);
+                break;
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
