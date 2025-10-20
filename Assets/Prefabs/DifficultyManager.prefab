@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906d51900eb56b7478cf23a73ed7f341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDifficultyData: {fileID: 0}
+  levelDifficultyData: {fileID: 11400000, guid: bf28d144b3325a044a5554110481c6d9, type: 2}
+  landlubberMode: 0

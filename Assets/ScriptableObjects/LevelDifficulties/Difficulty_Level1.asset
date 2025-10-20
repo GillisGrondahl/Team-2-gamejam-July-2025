@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToComplete: 120
   waveMotionIntensity: 0.8
+  levelRecipes:
+  - {fileID: 11400000, guid: b5a30c42c59ddf04ebf89ea553a6c879, type: 2}
+  - {fileID: 11400000, guid: 83d999219351ca74ca37aeb5bb54d9ae, type: 2}

@@ -1,4 +1,6 @@
+using MoreMountains.Tools;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,12 +10,16 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Zone Restriction")]
     [SerializeField] private BoxCollider playerZone;  // Reference to the PlayerZone collider
+    [SerializeField] private BoxCollider oneArmedScreenScrollLeft;
+    [SerializeField] private BoxCollider oneArmedScreenScrollRight;
+    [SerializeField] private SphereCollider interactorCollider;
 
     [Header("Movement")]
     [SerializeField] private float maxSpeed = 2f;
     [SerializeField] private float acceleration = 2f;
     [SerializeField] private float deceleration = 2f;
     [SerializeField] private bool showCursor = false;
+    [SerializeField] private bool oneArmedMode = false;
 
     [Header("Jitter")]
     [SerializeField] private bool jitterEnabled = true;
@@ -24,9 +30,19 @@ public class PlayerMovement : MonoBehaviour
     private float inputDirection = 0f;
     private float jitterOffset = 0f;
 
+    // for one-armed mode
+    private bool isRMBHeld = false;
+    private bool hasInitialMousePosition = false;
+    private float keyboardInput = 0f;
+    private float mouseInput = 0f;
+
+
 
     private void Start()
     {
+        // Subscribe to one-armed mode event
+        GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
+
         input.EnableInputActions();
         Cursor.lockState = showCursor? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = showCursor;
@@ -44,26 +60,72 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         input.Move += UpdateDirection;
+        input.OneArmedRMB += HandleRMBState; // for one-armed mode
     }
 
     private void OnDisable()
     {
         input.Move -= UpdateDirection;
+        input.OneArmedRMB -= HandleRMBState; 
     }
 
     private void Update()
     {
         UpdateMovement();
+
         if (jitterEnabled)
         {
             ApplyJitter();
         }
     }
 
-    private void UpdateDirection(Vector2 direction) => inputDirection = direction.x; 
+    #region OneArmedMode
+    private void HandleOneArmedModeToggled(bool oneArmedMode)
+    {
+        this.oneArmedMode = oneArmedMode;
+
+    }
+    private void HandleRMBState(bool isPressed)
+    {
+        isRMBHeld = isPressed;
+    }
+    
+    #endregion
+
+    private void UpdateDirection(Vector2 direction)
+    {
+        keyboardInput = direction.x;
+    }
 
     private void UpdateMovement()
     {
+        // Determine which input source to use
+        if (oneArmedMode && isRMBHeld)
+        {
+            // Check for collision with left or right screen scroll zones
+            bool collidingLeft = IsCollidingWith(interactorCollider, oneArmedScreenScrollLeft);
+            bool collidingRight = IsCollidingWith(interactorCollider, oneArmedScreenScrollRight);
+
+            if (collidingLeft)
+            {
+                mouseInput = -1f; // Move left
+            }
+            else if (collidingRight)
+            {
+                mouseInput = 1f; // Move right
+            }
+            else
+            {
+                mouseInput = 0f; // No movement
+            }
+
+            inputDirection = mouseInput;
+        }
+        else
+        {
+            inputDirection = keyboardInput;
+        }
+
         float targetVelocity = inputDirection * maxSpeed;
         float accelerationRate = (inputDirection != 0f) ? acceleration : deceleration;
         currentVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, accelerationRate * Time.deltaTime);
@@ -82,7 +144,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                // Stop movement if trying to go further out of bounds
                 currentVelocity = 0f;
             }
         }
@@ -126,5 +187,16 @@ public class PlayerMovement : MonoBehaviour
         return newDistance < currentDistance;
     }
 
+    // Helper method to check collision between two colliders
+    private bool IsCollidingWith(SphereCollider sphere, BoxCollider box)
+    {
+        if (sphere == null || box == null) return false;
+
+        Vector3 closestPoint = box.ClosestPoint(sphere.transform.position);
+        float distance = Vector3.Distance(closestPoint, sphere.transform.position);
+        float sphereRadius = sphere.radius * sphere.transform.lossyScale.x;
+
+        return distance <= sphereRadius;
+    }
 
 }

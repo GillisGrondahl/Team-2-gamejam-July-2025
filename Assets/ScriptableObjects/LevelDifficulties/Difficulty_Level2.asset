@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: Difficulty_Level2
   m_EditorClassIdentifier: 
   timeToComplete: 300
+  waveMotionIntensity: 1
+  levelRecipes:
+  - {fileID: 11400000, guid: a04bad90dc7b58d4aa87adecdb060444, type: 2}
+  - {fileID: 11400000, guid: 79fd334957f7e1c49bfc139d9b75f95d, type: 2}
+  - {fileID: 11400000, guid: 33b091281b2007749a654032f4061c21, type: 2}
