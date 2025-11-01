@@ -364,13 +364,13 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1598,6 +1598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8165794321758342352, guid: 47929802e33fbd844845449047fb85b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8621245646174358161, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1776,11 +1780,47 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.167
       objectReference: {fileID: 0}
+    - target: {fileID: 4984772924918071131, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_UsePipelineSettings
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984772924918071131, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_AdditionalLightsShadowResolutionTier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5323409504074561194, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_Name
       value: Ship
       objectReference: {fileID: 0}
     - target: {fileID: 6227348673787419630, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Range
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Intensity
+      value: 1.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_ColorTemperature
+      value: 4555
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Shadows.m_NearPlane
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740258494103789096, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Shadows.m_NormalBias
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164938260585151008, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
