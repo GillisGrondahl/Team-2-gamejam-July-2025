@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using VContainer;
 
 public class DiegeticMenuButton : MonoBehaviour
 {
-
-    [Header("Inputs")]
-    [SerializeField] private InputReader input;
+    private IInputService input;
 
     [Header("Collider Reference")]
     [SerializeField] private BoxCollider buttonCollider;
@@ -25,9 +24,10 @@ public class DiegeticMenuButton : MonoBehaviour
     private Vector2 mousePosition = Vector2.zero;
     private bool mouseClick = false;
 
-    private void Awake()
+    [Inject]
+    private void Construct(IInputService input)
     {
-        input.EnableInputActions();
+        this.input = input;
     }
 
     private void OnEnable()

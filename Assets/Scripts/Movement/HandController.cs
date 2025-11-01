@@ -1,9 +1,9 @@
 using UnityEngine;
+using VContainer;
 
 public class HandController : MonoBehaviour
 {
-    [Header("Inputs")]
-    [SerializeField] private InputReader input;
+    private IInputService _input;
 
     [Header("Hand Settings")]
     [SerializeField] private Transform handPivot;
@@ -19,25 +19,30 @@ public class HandController : MonoBehaviour
     private float _reach = 0f;
     private Vector2 _look = Vector2.zero;
 
+    [Inject]
+    private void Construct(IInputService input)
+    {
+        _input = input;
+    }
+
     void Start()
     {
         Vector3 angles = handPivot.transform.localEulerAngles;
         yaw = angles.y;
         pitch = angles.x;
-        input.EnableInputActions();
         UpdateHandPointPosition();
     }
 
     private void OnEnable()
     {
-        input.Reach += UpdateReachInput;
-        input.Look += UpdateLookInput;
+        _input.Reach += UpdateReachInput;
+        _input.Look += UpdateLookInput;
     }
 
     private void OnDisable()
     {
-        input.Reach -= UpdateReachInput;
-        input.Look -= UpdateLookInput;
+        _input.Reach -= UpdateReachInput;
+        _input.Look -= UpdateLookInput;
     }
 
     private void UpdateReachInput(float direction) => _reach = direction;

@@ -2,11 +2,11 @@ using MoreMountains.Tools;
 using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
+using VContainer;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Inputs")]
-    [SerializeField] private InputReader input;
+    private IInputService _input;
 
     [Header("Zone Restriction")]
     [SerializeField] private BoxCollider playerZone;  // Reference to the PlayerZone collider
@@ -37,14 +37,18 @@ public class PlayerMovement : MonoBehaviour
     private float mouseInput = 0f;
 
 
+    [Inject]
+    private void Construct(IInputService input)
+    {
+        _input = input;
+    }
 
     private void Start()
     {
         // Subscribe to one-armed mode event
         GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
 
-        input.EnableInputActions();
-        Cursor.lockState = showCursor? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = showCursor;
 
         if (playerZone == null)
@@ -59,14 +63,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        input.Move += UpdateDirection;
-        input.OneArmedRMB += HandleRMBState; // for one-armed mode
+        _input.Move += UpdateDirection;
+        _input.OneArmedRMB += HandleRMBState; // for one-armed mode
     }
 
     private void OnDisable()
     {
-        input.Move -= UpdateDirection;
-        input.OneArmedRMB -= HandleRMBState; 
+        _input.Move -= UpdateDirection;
+        _input.OneArmedRMB -= HandleRMBState;
     }
 
     private void Update()
@@ -89,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isRMBHeld = isPressed;
     }
-    
+
     #endregion
 
     private void UpdateDirection(Vector2 direction)

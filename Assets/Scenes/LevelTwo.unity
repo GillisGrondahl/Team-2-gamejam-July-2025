@@ -1074,6 +1074,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1020506697183516857, guid: 47929802e33fbd844845449047fb85b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1183817064630113259, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1689,6 +1693,10 @@ PrefabInstance:
     - target: {fileID: 8165794321758342352, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_Name
       value: GameUI Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8165794321758342352, guid: 47929802e33fbd844845449047fb85b1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8621245646174358161, guid: 47929802e33fbd844845449047fb85b1, type: 3}
       propertyPath: m_AnchorMax.y

@@ -1,39 +1,33 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using static InputSystem_Actions;
 
 
-public interface IInputReader
-{
-    Vector2 Direction { get; }
-    void EnableInputActions(); 
-}
-
 [CreateAssetMenu(fileName = "InputReader", menuName = "ScriptableObjects/Input Reader")]
-public class InputReader : ScriptableObject, IPlayerActions, IInputReader
+public class InputReader_SO : ScriptableObject, IPlayerActions /*, IInputService*/
 {
-    public event UnityAction<Vector2> Move = delegate { };
-    public event UnityAction<bool> Interact = delegate { };
-    public event UnityAction<float> Reach = delegate { };
-    public event UnityAction<Vector2> Look = delegate { };
-    public event UnityAction<Vector2> MousePosition = delegate { };
-    public event UnityAction<bool> OneArmedRMB = delegate { };
+    public event Action<Vector2> Move = delegate { };
+    public event Action<bool> Interact = delegate { };
+    public event Action<float> Reach = delegate { };
+    public event Action<Vector2> Look = delegate { };
+    public event Action<Vector2> MousePosition = delegate { };
+    public event Action<bool> OneArmedRMB = delegate { };
 
-    public InputSystem_Actions inputActions;
+    public InputSystem_Actions _actions;
 
-    public Vector2 Direction => inputActions.Player.Move.ReadValue<Vector2>();
-    public bool IsInteractKeyPressed => inputActions.Player.Interact.IsPressed();
-    public bool IsOneArmedRMBPressed => inputActions.Player.OneArmedRMB.IsPressed();
+    public Vector2 Direction => _actions.Player.Move.ReadValue<Vector2>();
+    public bool IsInteractPressed => _actions.Player.Interact.IsPressed();
+    public bool IsOneArmedRMBPressed => _actions.Player.OneArmedRMB.IsPressed();
 
     public void EnableInputActions()
     {
-        if(inputActions == null)
+        if(_actions == null)
         {
-            inputActions = new InputSystem_Actions();
-            inputActions.Player.SetCallbacks(this);
+            _actions = new InputSystem_Actions();
+            _actions.Player.SetCallbacks(this);
         }
-        inputActions.Enable();
+        _actions.Enable();
     }
 
     public void OnOneArmedRMB(InputAction.CallbackContext context)
@@ -80,5 +74,10 @@ public class InputReader : ScriptableObject, IPlayerActions, IInputReader
     public void OnMousePosition(InputAction.CallbackContext context)
     {
         MousePosition.Invoke(context.ReadValue<Vector2>());
+    }
+
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        // Implement escape functionality if needed
     }
 }

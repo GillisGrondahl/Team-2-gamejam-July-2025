@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using VContainer;
 public class RecipeSystem : MonoBehaviour
 {
     public static RecipeSystem Instance { get; private set; }
@@ -38,6 +39,15 @@ public class RecipeSystem : MonoBehaviour
 
     private List<(RecipePosition recipe, IngredientUI ui)> _positionUiPairs = new();
 
+
+    private ITimerService _timer;
+
+    [Inject]
+    private void Construct(ITimerService timeManager)
+    {
+        _timer = timeManager;
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -52,18 +62,20 @@ public class RecipeSystem : MonoBehaviour
 
     private void Start()
     {
-        TimeManager.Instance.OnTimeUp += OnTimerEnd;
-
         GetRecipesFromDifficultyData();
 
         if (recipes.Count > 0)
             GetNewRecipe();
     }
 
-
-    private void OnDestroy()
+    private void OnEnable()
     {
-            TimeManager.Instance.OnTimeUp -= OnTimerEnd;
+        _timer.Completed += OnTimerEnd;
+    }
+
+    private void OnDisable()
+    {
+        _timer.Completed -= OnTimerEnd;
     }
 
     private void GetRecipesFromDifficultyData()
@@ -235,14 +247,14 @@ public class RecipeSystem : MonoBehaviour
 
             levelComplete.EvaluateScore(OverallQuality);
 
-            TimeManager.Instance.TogglePause();
+            //_timeManager.TogglePause();
             Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
 
         }
         else
         {
             levelComplete.EvaluateScore(0f);
-            TimeManager.Instance.TogglePause();
+            //_timeManager.TogglePause();
             Debug.Log("LEVEL FAILED!");
         }
     }

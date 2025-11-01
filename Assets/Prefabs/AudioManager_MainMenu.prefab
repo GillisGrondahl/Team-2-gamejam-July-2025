@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8623593298384893883}
   - component: {fileID: 6448629973054700967}
-  - component: {fileID: 5849087735677211071}
   m_Layer: 0
   m_Name: AudioManager_MainMenu
   m_TagString: Untagged
@@ -74,15 +73,3 @@ MonoBehaviour:
       Data3: -424208719
       Data4: 1209409010
     Path: event:/Ambience/AMB_Track1
---- !u!114 &5849087735677211071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6244623586669308147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cdc94155902a654aafbeeaa864899c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

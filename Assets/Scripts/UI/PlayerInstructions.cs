@@ -1,6 +1,7 @@
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class PlayerInstructions : MonoBehaviour
 {
@@ -10,10 +11,18 @@ public class PlayerInstructions : MonoBehaviour
     private bool _recipeArrowPlayed = false;
     private bool _countdownArrowPlayed = false;
 
+    private ITimerService _timer;
+
+    [Inject]
+    private void Cunstruct(ITimerService timeManager)
+    {
+        _timer = timeManager;
+    }
+
 
     private void Start()
     {
-        TimeManager.Instance.PauseGame();
+        _timer.Pause();
 
         _continueButton.onClick.AddListener(() =>
         {
@@ -30,7 +39,7 @@ public class PlayerInstructions : MonoBehaviour
             else
             {
                 gameObject.SetActive(false);
-                TimeManager.Instance.UnpauseGame();
+                _timer.Resume();
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }

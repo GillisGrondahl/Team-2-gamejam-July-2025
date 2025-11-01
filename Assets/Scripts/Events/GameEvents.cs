@@ -21,13 +21,13 @@ public class GameEvents : MonoBehaviour
     public Action OnSettingsClicked;
 
 
-    public Action<TimeManager> TimeManagerInstantiated;
+    //public Action<TimeManager> TimeManagerInstantiated;
 
     // Settings Events
-    public Action<float> OnMasterVolumeChanged;
-    public Action<float> OnBGMVolumeChanged;
-    public Action<float> OnAmbienceVolumeChanged;
-    public Action<float> OnSFXVolumeChanged;
+    //public Action<float> OnMasterVolumeChanged;
+    //public Action<float> OnBGMVolumeChanged;
+    //public Action<float> OnAmbienceVolumeChanged;
+    //public Action<float> OnSFXVolumeChanged;
     public Action<bool> OnLandlubberModeToggled;
     public Action<bool> OnOneArmedModeToggled;
 
