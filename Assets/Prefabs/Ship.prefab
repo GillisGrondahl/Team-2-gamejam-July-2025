@@ -2185,6 +2185,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3106694301459417656, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
+      propertyPath: m_Range
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5049585129044771823, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2228,6 +2232,14 @@ PrefabInstance:
     - target: {fileID: 6376457662972857453, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393070506146359397, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
+      propertyPath: m_Range
+      value: 1.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393070506146359397, guid: 718052ecc75d17749bd4413417bf1a2a, type: 3}
+      propertyPath: m_Shadows.m_NearPlane
+      value: 0.022899998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
