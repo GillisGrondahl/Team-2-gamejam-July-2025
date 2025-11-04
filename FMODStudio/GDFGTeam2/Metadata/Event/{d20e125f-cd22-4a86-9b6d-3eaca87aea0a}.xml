@@ -5,7 +5,7 @@
 			<value>Saltshaker_Dropped</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -100,6 +100,7 @@
 		<relationship name="effects">
 			<destination>{46783028-a5d8-46ef-ae9e-335f56d186a8}</destination>
 			<destination>{74df1236-33f4-4187-abf7-b2838e06f3de}</destination>
+			<destination>{65ee96cf-94b9-40b6-b550-7c31dafd6bb2}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e3d412be-0bd1-4912-a0dc-dd101cd3fbe9}" />
@@ -111,6 +112,7 @@
 	<object class="MixerBusFader" id="{206e7bbe-c5a8-4547-8c9c-86b24e835162}" />
 	<object class="MixerBusFader" id="{46783028-a5d8-46ef-ae9e-335f56d186a8}" />
 	<object class="LoudnessMeter" id="{74df1236-33f4-4187-abf7-b2838e06f3de}" />
+	<object class="SpatialiserEffect" id="{65ee96cf-94b9-40b6-b550-7c31dafd6bb2}" />
 	<object class="SingleSound" id="{46d49254-9d64-43f9-bd8b-41c2702855ce}">
 		<relationship name="audioFile">
 			<destination>{92dd4427-51d4-463d-924f-496f7d1e0dc0}</destination>

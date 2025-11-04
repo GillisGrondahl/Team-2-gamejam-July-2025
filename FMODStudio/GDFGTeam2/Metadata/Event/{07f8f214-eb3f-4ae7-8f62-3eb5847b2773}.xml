@@ -5,7 +5,7 @@
 			<value>Knife_Pickup</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -100,6 +100,7 @@
 		<relationship name="effects">
 			<destination>{37904ca0-7bfb-44a9-8d46-f44bebc5e0ae}</destination>
 			<destination>{e11e88c0-c3fe-4661-bf16-043032817088}</destination>
+			<destination>{5e6a7aa8-2112-4a02-8515-6e8e530accae}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a48f2742-70db-495e-84b7-3066199ed217}" />
@@ -112,6 +113,7 @@
 	<object class="MixerBusFader" id="{196d3d1e-4ae5-4f3c-908e-601c21a5082b}" />
 	<object class="MixerBusFader" id="{37904ca0-7bfb-44a9-8d46-f44bebc5e0ae}" />
 	<object class="LoudnessMeter" id="{e11e88c0-c3fe-4661-bf16-043032817088}" />
+	<object class="SpatialiserEffect" id="{5e6a7aa8-2112-4a02-8515-6e8e530accae}" />
 	<object class="SingleSound" id="{4c39f3eb-2232-4cb3-b7d1-fd85d1a6b742}">
 		<relationship name="audioFile">
 			<destination>{654fd448-8f91-4bd9-952f-6e50b069d07f}</destination>
