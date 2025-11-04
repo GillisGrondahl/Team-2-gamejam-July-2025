@@ -5,7 +5,7 @@
 			<value>Fish_Dropped</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -138,7 +138,6 @@
 			<destination>{88e3ed21-87c9-43b2-8af7-eba4aaba9cdb}</destination>
 			<destination>{52ba862d-3128-42e2-8b03-fa9c261ee02d}</destination>
 			<destination>{4aeed1ca-417c-43bd-a0d0-efa929a366cc}</destination>
-			<destination>{de3243a3-c9ce-4039-93f4-2d4c8cc1ccef}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a2b27ec4-a3ed-4329-a6db-4ea9812db6eb}" />
@@ -172,12 +171,7 @@
 			<value>2</value>
 		</property>
 	</object>
-	<object class="LoudnessMeter" id="{4aeed1ca-417c-43bd-a0d0-efa929a366cc}">
-		<property name="bypass">
-			<value>true</value>
-		</property>
-	</object>
-	<object class="SpatialiserEffect" id="{de3243a3-c9ce-4039-93f4-2d4c8cc1ccef}" />
+	<object class="LoudnessMeter" id="{4aeed1ca-417c-43bd-a0d0-efa929a366cc}" />
 	<object class="SingleSound" id="{6eddfaa6-6557-4e14-88f3-fe8aafb672ac}">
 		<relationship name="audioFile">
 			<destination>{a13a7759-fc7a-435f-bb08-010af6258ef6}</destination>

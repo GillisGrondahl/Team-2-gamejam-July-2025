@@ -5,7 +5,7 @@
 			<value>Drop_in_Pot</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -137,7 +137,6 @@
 		<relationship name="effects">
 			<destination>{22d6704e-c6e2-4c35-a1f9-dfd638ba5971}</destination>
 			<destination>{9b65cf95-b21f-40ec-89d0-240f9feeb9c7}</destination>
-			<destination>{5f47c7fa-6363-48e6-a9d2-f5483c2d4540}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{f4a1401c-e487-460e-99a6-b9311da8207d}" />
@@ -157,12 +156,7 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{22d6704e-c6e2-4c35-a1f9-dfd638ba5971}" />
-	<object class="LoudnessMeter" id="{9b65cf95-b21f-40ec-89d0-240f9feeb9c7}">
-		<property name="bypass">
-			<value>true</value>
-		</property>
-	</object>
-	<object class="SpatialiserEffect" id="{5f47c7fa-6363-48e6-a9d2-f5483c2d4540}" />
+	<object class="LoudnessMeter" id="{9b65cf95-b21f-40ec-89d0-240f9feeb9c7}" />
 	<object class="SingleSound" id="{36699cc4-4d96-486b-93fc-51d717f361e9}">
 		<relationship name="audioFile">
 			<destination>{f5223266-9439-473a-81ce-5e8233d833e2}</destination>

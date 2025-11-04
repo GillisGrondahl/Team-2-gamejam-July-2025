@@ -5,7 +5,7 @@
 			<value>Tomato_Dropped</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -138,7 +138,6 @@
 			<destination>{5bc67fe5-1dee-49ca-9bda-d8cf39047ef1}</destination>
 			<destination>{d9aa5617-dc46-469a-816d-9dc8e7cb2c8a}</destination>
 			<destination>{1700bca7-56c3-468e-9667-41239e509ff4}</destination>
-			<destination>{4dafd20c-debc-45a2-923a-3b75256be808}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1c5ae32f-6909-42ec-a46b-ea12c37e9a6e}" />
@@ -167,7 +166,6 @@
 		</property>
 	</object>
 	<object class="LoudnessMeter" id="{1700bca7-56c3-468e-9667-41239e509ff4}" />
-	<object class="SpatialiserEffect" id="{4dafd20c-debc-45a2-923a-3b75256be808}" />
 	<object class="SingleSound" id="{c361bfd9-1683-4a3d-8d9b-1d2867f0eda8}">
 		<relationship name="audioFile">
 			<destination>{4fb7eb3b-3295-426a-adef-9391e0f7f207}</destination>

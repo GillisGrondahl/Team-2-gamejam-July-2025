@@ -5,7 +5,7 @@
 			<value>PickUp</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -137,7 +137,6 @@
 		<relationship name="effects">
 			<destination>{e6772ca5-73ad-4fae-bf77-ec0e0e473158}</destination>
 			<destination>{e6f8468d-3833-4fb8-8f7f-432335e4f1be}</destination>
-			<destination>{828bf816-2085-4344-8cbc-9aae39110f76}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{58c1b22b-a3ef-4284-81cf-1d575cafa157}" />
@@ -159,7 +158,6 @@
 	</object>
 	<object class="MixerBusFader" id="{e6772ca5-73ad-4fae-bf77-ec0e0e473158}" />
 	<object class="LoudnessMeter" id="{e6f8468d-3833-4fb8-8f7f-432335e4f1be}" />
-	<object class="SpatialiserEffect" id="{828bf816-2085-4344-8cbc-9aae39110f76}" />
 	<object class="SingleSound" id="{3919b79d-ae67-4c38-9091-344874817cd5}">
 		<relationship name="audioFile">
 			<destination>{f3e7167e-38f0-4c76-895e-38d4c1de7034}</destination>

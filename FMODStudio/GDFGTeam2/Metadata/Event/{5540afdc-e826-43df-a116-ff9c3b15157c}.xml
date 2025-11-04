@@ -5,7 +5,7 @@
 			<value>Knife_Dropped</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -100,7 +100,6 @@
 		<relationship name="effects">
 			<destination>{a95ed755-9c2b-48e4-b4b9-118ab7f093ed}</destination>
 			<destination>{6ee4e578-de19-494e-bf5b-7ceb5beaec99}</destination>
-			<destination>{a81c38d6-6c87-4dc4-adc7-de1bd6730a6a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a32984da-5639-42c1-8a44-1b42ed531464}" />
@@ -114,7 +113,6 @@
 	<object class="MixerBusFader" id="{be5478bc-3723-4f20-bc5c-ba4a7d64ec56}" />
 	<object class="MixerBusFader" id="{a95ed755-9c2b-48e4-b4b9-118ab7f093ed}" />
 	<object class="LoudnessMeter" id="{6ee4e578-de19-494e-bf5b-7ceb5beaec99}" />
-	<object class="SpatialiserEffect" id="{a81c38d6-6c87-4dc4-adc7-de1bd6730a6a}" />
 	<object class="SingleSound" id="{867d276b-c18b-4634-aef1-3133e4e72666}">
 		<relationship name="audioFile">
 			<destination>{aba034e0-8ae2-47e6-98f3-13d0b3490bcb}</destination>

@@ -4835,8 +4835,6 @@ ParticleSystemRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4858,7 +4856,6 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -9760,8 +9757,6 @@ ParticleSystemRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9783,7 +9778,6 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -9851,10 +9845,6 @@ PrefabInstance:
       propertyPath: managedReferences[8106807541632598120].Owner
       value: 
       objectReference: {fileID: 2391505403258780121}
-    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
-      propertyPath: managedReferences[998730614237298750].Play3D
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[8106807541632598120].Active
       value: 1
@@ -10275,10 +10265,6 @@ PrefabInstance:
       propertyPath: managedReferences[998730723049078846].Owner
       value: 
       objectReference: {fileID: 7188282214576976196}
-    - target: {fileID: 4699068371201697725, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
-      propertyPath: managedReferences[998730614237298750].Play3D
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4699068371201697725, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[998730723049078846].Active
       value: 1
