@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].Play3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272410748585832224, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: managedReferences[998730614237298750].FMODEventPath.Path
       value: event:/SFX/Potato_Dropped
       objectReference: {fileID: 0}
@@ -40,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 13400000, guid: 47d658cf0444ffa4393aa9f8eecc0678, type: 2}
+    - target: {fileID: 4699068371201697725, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
+      propertyPath: managedReferences[998730614237298750].Play3D
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6805411796304712701, guid: d9d486f4cbfcd964ab4f7ff75581f9d0, type: 3}
       propertyPath: m_Name
       value: Carrot
