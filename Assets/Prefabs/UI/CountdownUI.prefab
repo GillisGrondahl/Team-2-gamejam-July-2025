@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 7467003415941674928}
   - component: {fileID: 4141253286420076264}
   m_Layer: 5
-  m_Name: Countdown_Background
+  m_Name: CountdownUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,9 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68758b828df07214381c85e4d503f6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeDisplayText: {fileID: 361189277158952827}
   _countdownReachedFeedback: {fileID: 3609059039734491778}
   _countdownTickFeedback: {fileID: 1873454362069944192}
-  _timeUpFeedback: {fileID: 0}
 --- !u!114 &7467003415941674928
 MonoBehaviour:
   m_ObjectHideFlags: 0

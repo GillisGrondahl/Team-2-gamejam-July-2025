@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4707238014233049876}
-  - component: {fileID: 6940574278918929486}
   - component: {fileID: 7702634737958571240}
   - component: {fileID: 3484067765621404133}
   - component: {fileID: 2841431545709571942}
+  - component: {fileID: 6940574278918929486}
   m_Layer: 5
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -42,21 +42,6 @@ RectTransform:
   m_AnchoredPosition: {x: 95.14964, y: -111.97756}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6940574278918929486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3670341691920605918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b779d01084a4534cb2341cefd76b82d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startButton: {fileID: 9105131154735999435}
-  settingsButton: {fileID: 6597989329274590632}
-  exitButton: {fileID: 8881285469677523709}
 --- !u!222 &7702634737958571240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -121,6 +106,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6940574278918929486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3670341691920605918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b779d01084a4534cb2341cefd76b82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startButton: {fileID: 9105131154735999435}
+  settingsButton: {fileID: 6597989329274590632}
+  exitButton: {fileID: 8881285469677523709}
 --- !u!1001 &669356954263165250
 PrefabInstance:
   m_ObjectHideFlags: 0

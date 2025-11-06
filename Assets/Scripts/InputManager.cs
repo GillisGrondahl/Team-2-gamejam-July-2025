@@ -19,7 +19,7 @@ public class InputManager : IInputService, IStartable, IDisposable, IPlayerActio
     public event Action<Vector2> Look = delegate { };
     public event Action<Vector2> MousePosition = delegate { };
     public event Action<bool> OneArmedRMB = delegate { };
-    public event Action<bool> Escape = delegate { };
+    public event Action Escape = delegate { };
 
     public void Start()
     {
@@ -52,7 +52,6 @@ public class InputManager : IInputService, IStartable, IDisposable, IPlayerActio
 
     public void OnEscape(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Started) Escape(true);
-        if (ctx.phase == InputActionPhase.Canceled) Escape(false);
+        if (ctx.phase == InputActionPhase.Started) Escape();
     }
 }

@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 993796190601267249}
   - component: {fileID: 5948735897508475547}
   m_Layer: 5
-  m_Name: Recipe
+  m_Name: RecipeUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

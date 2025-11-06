@@ -14,5 +14,5 @@ public interface IInputService
     event Action<Vector2> Look;
     event Action<Vector2> MousePosition;
     event Action<bool> OneArmedRMB;
-    event Action<bool> Escape;
+    event Action Escape;
 }

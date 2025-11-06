@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -18,16 +19,17 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] private Toggle oneArmedMode;
 
     AudioManager _audioManager;
+    LevelManager _levelManager;
 
     [Inject]
-    private void Constructor(AudioManager audioManager)
+    private void Constructor(AudioManager audioManager, LevelManager levelManager)
     {
         _audioManager = audioManager;
+        _levelManager = levelManager;
     }
 
     void OnEnable()
     {
-
         masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeSliderChanged);
         bgmVolumeSlider.onValueChanged.AddListener(OnBGMVolumeSliderChanged);
         ambienceVolumeSlider.onValueChanged.AddListener(OnAmbienceVolumeSliderChanged);
@@ -50,6 +52,10 @@ public class SettingsMenuUI : MonoBehaviour
         sfxVolumeSlider.onValueChanged.RemoveListener(OnSFXVolumeSliderChanged);
     }
 
+    private void OnEscapePressed(bool obj)
+    {
+        throw new NotImplementedException();
+    }
 
     public void OnLandlubberModeToggled()
     {

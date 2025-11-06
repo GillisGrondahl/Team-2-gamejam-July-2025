@@ -1,25 +1,25 @@
-using Unity.VisualScripting;
+using FMOD;
 using UnityEngine;
+using UnityEngine.Events;
 using VContainer;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private float levelDurationInSeconds = 60f;
-    [SerializeField] private float earlyWarningInSeconds = 10f;
-    [SerializeField] private int finalCountdownInSeconds = 5;
-
-    public float LevelDurationInSeconds => levelDurationInSeconds;
-    public float EarlyWarningInSeconds => earlyWarningInSeconds;
-    public int FinalCountdownInSeconds => finalCountdownInSeconds;
+    [SerializeField] private LevelDifficultyData levelDifficultyData;
 
     private bool _earlyWarningTriggered = false;
     private int _lastAnnouncedSecond = int.MinValue;
+
+    private bool _isGamePaused = false;
 
 
     private AudioManager _audio;
     private ITimerService _timer;
     private ITimerUI _timerUI;
     private IInputService _input;
+
+    public event UnityAction GamePaused;
+    public event UnityAction GameResumed;
 
 
     //TODO: Move this to Controller, LevelManager doing to many things
@@ -32,10 +32,6 @@ public class LevelManager : MonoBehaviour
         _input = input;
     }
 
-    private void _input_Escape(bool obj)
-    {
-        throw new System.NotImplementedException();
-    }
 
     //Add check for the lvl1 info
     private void Start()
@@ -46,18 +42,20 @@ public class LevelManager : MonoBehaviour
     public void StartLevel()
     {
         _earlyWarningTriggered = false;
-        _timer.Start(levelDurationInSeconds);
+        _timer.Start(levelDifficultyData.levelDurationInSeconds);
+        ResumeGame();
     }
 
     private void OnEnable()
     {
-        _input.Escape += _input_Escape;
+        _input.Escape += TogglePause;
         _timer.Tick += OnTimerTick;
         _timer.Completed += OnTimerCompleted;
     }
 
     private void OnDisable()
     {
+        _input.Escape -= TogglePause;
         _timer.Tick -= OnTimerTick;
         _timer.Completed -= OnTimerCompleted;
     }
@@ -66,7 +64,7 @@ public class LevelManager : MonoBehaviour
     {
         _timerUI.ShowTime(time);
 
-        if (!_earlyWarningTriggered && time <= earlyWarningInSeconds)
+        if (!_earlyWarningTriggered && time <= levelDifficultyData.earlyWarningInSeconds)
         { 
             _earlyWarningTriggered = true;
             _timerUI.ShowWarning();
@@ -74,10 +72,10 @@ public class LevelManager : MonoBehaviour
         }
 
 
-        if (finalCountdownInSeconds > 0)
+        if (levelDifficultyData.finalCountdownInSeconds > 0)
         {
             int wholeSeconds = Mathf.CeilToInt(time);
-            if(wholeSeconds != _lastAnnouncedSecond && wholeSeconds <= finalCountdownInSeconds && wholeSeconds > 0)
+            if(wholeSeconds != _lastAnnouncedSecond && wholeSeconds <= levelDifficultyData.finalCountdownInSeconds && wholeSeconds > 0)
             {
                 _lastAnnouncedSecond = wholeSeconds;
                 _timerUI.ShowTimeEnding();
@@ -89,6 +87,35 @@ public class LevelManager : MonoBehaviour
     private void OnTimerCompleted()
     {
         //Audio?
+    }
+
+    public void TogglePause()
+    {
+        if (_isGamePaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+        _isGamePaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        GamePaused?.Invoke();
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        _isGamePaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        GameResumed?.Invoke();
     }
 }
 
