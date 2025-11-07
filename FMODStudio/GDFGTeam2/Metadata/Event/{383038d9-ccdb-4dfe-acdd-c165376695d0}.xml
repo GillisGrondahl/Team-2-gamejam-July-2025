@@ -5,7 +5,7 @@
 			<value>ClickButton</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{677be02e-ba25-47b4-8034-ce2805ffd231}</destination>
@@ -145,7 +145,7 @@
 			<value>3.5</value>
 		</property>
 		<relationship name="sounds">
-			<destination>{30f87c61-f8f4-428e-8bdf-76af75bb7285}</destination>
+			<destination>{0dba3166-c1d8-4f1f-a0d5-336b32a56a5c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{913fbd09-b89d-4645-906b-becbf53538ec}" />
@@ -160,9 +160,9 @@
 	</object>
 	<object class="MixerBusFader" id="{42d8f038-9ebf-4173-bccf-29e1ba1a6c9c}" />
 	<object class="LoudnessMeter" id="{44575f40-56fd-460d-bd1e-c3de4fec7e41}" />
-	<object class="SingleSound" id="{30f87c61-f8f4-428e-8bdf-76af75bb7285}">
+	<object class="SingleSound" id="{0dba3166-c1d8-4f1f-a0d5-336b32a56a5c}">
 		<relationship name="audioFile">
-			<destination>{52424039-564c-4d58-84a9-95864ac141b6}</destination>
+			<destination>{78439795-9b15-4676-aeaf-6e82d6cf73eb}</destination>
 		</relationship>
 	</object>
 	<object class="AutomationPoint" id="{9a141c3c-692c-4768-9f0d-d0e7853c7e35}">
