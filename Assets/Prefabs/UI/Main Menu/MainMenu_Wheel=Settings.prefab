@@ -957,7 +957,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        Play3D: 0
+        Play3D: 1
         PositionTransform: {fileID: 0}
         Parameters: []
     - rid: 6108673472560103492
@@ -1034,7 +1034,7 @@ MonoBehaviour:
           ButtonText: 
         Owner: {fileID: 4620612498499694851}
         DebugActive: 0
-        AnimateRotationTarget: {fileID: 0}
+        AnimateRotationTarget: {fileID: 1717088689571858908}
         Mode: 0
         RotationSpace: 1
         MovementMode: 0
@@ -1462,7 +1462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d65b59f9da4541b72399fd36eab44, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 755d65b59f9da4541b72399fd36eab44, type: 3}
       propertyPath: m_LocalPosition.z
