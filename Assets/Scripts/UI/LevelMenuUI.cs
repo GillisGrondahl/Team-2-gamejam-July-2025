@@ -30,11 +30,11 @@ public class LevelMenuUI : MonoBehaviour
 
     private void ShowLevelMenuUI()
     {
-        levelMenu.gameObject.SetActive(true);
+        levelMenu.SetActive(true);
     }
 
     private void HideLevelMenuUI()
     {
-        levelMenu.gameObject.SetActive(false);
+        levelMenu.SetActive(false);
     }
 }

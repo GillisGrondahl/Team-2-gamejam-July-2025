@@ -1,161 +1,82 @@
-using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using VContainer;
-public class RecipeSystem : MonoBehaviour
+using VContainer.Unity;
+
+public class RecipeSystem : IStartable
 {
-    public static RecipeSystem Instance { get; private set; }
+    public float OverallQuality { get => _qualityList.Average(); }
+    public int QualityOfCurrentRecipe { get; private set; } = 100;
+    public int CurrentRecipeIndex { get; private set; } = 0;
+    public int TotalRecipes => _recipes?.Count ?? 0;
 
-    public float OverallQuality { get; private set; } = 100f;
-
-    [SerializeField] private MMF_Player _MMFRecipeCompleted;
-    [SerializeField] private MMF_Player _MMFLevelEnd;
-
-    public int wrongIngredientPenalty = 10;
-    public int excessIngredientPenalty = 10;
-
-    [SerializeField] TMP_Text recipeNameText = null;
-    [SerializeField] Transform ingredientsList = null;
-    [SerializeField] Transform ingredientUI = null;
-    [SerializeField] TMP_Text qualityText = null;
-    [SerializeField] MMProgressBar qualityBar = null;
-
-    [SerializeField] GameObject levelCompleteUI = null;
+    public event Action<RecipeData> NewRecipe;
+    public event Action<int> RecipeUpdated;
+    public event Action RecipeCompleted;
+    public event Action AllRecipesCompleted;
 
 
-    private List<RecipeData> recipes = null;
-    [SerializeField] private int qualityOfCurrentRecipe = 100;
-    //private RecipeData _currentRecipe = null;
-    //private List<IngredientData> _currentIngredients = new List<IngredientData>();
-    private List<RecipePosition> _currentIngredients = new();
+    private List<RecipeData> _recipes = null;
+    private List<RecipeStep> _currentlyAddedIngredients = new();
     private Dictionary<IngredientData, int> _requiredIngredientsCount = new Dictionary<IngredientData, int>();
-    private int _currentRecipeIndex = 0;
     private List<float> _qualityList = new List<float>();
+    private RecipeData _currentRecipe = null;
 
-    private List<RecipePosition> currentRecipe = new();
+    private readonly LevelData _levelData;
 
-    private List<(RecipePosition recipe, IngredientUI ui)> _positionUiPairs = new();
-
-
-    private ITimerService _timer;
-
-    [Inject]
-    private void Construct(ITimerService timeManager)
+    public RecipeSystem(LevelData LevelData)
     {
-        _timer = timeManager;
+        _levelData = LevelData;
     }
 
-    private void Awake()
+    public void Start()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        GetRecipes();
     }
 
-    private void Start()
+    private void GetRecipes()
     {
-        GetRecipesFromDifficultyData();
+        _recipes = _levelData.levelRecipes;
 
-        if (recipes.Count > 0)
-            GetNewRecipe();
+        if (_recipes.Count > 0)
+            GetNextRecipe();
     }
 
-    private void OnEnable()
+    private void GetNextRecipe()
     {
-        _timer.Completed += OnTimerEnd;
-    }
-
-    private void OnDisable()
-    {
-        _timer.Completed -= OnTimerEnd;
-    }
-
-    private void GetRecipesFromDifficultyData()
-    {
-        if (LevelDifficultyManager.Instance == null)
-        {
-            Debug.LogError("LevelDifficultyManager.Instance is null! Make sure it's initialized before RecipeSystem.");
-            return;
-        }
-
-        if (LevelDifficultyManager.Instance.levelDifficultyData == null)
-        {
-            Debug.LogError("LevelDifficultyData is null on LevelDifficultyManager!");
-            return;
-        }
-
-        recipes = LevelDifficultyManager.Instance.levelDifficultyData.levelRecipes;
-
-        if (recipes == null || recipes.Count == 0)
-        {
-            Debug.LogWarning("No recipes defined in LevelDifficultyData for this level!");
-        }
-    }
-
-    private void GetNewRecipe()
-    {
-        currentRecipe = new List<RecipePosition>();
-        foreach (var recipePosition in recipes[_currentRecipeIndex].requiredIngredientsPices.ToList())
-        {
-            currentRecipe.Add(new RecipePosition(recipePosition.Key, recipePosition.Value, false));
-        }
-        //_currentRecipe = recipes[_currentRecipeIndex];
-        _currentIngredients.Clear();
-        _requiredIngredientsCount = currentRecipe
+        _currentRecipe = ScriptableObject.Instantiate(_recipes[CurrentRecipeIndex]);
+        _requiredIngredientsCount = _currentRecipe.RequiredIngredients
             .GroupBy(i => i.Ingredient)
             .ToDictionary(g => g.Key, g => g.Count());
-        UpdateUI();
+
+        NewRecipe?.Invoke(_currentRecipe);
     }
 
-    private void UpdateUI()
-    {
-        // Update recipe name
-        recipeNameText.text = recipes[_currentRecipeIndex].recipeName;
-        _positionUiPairs.Clear();
-
-        UpdateQualityText();
-        foreach (Transform child in ingredientsList)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (var position in currentRecipe)
-        {
-            var ui = Instantiate(ingredientUI, ingredientsList).GetComponent<IngredientUI>();
-            ui.Initialize(position.Ingredient, position.PicesCount);
-
-            _positionUiPairs.Add((position, ui));
-        }
-    }
 
     public void AddIngredient(IngredientData ingredient, int amountOfpices)
     {
-        var currentPosition = new RecipePosition(ingredient, amountOfpices, false);
-        _currentIngredients.Add(currentPosition);
+        var currentPosition = new RecipeStep(ingredient, amountOfpices, false);
+        _currentlyAddedIngredients.Add(currentPosition);
 
-        if (!_requiredIngredientsCount.ContainsKey(ingredient))
+
+        if (!_currentRecipe.RequiredIngredients.Any(step => step.Ingredient == currentPosition.Ingredient))
         {
-            qualityOfCurrentRecipe -= wrongIngredientPenalty;
-            Debug.Log($"'{ingredient}' is not in recipe. -{wrongIngredientPenalty}%");
+            QualityOfCurrentRecipe -= _levelData.wrongIngredientPenalty;
+            Debug.Log($"'{ingredient}' is not in recipe. -{_levelData.wrongIngredientPenalty}%");
         }
         else
         {
-            int currentCount = _currentIngredients.Count(p => p.Ingredient == ingredient);
-            int allowedCount = _requiredIngredientsCount[ingredient];
+            int currentCount = _currentlyAddedIngredients.Count(step => step.Ingredient == ingredient);
+            int allowedCount = _recipes[CurrentRecipeIndex].RequiredIngredients.Count(step => step.Ingredient == ingredient);//_requiredIngredientsCount[ingredient];
 
-            var allowedIngredient = currentRecipe.FirstOrDefault(i => i.Ingredient == ingredient && !i.IsDone);
-            int allowedAmountOfPices = allowedIngredient?.PicesCount ?? 1;
+            var allowedIngredient = _currentRecipe.RequiredIngredients.FirstOrDefault(i => i.Ingredient == ingredient && !i.IsDone);
+            int allowedAmountOfPices = allowedIngredient?.PiecesCount ?? 1;
 
-            var recipePosition = currentRecipe.FirstOrDefault(p => p.Ingredient == ingredient
-            && p.PicesCount == amountOfpices
+            var recipePosition = _currentRecipe.RequiredIngredients.FirstOrDefault(p => p.Ingredient == ingredient
+            && p.PiecesCount == amountOfpices
             && !p.IsDone);
 
             if (recipePosition != null)
@@ -164,117 +85,65 @@ public class RecipeSystem : MonoBehaviour
             }
             else if (amountOfpices != allowedAmountOfPices)
             {
-                qualityOfCurrentRecipe -= excessIngredientPenalty;
-                Debug.Log($"Wrong amount of '{ingredient}' pices! Allowed: {allowedAmountOfPices}, now: {amountOfpices} -{excessIngredientPenalty}%");
+                QualityOfCurrentRecipe -= _levelData.excessIngredientPenalty;
+                Debug.Log($"Wrong amount of '{ingredient}' pices! Allowed: {allowedAmountOfPices}, now: {amountOfpices} -{_levelData.excessIngredientPenalty}%");
             }
             else if (currentCount > allowedCount)
             {
-                qualityOfCurrentRecipe -= excessIngredientPenalty;
-                Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{excessIngredientPenalty}%");
+                QualityOfCurrentRecipe -= _levelData.excessIngredientPenalty;
+                Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{_levelData.excessIngredientPenalty}%");
             }
 
         }
 
-
-        UpdateQualityText();
+        RecipeUpdated?.Invoke(QualityOfCurrentRecipe);
         CheckRecipeCompletion();
     }
 
-    private void UpdateQualityText()
-    {
-        //qualityText.text = $"Quality:\n{qualityOfCurrentRecipe:F2}%";
-        qualityBar.UpdateBar(qualityOfCurrentRecipe / 100f, 0f, 1f);
 
-        foreach (var (recipe, ui) in _positionUiPairs)
+
+    private void CheckRecipeCompletion()
+    {
+        //bool missingIngredient = false;
+
+        //missingIngredient = _currentRecipe.RequiredIngredients.Any(step => step.IsDone == false);
+
+        //foreach (var ingredient in _requiredIngredientsCount)
+        //{
+        //    if (_currentIngredients.Count(p => p.Ingredient == ingredient.Key) < ingredient.Value)
+        //    {
+        //        Debug.Log($"Recipe not complete: Missing {ingredient.Value - _currentIngredients.Count(p => p.Ingredient == ingredient.Key)} of {ingredient.Key.ingredientName}.");
+        //        missingIngredient = true;
+        //    }
+        //}
+
+        //if (_currentRecipe.RequiredIngredients.All(p => p.IsDone))
+        //    missingIngredient = false;
+
+        //if (missingIngredient) return;
+
+        if (_currentRecipe.RequiredIngredients.Any(step => step.IsDone == false)) return;
+
+        AddAndResetQuality();
+
+        RecipeCompleted?.Invoke();
+
+        if (++CurrentRecipeIndex < _recipes.Count)
         {
-            ui.SetTickMark(recipe.IsDone);
+            GetNextRecipe();
+            //Debug.Log($"Recipe complete! Moving to next recipe: {_recipes[CurrentRecipeIndex].recipeName}");
+
+        }
+        else
+        {
+            AllRecipesCompleted?.Invoke();
         }
     }
 
     private void AddAndResetQuality()
     {
-        _qualityList.Add(qualityOfCurrentRecipe);
-        qualityOfCurrentRecipe = 100;
-    }
-
-    private void CheckRecipeCompletion()
-    {
-        bool missingIngredient = false;
-        foreach (var ingredient in _requiredIngredientsCount)
-        {
-            if (_currentIngredients.Count(p => p.Ingredient == ingredient.Key) < ingredient.Value)
-            {
-                Debug.Log($"Recipe not complete: Missing {ingredient.Value - _currentIngredients.Count(p => p.Ingredient == ingredient.Key)} of {ingredient.Key.ingredientName}.");
-                missingIngredient = true;
-            }
-        }
-
-        if (currentRecipe.All(p => p.IsDone))
-            missingIngredient = false;
-
-        if (missingIngredient) return;
-
-        AddAndResetQuality();
-
-        if (++_currentRecipeIndex < recipes.Count)
-        {
-            GetNewRecipe();
-            Debug.Log($"Recipe complete! Moving to next recipe: {recipes[_currentRecipeIndex].recipeName}");
-
-            // Call MMF feedback for recipe completed
-            _MMFRecipeCompleted.PlayFeedbacks();
-        }
-        else
-        {
-            _MMFRecipeCompleted.PlayFeedbacks();
-            EndLevel(true);
-
-        }
-
-    }
-
-    private void EndLevel(bool allRecipesDone)
-    {
-        levelCompleteUI.SetActive(true);
-        LevelComplete levelComplete = levelCompleteUI.GetComponent<LevelComplete>();
-        levelComplete.SetNrMealsCompletedText(_currentRecipeIndex, recipes.Count);
-
-        _MMFLevelEnd.PlayFeedbacks();
-
-        if (allRecipesDone)
-        {
-            OverallQuality = _qualityList.Average();
-
-            levelComplete.EvaluateScore(OverallQuality);
-
-            //_timeManager.TogglePause();
-            Debug.Log($"LEVEL FINISHED! Quality: {OverallQuality}%");
-
-        }
-        else
-        {
-            levelComplete.EvaluateScore(0f);
-            //_timeManager.TogglePause();
-            Debug.Log("LEVEL FAILED!");
-        }
-    }
-
-    private void OnTimerEnd()
-    {
-        EndLevel(false);
-    }
-
-    private class RecipePosition
-    {
-        public IngredientData Ingredient { get; private set; }
-        public int PicesCount { get; private set; }
-        public bool IsDone { get; set; }
-
-        public RecipePosition(IngredientData ingredient, int picesCount, bool isDone)
-        {
-            Ingredient = ingredient;
-            PicesCount = picesCount;
-            IsDone = isDone;
-        }
+        _qualityList.Add(QualityOfCurrentRecipe);
+        QualityOfCurrentRecipe = 100;
     }
 }
+

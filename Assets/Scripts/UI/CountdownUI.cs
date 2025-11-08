@@ -1,19 +1,69 @@
 using MoreMountains.Feedbacks;
+using System;
 using TMPro;
 using UnityEngine;
 using VContainer;
 
-public class CountdownUI : MonoBehaviour, ITimerUI
+public class CountdownUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text timeDisplayText;
     [SerializeField] private MMF_Player _countdownReachedFeedback;
     [SerializeField] private MMF_Player _countdownTickFeedback;
 
+    private bool _earlyWarningTriggered = false;
+    private int _lastAnnouncedSecond = int.MinValue;
+
+    private ITimerService _timerService;
+    private LevelData _levelData;
+    private AudioManager _audioManager;
+
+    [Inject]
+    private void Construct(ITimerService timerService, LevelData levelData, AudioManager audioManager)
+    {
+        _timerService = timerService;
+        _levelData = levelData;
+        _audioManager = audioManager;
+    }
 
     private void Start()
     {
         timeDisplayText.color = Color.black;
         timeDisplayText.text = GetFormattedTime(0f);
+        _earlyWarningTriggered = false;
+    }
+
+    private void OnEnable()
+    {
+        _timerService.Tick += OnTimerTick;
+    }
+
+    private void OnDisable()
+    {
+        _timerService.Tick -= OnTimerTick;
+    }
+
+    private void OnTimerTick(float time)
+    {
+        ShowTime(time);
+
+        if (!_earlyWarningTriggered && time <= _levelData.earlyWarningInSeconds)
+        {
+            _earlyWarningTriggered = true;
+            ShowWarning();
+            _audioManager.SetTempo(0.3f);
+        }
+
+
+        if (_levelData.finalCountdownInSeconds > 0)
+        {
+            int wholeSeconds = Mathf.CeilToInt(time);
+            if (wholeSeconds != _lastAnnouncedSecond && wholeSeconds <= _levelData.finalCountdownInSeconds && wholeSeconds > 0)
+            {
+                _lastAnnouncedSecond = wholeSeconds;
+                ShowTimeEnding();
+                _audioManager.SetTempo(0.5f);
+            }
+        }
     }
 
     public void ShowTime(float timeInSeconds)

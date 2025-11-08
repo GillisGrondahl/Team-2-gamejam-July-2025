@@ -5,7 +5,7 @@ using VContainer;
 
 public class DiegeticMenuButton : MonoBehaviour
 {
-    private IInputService input;
+    private IInputService _input;
 
     [Header("Collider Reference")]
     [SerializeField] private BoxCollider buttonCollider;
@@ -27,19 +27,19 @@ public class DiegeticMenuButton : MonoBehaviour
     [Inject]
     private void Construct(IInputService input)
     {
-        this.input = input;
+        _input = input;
     }
 
     private void OnEnable()
     {
-        input.MousePosition += UpdateMousePosition;
-        input.Interact += UpdateInteraction;
+        _input.MousePosition += UpdateMousePosition;
+        _input.Interact += UpdateInteraction;
     }
 
     private void OnDisable()
     {
-        input.MousePosition -= UpdateMousePosition;
-        input.Interact -= UpdateInteraction;
+        _input.MousePosition -= UpdateMousePosition;
+        _input.Interact -= UpdateInteraction;
     }
 
     void Start()

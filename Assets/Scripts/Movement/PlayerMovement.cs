@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         // Subscribe to one-armed mode event
-        GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
+        //GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
 
         Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = showCursor;

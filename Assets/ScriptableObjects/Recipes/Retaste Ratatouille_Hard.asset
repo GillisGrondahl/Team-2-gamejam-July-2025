@@ -21,3 +21,19 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
     - {fileID: 11400000, guid: 6e2c201cb1ad8094ab00118bdcf572b7, type: 2}
     values: 0300000003000000040000000300000001000000
+  <RequiredIngredients>k__BackingField:
+  - ingredient: {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
+    piecesCount: 3
+    isDone: 0
+  - ingredient: {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
+    piecesCount: 3
+    isDone: 0
+  - ingredient: {fileID: 11400000, guid: 48949b34dec3da441aeb315ec5ff5fff, type: 2}
+    piecesCount: 4
+    isDone: 0
+  - ingredient: {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
+    piecesCount: 3
+    isDone: 0
+  - ingredient: {fileID: 11400000, guid: 6e2c201cb1ad8094ab00118bdcf572b7, type: 2}
+    piecesCount: 1
+    isDone: 0

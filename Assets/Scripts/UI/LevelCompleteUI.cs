@@ -1,15 +1,57 @@
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
-public class LevelComplete : MonoBehaviour
+public class LevelCompleteUI : MonoBehaviour
 {
+
+    [SerializeField] private MMF_Player _MMFLevelEnd;
     [SerializeField] private float _scoreToComplete = 0.6f;
+    [SerializeField] private Canvas _canvas;
     [SerializeField] private Sprite _starOutline, _starFilled;
     [SerializeField] private Image _star1, _star2, _star3, _star4, _star5;
     [SerializeField] private TMP_Text _evaluationText, _NrMealsCompletedText;
     [SerializeField] private Button _continueButton, _retryButton;
 
+    private LevelManager _levelManager;
+    private RecipeSystem _recipeSystem;
+
+    [Inject]
+    private void Construct(LevelManager levelManager, RecipeSystem recipeSystem)
+    {
+        _levelManager = levelManager;
+        _recipeSystem = recipeSystem;
+    }
+
+    private void Awake()
+    {
+        _canvas.enabled = false;
+    }
+
+
+    private void OnEnable()
+    {
+        _levelManager.LevelEnded += OnLevelEnd;
+    }
+
+    private void OnDisable()
+    {
+        _levelManager.LevelEnded -= OnLevelEnd;
+    }
+
+    private void OnLevelEnd()
+    {
+        _canvas.enabled = true;
+
+        SetNrMealsCompletedText(_recipeSystem.CurrentRecipeIndex, _recipeSystem.TotalRecipes);
+
+        _MMFLevelEnd.PlayFeedbacks();
+
+        EvaluateScore(_recipeSystem.OverallQuality);
+        Debug.Log($"LEVEL FINISHED! Quality: {_recipeSystem.OverallQuality}%");
+    }
 
     public void EvaluateScore(float score)
     {

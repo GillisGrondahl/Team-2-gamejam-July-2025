@@ -1,6 +1,7 @@
 ﻿using MoreMountains.Feedbacks;
 using System.Collections;
 using UnityEngine;
+using VContainer;
 
 public class IngredientChecker : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class IngredientChecker : MonoBehaviour
     private bool _cooldown = false;
     [SerializeField] private MMF_Player _MMFIngredientDropInPot;
     [SerializeField] private MMF_Player _MMFToolDropInPot;
+
+    private RecipeSystem _recipeSystem;
+
+    [Inject]
+    private void Construct(RecipeSystem recipeSystem)
+    {
+        _recipeSystem = recipeSystem;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,7 +40,7 @@ public class IngredientChecker : MonoBehaviour
 
                 int pices = ingredient.ingredientParts.Count + 1;
                 Debug.Log($"Ingredient {ingredient.ingredient.ingredientName} has {pices} pices.");
-                RecipeSystem.Instance.AddIngredient(ingredient.ingredient, pices);
+                _recipeSystem.AddIngredient(ingredient.ingredient, pices);
                 Destroy(ingredient.gameObject);
 
                 // call MMF Feedback for playing sounds when dropping in pot
@@ -39,7 +48,7 @@ public class IngredientChecker : MonoBehaviour
             }
             else if (other.TryGetComponent<Tool>(out var tool))
             {
-                RecipeSystem.Instance.AddIngredient(ScriptableObject.CreateInstance<IngredientData>(), 1);
+                _recipeSystem.AddIngredient(ScriptableObject.CreateInstance<IngredientData>(), 1);
                 _MMFToolDropInPot.PlayFeedbacks();
                 tool.ResetPosition();
             }

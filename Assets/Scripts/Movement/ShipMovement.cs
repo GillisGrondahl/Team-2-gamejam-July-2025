@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VContainer;
 
 public class ShipMotion : MonoBehaviour
 {
@@ -33,20 +34,28 @@ public class ShipMotion : MonoBehaviour
     private float _heaveOffset;
     private float _pitchOffset;
 
+    LevelData _levelData;
+
+    [Inject]
+    private void Construct(LevelData levelData)
+    {
+        _levelData = levelData;
+    }
+
 
     void Start()
     {
         // Subscribe to landlubber mode event
-        GameEvents.Instance.OnLandlubberModeToggled += HandleLandlubberModeToggled;
+        //GameEvents.Instance.OnLandlubberModeToggled += HandleLandlubberModeToggled;
 
         // get motion intensity from difficulty manager
-        _motionIntensity = LevelDifficultyManager.Instance.levelDifficultyData.waveMotionIntensity;
+        _motionIntensity = _levelData.waveMotionIntensity;
 
         // if landlubber mode is enabled, disable motion
-        if (LevelDifficultyManager.Instance.landlubberMode == true)
-        {
-            _motionIntensity = 0f;
-        }
+        //if (LevelDifficultyManager.Instance.landlubberMode == true)
+        //{
+        //    _motionIntensity = 0f;
+        //}
 
         // Store the initial position and rotation
         _initialPosition = transform.position;
@@ -76,7 +85,7 @@ public class ShipMotion : MonoBehaviour
     public void HandleLandlubberModeToggled(bool landlubberMode)
     {
         _motionIntensity = landlubberMode ? 0f : 1f;
-        LevelDifficultyManager.Instance.landlubberMode = landlubberMode;
+        //LevelDifficultyManager.Instance.landlubberMode = landlubberMode;
     }
 
     public void CalcHeaving(float _time)

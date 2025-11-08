@@ -19,13 +19,13 @@ public class SettingsMenuUI : MonoBehaviour
     [SerializeField] private Toggle oneArmedMode;
 
     AudioManager _audioManager;
-    LevelManager _levelManager;
+    //LevelManager _levelManager;
 
     [Inject]
-    private void Constructor(AudioManager audioManager, LevelManager levelManager)
+    private void Constructor(AudioManager audioManager)
     {
         _audioManager = audioManager;
-        _levelManager = levelManager;
+        //_levelManager = levelManager;
     }
 
     void OnEnable()
@@ -59,14 +59,14 @@ public class SettingsMenuUI : MonoBehaviour
 
     public void OnLandlubberModeToggled()
     {
-        LevelDifficultyManager.Instance.landlubberMode = landlubberMode.isOn;
-        GameEvents.Instance.OnLandlubberModeToggled?.Invoke(landlubberMode.isOn);
+        //LevelDifficultyManager.Instance.landlubberMode = landlubberMode.isOn;
+        //GameEvents.Instance.OnLandlubberModeToggled?.Invoke(landlubberMode.isOn);
         Debug.Log("Landlubber mode toggled: " + landlubberMode.isOn);
     }
 
     public void OnOneHandedModeToggled(bool isOn)
     {
-        GameEvents.Instance.OnOneArmedModeToggled?.Invoke(oneArmedMode.isOn);
+        //GameEvents.Instance.OnOneArmedModeToggled?.Invoke(oneArmedMode.isOn);
         Debug.Log("One-armed mode toggled: " + oneArmedMode.isOn);
 
     }

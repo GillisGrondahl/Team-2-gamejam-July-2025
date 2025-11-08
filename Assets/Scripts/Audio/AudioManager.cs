@@ -95,7 +95,7 @@ public class AudioManager : MonoBehaviour, IAudioService
     private void Start()
     {
         // Subscribe to game events
-        GameEvents.Instance.OnStartGameClicked += HandleLevelStart;
+        //GameEvents.Instance.OnStartGameClicked += HandleLevelStart;
         //GameEvents.Instance.TimeManagerInstantiated += HandleTimeManagerInitiated;
 
         // Ensure banks are loaded (redundant if auto-loading works, but safe)

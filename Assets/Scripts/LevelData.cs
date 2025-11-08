@@ -3,11 +3,18 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelDifficultyData", menuName = "ScriptableObjects/LevelDifficultyData")]
 
-public class LevelDifficultyData : ScriptableObject
+public class LevelData : ScriptableObject
 {
+
+    public bool showPlayerInstructions = false;
+
     public float levelDurationInSeconds = 60f;
     public float earlyWarningInSeconds = 10f;
     public int finalCountdownInSeconds = 5;
+
+    [Header("Scoring Penalties")]
+    public int wrongIngredientPenalty = 10;
+    public int excessIngredientPenalty = 10;
 
     public int timeToComplete = 120;
     [Tooltip("Speed multiplier for overall wave motion intensity (effects pitch amplitude & overall speed)")]

@@ -5,35 +5,31 @@ using VContainer;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private LevelDifficultyData levelDifficultyData;
-
-    private bool _earlyWarningTriggered = false;
-    private int _lastAnnouncedSecond = int.MinValue;
-
     private bool _isGamePaused = false;
-
+    private bool _isLevelFinished = false;
 
     private AudioManager _audio;
     private ITimerService _timer;
-    private ITimerUI _timerUI;
     private IInputService _input;
+    private RecipeSystem _recipeSystem;
+    private LevelData _levelData;
 
     public event UnityAction GamePaused;
     public event UnityAction GameResumed;
+    public event UnityAction LevelEnded;
 
+    public event UnityAction ShowPlayerInstructions;
 
-    //TODO: Move this to Controller, LevelManager doing to many things
     [Inject]
-    private void Construct(ITimerService timerService, AudioManager audioService, ITimerUI timerUI, IInputService input)
+    private void Construct(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, LevelData levelData)
     {
         _timer = timerService;
         _audio = audioService;
-        _timerUI = timerUI;
         _input = input;
+        _recipeSystem = recipeSystem;
+        _levelData = levelData;
     }
 
-
-    //Add check for the lvl1 info
     private void Start()
     {
         StartLevel();
@@ -41,81 +37,72 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel()
     {
-        _earlyWarningTriggered = false;
-        _timer.Start(levelDifficultyData.levelDurationInSeconds);
-        ResumeGame();
+        _isLevelFinished = false;
+        _timer.Start(_levelData.levelDurationInSeconds);
+        _audio.HandleLevelStart();
+
+        if(_levelData.showPlayerInstructions)
+        {
+            ShowPlayerInstructions?.Invoke();
+            PauseGame();
+        }
+        else
+            ResumeGame();
     }
 
     private void OnEnable()
     {
         _input.Escape += TogglePause;
-        _timer.Tick += OnTimerTick;
-        _timer.Completed += OnTimerCompleted;
+        _timer.Completed += OnLevelEnd;
+        _recipeSystem.AllRecipesCompleted += OnLevelEnd;
     }
 
     private void OnDisable()
     {
         _input.Escape -= TogglePause;
-        _timer.Tick -= OnTimerTick;
-        _timer.Completed -= OnTimerCompleted;
+        _timer.Completed -= OnLevelEnd;
+        _recipeSystem.AllRecipesCompleted -= OnLevelEnd;
     }
 
-    private void OnTimerTick(float time) 
+    private void OnLevelEnd()
     {
-        _timerUI.ShowTime(time);
-
-        if (!_earlyWarningTriggered && time <= levelDifficultyData.earlyWarningInSeconds)
-        { 
-            _earlyWarningTriggered = true;
-            _timerUI.ShowWarning();
-            _audio.SetTempo(0.3f);
-        }
-
-
-        if (levelDifficultyData.finalCountdownInSeconds > 0)
-        {
-            int wholeSeconds = Mathf.CeilToInt(time);
-            if(wholeSeconds != _lastAnnouncedSecond && wholeSeconds <= levelDifficultyData.finalCountdownInSeconds && wholeSeconds > 0)
-            {
-                _lastAnnouncedSecond = wholeSeconds;
-                _timerUI.ShowTimeEnding();
-                _audio.SetTempo(0.5f);
-            }
-        }
-    }
-
-    private void OnTimerCompleted()
-    {
-        //Audio?
+        PauseGame();
+        _isLevelFinished = true;
+        LevelEnded?.Invoke();
     }
 
     public void TogglePause()
     {
+        if(_isLevelFinished) return;
+
         if (_isGamePaused)
         {
             ResumeGame();
+            GameResumed?.Invoke();
         }
         else
         {
             PauseGame();
+            GamePaused?.Invoke();
         }
     }
     private void PauseGame()
     {
         Time.timeScale = 0f;
+        _timer.Pause();
         _isGamePaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        GamePaused?.Invoke();
+
     }
 
     private void ResumeGame()
     {
         Time.timeScale = 1f;
+        _timer.Resume();
         _isGamePaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        GameResumed?.Invoke();
     }
 }
 
