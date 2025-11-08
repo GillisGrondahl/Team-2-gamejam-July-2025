@@ -83,7 +83,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{674188ea-d4a2-4954-b608-ab7595c57070}">
 		<property name="volume">
-			<value>4</value>
+			<value>10</value>
 		</property>
 		<relationship name="automators">
 			<destination>{096a7b2d-5fce-42cd-bcb8-5fe8407176af}</destination>
@@ -159,7 +159,11 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{42d8f038-9ebf-4173-bccf-29e1ba1a6c9c}" />
-	<object class="LoudnessMeter" id="{44575f40-56fd-460d-bd1e-c3de4fec7e41}" />
+	<object class="LoudnessMeter" id="{44575f40-56fd-460d-bd1e-c3de4fec7e41}">
+		<property name="loudnessTarget">
+			<value>-22</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{0dba3166-c1d8-4f1f-a0d5-336b32a56a5c}">
 		<relationship name="audioFile">
 			<destination>{78439795-9b15-4676-aeaf-6e82d6cf73eb}</destination>

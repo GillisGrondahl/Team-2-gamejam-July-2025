@@ -157,11 +157,7 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{22d6704e-c6e2-4c35-a1f9-dfd638ba5971}" />
-	<object class="LoudnessMeter" id="{9b65cf95-b21f-40ec-89d0-240f9feeb9c7}">
-		<property name="bypass">
-			<value>true</value>
-		</property>
-	</object>
+	<object class="LoudnessMeter" id="{9b65cf95-b21f-40ec-89d0-240f9feeb9c7}" />
 	<object class="SpatialiserEffect" id="{5f47c7fa-6363-48e6-a9d2-f5483c2d4540}" />
 	<object class="SingleSound" id="{36699cc4-4d96-486b-93fc-51d717f361e9}">
 		<relationship name="audioFile">
