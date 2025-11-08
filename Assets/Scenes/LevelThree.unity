@@ -1079,6 +1079,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7293570150778674704, guid: 57ea5026d8d78bf41b70f02df3bfbe54, type: 3}
+      propertyPath: managedReferences[6108673519520055364].DestinationSceneName
+      value: MainMenuScene
+      objectReference: {fileID: 0}
     - target: {fileID: 7795266442164994982, guid: 57ea5026d8d78bf41b70f02df3bfbe54, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

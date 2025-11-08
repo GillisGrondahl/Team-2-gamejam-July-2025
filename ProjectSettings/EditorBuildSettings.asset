@@ -7,10 +7,16 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
-    guid: 11053fcb754d4bb4795e3861a4076a6b
+    guid: 2734508528f86eb4796fb4c8eccb8295
   - enabled: 1
     path: Assets/Scenes/LevelOne.unity
     guid: bbbc7106f2b70c443afaaf1af531d9f6
+  - enabled: 1
+    path: Assets/Scenes/LevelTwo.unity
+    guid: 5502689d1ef5b2b45912fcd554eec3c6
+  - enabled: 1
+    path: Assets/Scenes/LevelThree.unity
+    guid: 1a8803b1fd9a0034eaf151e76ca6d282
   - enabled: 1
     path: Assets/Feel/MMTools/Core/MMSceneLoading/LoadingScreens/MMAdditiveLoadingScreen.unity
     guid: d89b77a7a68c1844280c6ff2e49f95b8
