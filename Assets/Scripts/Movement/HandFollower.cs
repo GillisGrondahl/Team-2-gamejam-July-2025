@@ -54,22 +54,17 @@ public class HandFollower : MonoBehaviour
 
         if (close && !isClosing)
         {
-            animator.speed = 1f;                 
+            animator.speed = 1.5f;                 
             animator.Play("HandClose", 0, 0f);   
         }
-        else if (!close && isClosing)
+        else
         {
-            animator.speed = -1f;                
-            animator.Play("HandClose", 0, 1f);
-            StartCoroutine(ResetToOpen());
+            animator.speed = 2.5f;                
+            animator.Play("HandOpen", 0, 0f);
+            //StartCoroutine(ResetToOpen());
         }
 
         isClosing = close;
     }
-    private IEnumerator ResetToOpen()
-    {
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        animator.speed = 0f;
-        animator.Play("HandClose", 0, 0f); 
-    }
+ 
 }
