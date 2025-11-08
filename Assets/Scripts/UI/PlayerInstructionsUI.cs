@@ -65,8 +65,6 @@ public class PlayerInstructionsUI : MonoBehaviour
 
     public void NextInstruction()
     {
-
-        Debug.Log("Next Instruction");
         if (!_recipeArrowPlayed)
         {
             _recipeArrow.PlayFeedbacks();

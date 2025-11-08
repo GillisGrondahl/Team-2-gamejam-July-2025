@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1140296450800019457}
   - component: {fileID: 5640874631592454413}
   m_Layer: 0
-  m_Name: MMF_FadeOutToSceneChange
+  m_Name: MMF_FadeOutToSceneChange_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
