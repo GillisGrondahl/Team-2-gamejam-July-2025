@@ -53,7 +53,7 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         //GameEvents.Instance.TimeManagerInstantiated?.Invoke(this);
-        levelDurationSeconds = (float)LevelDifficultyManager.Instance.levelDifficultyData.timeToComplete;
+        //levelDurationSeconds = (float)LevelDifficultyManager.Instance.levelDifficultyData.timeToComplete;
         StartTimer();
     }
 

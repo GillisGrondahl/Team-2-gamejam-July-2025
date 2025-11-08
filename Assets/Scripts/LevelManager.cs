@@ -1,9 +1,11 @@
 using FMOD;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using VContainer;
+using VContainer.Unity;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : IInitializable, IStartable, IDisposable
 {
     private bool _isGamePaused = false;
     private bool _isLevelFinished = false;
@@ -20,8 +22,7 @@ public class LevelManager : MonoBehaviour
 
     public event UnityAction ShowPlayerInstructions;
 
-    [Inject]
-    private void Construct(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, LevelData levelData)
+    public LevelManager(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, LevelData levelData)
     {
         _timer = timerService;
         _audio = audioService;
@@ -30,7 +31,7 @@ public class LevelManager : MonoBehaviour
         _levelData = levelData;
     }
 
-    private void Start()
+    public void Start()
     {
         StartLevel();
     }
@@ -50,14 +51,14 @@ public class LevelManager : MonoBehaviour
             ResumeGame();
     }
 
-    private void OnEnable()
+    public void Initialize()
     {
         _input.Escape += TogglePause;
         _timer.Completed += OnLevelEnd;
         _recipeSystem.AllRecipesCompleted += OnLevelEnd;
     }
 
-    private void OnDisable()
+    public void Dispose()
     {
         _input.Escape -= TogglePause;
         _timer.Completed -= OnLevelEnd;

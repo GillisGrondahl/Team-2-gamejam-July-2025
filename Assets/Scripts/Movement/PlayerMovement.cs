@@ -48,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
         // Subscribe to one-armed mode event
         //GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
 
-        Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = showCursor;
+        //Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
+        //Cursor.visible = showCursor;
 
         if (playerZone == null)
         {
