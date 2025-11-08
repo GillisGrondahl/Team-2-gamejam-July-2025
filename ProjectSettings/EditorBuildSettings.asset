@@ -9,14 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 11053fcb754d4bb4795e3861a4076a6b
   - enabled: 1
-    path: Assets/Scenes/LevelOne_old.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/LevelTwo.unity
-    guid: 8ccfdcd060ef43440abc321c6374d794
-  - enabled: 1
-    path: Assets/Scenes/LevelThree.unity
-    guid: fe288bdfe67ebdf4eb59c6b969110f65
+    path: Assets/Scenes/LevelOne.unity
+    guid: bbbc7106f2b70c443afaaf1af531d9f6
   - enabled: 1
     path: Assets/Feel/MMTools/Core/MMSceneLoading/LoadingScreens/MMAdditiveLoadingScreen.unity
     guid: d89b77a7a68c1844280c6ff2e49f95b8
