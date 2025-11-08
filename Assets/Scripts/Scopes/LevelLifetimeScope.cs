@@ -2,7 +2,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-public class LevelOneLifetimeScope : LifetimeScope
+public class LevelLifetimeScope : LifetimeScope
 {
     [SerializeField] LevelData levelData;
 

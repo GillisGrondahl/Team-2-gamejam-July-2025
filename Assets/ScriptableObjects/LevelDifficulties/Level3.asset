@@ -10,8 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eddb603a44c19e645b6871e526e8fb15, type: 3}
-  m_Name: Difficulty_Level3
+  m_Name: Level3
   m_EditorClassIdentifier: 
+  showPlayerInstructions: 0
+  levelDurationInSeconds: 330
+  earlyWarningInSeconds: 10
+  finalCountdownInSeconds: 5
+  wrongIngredientPenalty: 10
+  excessIngredientPenalty: 10
   timeToComplete: 330
   waveMotionIntensity: 1.4
   levelRecipes:

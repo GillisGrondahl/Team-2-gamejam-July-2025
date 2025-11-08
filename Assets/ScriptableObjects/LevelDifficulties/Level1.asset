@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eddb603a44c19e645b6871e526e8fb15, type: 3}
-  m_Name: Difficulty_Level1
+  m_Name: Level1
   m_EditorClassIdentifier: 
   showPlayerInstructions: 1
-  levelDurationInSeconds: 60
+  levelDurationInSeconds: 120
   earlyWarningInSeconds: 10
   finalCountdownInSeconds: 5
   wrongIngredientPenalty: 10

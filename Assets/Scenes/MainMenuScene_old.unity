@@ -1153,7 +1153,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1.4
+  m_Intensity: 1.41
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2594,6 +2594,14 @@ PrefabInstance:
     - target: {fileID: 3263758716113648889, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
       propertyPath: m_Name
       value: MainMenu_Wheel=Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743856074586644819, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8884239
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743856074586644819, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
+      propertyPath: m_Center.y
+      value: 0.92328393
       objectReference: {fileID: 0}
     - target: {fileID: 6963725799218194612, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
       propertyPath: m_LocalPosition.x
