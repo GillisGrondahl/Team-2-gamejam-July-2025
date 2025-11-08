@@ -13,6 +13,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         _audioManager.HandleLevelStop();
         //AudioManager.instance.HandleLevelStop();
     }

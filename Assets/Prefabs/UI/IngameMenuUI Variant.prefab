@@ -250,11 +250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8881285469677523709, guid: b3553f102d6aca94cb713229da3ca67e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleIngameMenu
+      value: ResumeButtonClicked
       objectReference: {fileID: 0}
     - target: {fileID: 8881285469677523709, guid: b3553f102d6aca94cb713229da3ca67e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TimeManager, Assembly-CSharp
+      value: LevelMenuUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 9105131154735999435, guid: b3553f102d6aca94cb713229da3ca67e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -366,83 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &7996089651852731596
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2266808361239280064}
-    m_Modifications:
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3781983662237930806, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: m_Name
-      value: MMF_FadeOutToSceneChange
-      objectReference: {fileID: 0}
-    - target: {fileID: 5640874631592454413, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-      propertyPath: managedReferences[6108673519520055364].DestinationSceneName
-      value: MainMenuScene
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dabfba10e229d31449766a16573eabb3, type: 3}
---- !u!114 &2359807844746743233 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5640874631592454413, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-  m_PrefabInstance: {fileID: 7996089651852731596}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &6999988795211320525 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1140296450800019457, guid: dabfba10e229d31449766a16573eabb3, type: 3}
-  m_PrefabInstance: {fileID: 7996089651852731596}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8139555372937754239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,7 +485,7 @@ PrefabInstance:
     - target: {fileID: 8217559201367231423, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2359807844746743233}
+      objectReference: {fileID: 7150345954305430776}
     - target: {fileID: 8217559201367231423, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayFeedbacks
@@ -577,10 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8034650765435785151, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6999988795211320525}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
 --- !u!224 &2266808361239280064 stripped
@@ -588,3 +508,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8034650765435785151, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
   m_PrefabInstance: {fileID: 8139555372937754239}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7150345954305430776 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1427258170141926023, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
+  m_PrefabInstance: {fileID: 8139555372937754239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

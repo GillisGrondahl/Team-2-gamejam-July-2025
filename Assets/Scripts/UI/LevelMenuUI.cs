@@ -28,6 +28,11 @@ public class LevelMenuUI : MonoBehaviour
         _levelManager.GameResumed -= HideLevelMenuUI;
     }
 
+    public void ResumeButtonClicked()
+    {
+        _levelManager.TogglePause();
+    }
+
     private void ShowLevelMenuUI()
     {
         levelMenu.SetActive(true);
