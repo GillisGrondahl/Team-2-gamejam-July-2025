@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HandFollower : MonoBehaviour
@@ -9,13 +10,19 @@ public class HandFollower : MonoBehaviour
     [SerializeField] private float maxLinearSpeed = 10f;
     [SerializeField] private float maxAngularSpeed = 20f;
 
-    [SerializeField] private Transform handOpen = null;
-    [SerializeField] private Transform handClosed = null;
+    //[SerializeField] private Transform handOpen = null;
+    //[SerializeField] private Transform handClosed = null;
+
+    [SerializeField] private Animator animator;
+    
+    private bool isClosing = false;
 
     private Rigidbody rb;
 
     void Start()
     {
+        animator.Play("HandClose", 0, 0f);
+        animator.speed = 0f;
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
@@ -39,9 +46,30 @@ public class HandFollower : MonoBehaviour
         rb.angularVelocity = Vector3.ClampMagnitude(desiredAngularVel, maxAngularSpeed);
     }
 
+    
     public void CloseHand(bool close)
     {
-        handOpen.gameObject.SetActive(!close);
-        handClosed.gameObject.SetActive(close);
+        // handOpen.gameObject.SetActive(!close);
+        // handClosed.gameObject.SetActive(close);
+
+        if (close && !isClosing)
+        {
+            animator.speed = 1f;                 
+            animator.Play("HandClose", 0, 0f);   
+        }
+        else if (!close && isClosing)
+        {
+            animator.speed = -1f;                
+            animator.Play("HandClose", 0, 1f);
+            StartCoroutine(ResetToOpen());
+        }
+
+        isClosing = close;
+    }
+    private IEnumerator ResetToOpen()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        animator.speed = 0f;
+        animator.Play("HandClose", 0, 0f); 
     }
 }
