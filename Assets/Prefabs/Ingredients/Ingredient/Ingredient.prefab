@@ -369,7 +369,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        Play3D: 0
+        Play3D: 1
         PositionTransform: {fileID: 0}
         Parameters: []
 --- !u!1 &6805411796304712701
@@ -440,6 +440,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -461,6 +463,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -594,7 +597,7 @@ MonoBehaviour:
   TransformToFollow: {fileID: 0}
   Rigidbody: {fileID: 0}
   cutable: 1
-  IsAPart: 0
+  ingredientParts: []
   _fdbkPickUp: {fileID: 4699068371201697725}
   _fdbkDropped: {fileID: 272410748585832224}
   _velocityThreshold: 0.5
@@ -979,6 +982,6 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        Play3D: 0
+        Play3D: 1
         PositionTransform: {fileID: 0}
         Parameters: []

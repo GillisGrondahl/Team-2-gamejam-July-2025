@@ -5,7 +5,7 @@
 			<value>Potato_Dropped</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -136,6 +136,7 @@
 	<object class="MixerBusEffectChain" id="{a483c658-9964-4363-a40a-f85ef3abb609}">
 		<relationship name="effects">
 			<destination>{1f257e52-771d-4b86-9fc8-8ff5a652674c}</destination>
+			<destination>{5eecbc63-f500-49ce-842c-79a59070212b}</destination>
 			<destination>{ee907ed2-d0c9-46b0-b936-38b0e1577ac6}</destination>
 		</relationship>
 	</object>
@@ -157,6 +158,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{1f257e52-771d-4b86-9fc8-8ff5a652674c}" />
+	<object class="SpatialiserEffect" id="{5eecbc63-f500-49ce-842c-79a59070212b}">
+		<property name="userStereoSeparation">
+			<value>59.9999962</value>
+		</property>
+		<property name="userStereoAxis">
+			<value>11.4398212</value>
+		</property>
+	</object>
 	<object class="LoudnessMeter" id="{ee907ed2-d0c9-46b0-b936-38b0e1577ac6}" />
 	<object class="SingleSound" id="{a9be76cd-5ddc-4da2-86e8-909794b2a865}">
 		<relationship name="audioFile">
