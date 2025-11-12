@@ -31,13 +31,14 @@ public class DiegeticMenuButton : MonoBehaviour
     }
 
     private void OnEnable()
-    {
+    { 
         _input.MousePosition += UpdateMousePosition;
         _input.Interact += UpdateInteraction;
     }
 
     private void OnDisable()
     {
+        
         _input.MousePosition -= UpdateMousePosition;
         _input.Interact -= UpdateInteraction;
     }
