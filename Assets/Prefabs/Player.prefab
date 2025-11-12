@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 1591256000760668755}
   - component: {fileID: 6504745973302034895}
   - component: {fileID: 3236987937718833828}
+  - component: {fileID: 1520037474792076994}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -213,6 +214,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 9171844199796460900}
+--- !u!114 &1520037474792076994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773009527413830843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &9171844199796460900
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,11 +287,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerZone: {fileID: 0}
-  input: {fileID: 11400000, guid: 41765659817585a428c9de9c834728db, type: 2}
+  oneArmedScreenScrollLeft: {fileID: 0}
+  oneArmedScreenScrollRight: {fileID: 0}
+  interactorCollider: {fileID: 0}
   maxSpeed: 2
   acceleration: 2
   deceleration: 2
   showCursor: 1
+  oneArmedMode: 0
   jitterEnabled: 1
   jitterIntensity: 0.7
   jitterFrequency: 1.1
@@ -292,7 +320,6 @@ MonoBehaviour:
   handReachMin: -0.2
   handReachMax: 1
   reachSpeed: 0.02
-  input: {fileID: 11400000, guid: 41765659817585a428c9de9c834728db, type: 2}
 --- !u!1001 &2877582393600200799
 PrefabInstance:
   m_ObjectHideFlags: 0
