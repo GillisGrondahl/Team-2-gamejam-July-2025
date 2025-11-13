@@ -832,7 +832,7 @@ MonoBehaviour:
   - rid: 6108673472560103491
   - rid: 4466160448576946274
   - rid: 4466160448576946275
-  - rid: 4466160469290778730
+  - rid: 4466160469290778737
   - rid: 4466160448576946277
   KeepPlayModeChanges: 0
   PerformanceMode: 0
@@ -1105,7 +1105,7 @@ MonoBehaviour:
         OnLoop:
           m_PersistentCalls:
             m_Calls: []
-    - rid: 4466160469290778730
+    - rid: 4466160469290778737
       type: {class: MMF_Rotation, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
@@ -1179,7 +1179,7 @@ MonoBehaviour:
           ButtonText: 
         Owner: {fileID: 4620612498499694851}
         DebugActive: 0
-        AnimateRotationTarget: {fileID: 0}
+        AnimateRotationTarget: {fileID: 1717088689571858908}
         Mode: 0
         RotationSpace: 1
         MovementMode: 0
