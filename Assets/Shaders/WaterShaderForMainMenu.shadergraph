@@ -2357,7 +2357,7 @@
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
     "m_AlphaClip": false,
-    "m_CastShadows": true,
+    "m_CastShadows": false,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
     "m_AdditionalMotionVectorMode": 0,
@@ -3045,9 +3045,9 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 0.10459942370653153,
-        "g": 0.6340939998626709,
-        "b": 0.9396226406097412,
+        "r": 0.05296541005373001,
+        "g": 0.4331614077091217,
+        "b": 0.6528301239013672,
         "a": 1.0
     },
     "isMainColor": false,
