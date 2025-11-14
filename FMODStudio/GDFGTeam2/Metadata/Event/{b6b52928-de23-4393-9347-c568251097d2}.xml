@@ -5,7 +5,7 @@
 			<value>Parrot_Insults</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -100,6 +100,7 @@
 		<relationship name="effects">
 			<destination>{9728849d-cfff-4d73-832f-a580a0aa63d7}</destination>
 			<destination>{d297623c-389b-4af6-b6f6-3fec191493db}</destination>
+			<destination>{9ce5b8c1-8d64-4dcb-a909-5d6dc916cc8c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e95d4109-9cfd-475c-ad48-810ba050352f}" />
@@ -113,6 +114,7 @@
 	<object class="MixerBusFader" id="{ed65a9c9-2589-4135-891c-7c30afb79191}" />
 	<object class="MixerBusFader" id="{9728849d-cfff-4d73-832f-a580a0aa63d7}" />
 	<object class="LoudnessMeter" id="{d297623c-389b-4af6-b6f6-3fec191493db}" />
+	<object class="SpatialiserEffect" id="{9ce5b8c1-8d64-4dcb-a909-5d6dc916cc8c}" />
 	<object class="SingleSound" id="{7b91e4ed-7a97-4765-8f34-82e23e01ef5d}">
 		<relationship name="audioFile">
 			<destination>{b05fc56b-079a-4c52-ac3c-a1180e117b30}</destination>
