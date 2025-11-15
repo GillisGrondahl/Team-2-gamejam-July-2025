@@ -10,15 +10,15 @@ public class IngredientUI : MonoBehaviour
     [SerializeField] private Image knife;
     [SerializeField] private TMP_Text ingredientName;
     public IngredientData Ingredient { get; private set; }
-    public void Initialize(IngredientData ingredient, int pices)
+    public void Initialize(IngredientData ingredient, int pieces)
     {
         Ingredient = ingredient;
         ingredientName.text = Ingredient.ingredientName;
         icon.sprite = Ingredient.icon;
 
-        if (pices > 1)
+        if (pieces > 1)
         {
-            ingredientName.text = $"{Ingredient.ingredientName} cut in {pices} pices";
+            ingredientName.text = $"{Ingredient.ingredientName} cut in {pieces} pieces";
             knife.gameObject.SetActive(true);
         }
     }
