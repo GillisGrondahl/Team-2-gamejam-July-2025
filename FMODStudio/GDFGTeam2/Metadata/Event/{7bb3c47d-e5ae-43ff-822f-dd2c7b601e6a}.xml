@@ -5,7 +5,7 @@
 			<value>Hands_To_Supper</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{1cb50808-2c5f-419b-b93c-8e91481fba9c}</destination>
@@ -134,6 +134,7 @@
 		<relationship name="effects">
 			<destination>{50ab69df-505d-4c2b-b370-361893cbac91}</destination>
 			<destination>{f133f757-6385-41c8-9085-513ba3464142}</destination>
+			<destination>{68efd8d1-0323-46b9-964a-4ecabb43b681}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ab7025c1-15a3-4995-8c3a-6cc3efb0c304}" />
@@ -145,6 +146,7 @@
 	<object class="MixerBusFader" id="{c76efb52-8707-4f20-a810-b4817861d862}" />
 	<object class="MixerBusFader" id="{50ab69df-505d-4c2b-b370-361893cbac91}" />
 	<object class="LoudnessMeter" id="{f133f757-6385-41c8-9085-513ba3464142}" />
+	<object class="SpatialiserEffect" id="{68efd8d1-0323-46b9-964a-4ecabb43b681}" />
 	<object class="SingleSound" id="{db12d003-a882-401a-83df-54cd6774d872}">
 		<relationship name="audioFile">
 			<destination>{a16e4f07-1459-4263-8263-6fd18b2dc0ce}</destination>

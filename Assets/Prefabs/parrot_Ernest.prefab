@@ -253,7 +253,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         Play3D: 1
-        PositionTransform: {fileID: 0}
+        PositionTransform: {fileID: 5266649144131307217}
         Parameters: []
     - rid: 9162141710737473698
       type: {class: MMF_AnimatorPlayState, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
