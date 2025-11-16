@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class LevelData : ScriptableObject
     public float levelDurationInSeconds = 60f;
     public float earlyWarningInSeconds = 10f;
     public int finalCountdownInSeconds = 5;
+
+    public MMF_Player nextLevel;
+    public MMF_Player restartLevel;
 
     [Header("Scoring Penalties")]
     public int wrongIngredientPenalty = 10;

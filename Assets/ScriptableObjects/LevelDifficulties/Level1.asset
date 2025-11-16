@@ -16,9 +16,10 @@ MonoBehaviour:
   levelDurationInSeconds: 120
   earlyWarningInSeconds: 10
   finalCountdownInSeconds: 5
+  nextLevel: {fileID: 8101103941675134267, guid: 63250db5554bace45b02e778b7b1e359, type: 3}
+  restartLevel: {fileID: 8101103941675134267, guid: ecf4395b06ad9e0498c3f0f6dc296529, type: 3}
   wrongIngredientPenalty: 10
   excessIngredientPenalty: 10
-  timeToComplete: 120
   waveMotionIntensity: 0.8
   levelRecipes:
   - {fileID: 11400000, guid: b5a30c42c59ddf04ebf89ea553a6c879, type: 2}

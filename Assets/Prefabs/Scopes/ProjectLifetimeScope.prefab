@@ -49,3 +49,4 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   audioManager: {fileID: 6448629973054700967, guid: c86be434405cfb145ac50a0897a70e4f, type: 3}
+  sceneController: {fileID: 4667809944858572091, guid: dabfba10e229d31449766a16573eabb3, type: 3}

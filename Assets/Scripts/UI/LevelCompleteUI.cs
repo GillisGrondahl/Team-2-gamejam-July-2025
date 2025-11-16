@@ -17,12 +17,14 @@ public class LevelCompleteUI : MonoBehaviour
 
     private LevelManager _levelManager;
     private RecipeSystem _recipeSystem;
+    private ISceneController _sceneController;
 
     [Inject]
-    private void Construct(LevelManager levelManager, RecipeSystem recipeSystem)
+    private void Construct(LevelManager levelManager, RecipeSystem recipeSystem, ISceneController sceneController)
     {
         _levelManager = levelManager;
         _recipeSystem = recipeSystem;
+        _sceneController = sceneController;
     }
 
     private void Awake()
@@ -34,11 +36,15 @@ public class LevelCompleteUI : MonoBehaviour
     private void OnEnable()
     {
         _levelManager.LevelEnded += OnLevelEnd;
+        _continueButton.onClick.AddListener(() => _sceneController.LoadLevelSelection());
+        _retryButton.onClick.AddListener(() => _sceneController.RetryCurrentLevel());
     }
 
     private void OnDisable()
     {
         _levelManager.LevelEnded -= OnLevelEnd;
+        _continueButton.onClick.RemoveAllListeners();
+        _retryButton.onClick.RemoveAllListeners();
     }
 
     private void OnLevelEnd()
