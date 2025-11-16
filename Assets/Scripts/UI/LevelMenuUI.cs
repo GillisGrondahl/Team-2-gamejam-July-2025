@@ -7,31 +7,63 @@ public class LevelMenuUI : MonoBehaviour
 {
 
     [SerializeField] private GameObject levelMenu;
+    [SerializeField] private GameObject settingsMenu;
+
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button resumeButton;
 
     LevelManager _levelManager;
+    ISceneController _sceneController;
 
     [Inject]
-    public void Construct(LevelManager levelManager)
+    private void Construct(LevelManager levelManager, ISceneController sceneController)
     {
         _levelManager = levelManager;
+        _sceneController = sceneController;
     }
 
     private void OnEnable()
     {
         _levelManager.GamePaused += ShowLevelMenuUI;
         _levelManager.GameResumed += HideLevelMenuUI;
+        restartButton.onClick.AddListener(OnRestartButtonClicked);
+        settingsButton.onClick.AddListener(OnSettingsButtonClicked);
+        mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        resumeButton.onClick.AddListener(OnResumeButtonClicked);
     }
 
     private void OnDisable()
     {
         _levelManager.GamePaused -= ShowLevelMenuUI;
         _levelManager.GameResumed -= HideLevelMenuUI;
+        restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
+        mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+        resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
     }
 
-    public void ResumeButtonClicked()
+    private void OnRestartButtonClicked()
+    {
+        _sceneController.RetryCurrentLevel();
+    }
+
+    private void OnSettingsButtonClicked()
+    {
+        settingsMenu.SetActive(true);
+    }
+
+    private void OnMainMenuButtonClicked()
+    {
+        _sceneController.LoadMainMenu();
+    }
+
+    private void OnResumeButtonClicked()
     {
         _levelManager.TogglePause();
     }
+
 
     private void ShowLevelMenuUI()
     {

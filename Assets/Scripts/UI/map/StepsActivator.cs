@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+//#if UNITY_EDITOR
+//using UnityEditor;
+//#endif
 
 public class StepsActivator : MonoBehaviour
 {
@@ -30,23 +30,23 @@ public class StepsActivator : MonoBehaviour
 
     }
 
-#if UNITY_EDITOR
-    [CustomEditor(typeof(StepsActivator))]
-    public class StepActivatorEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            DrawDefaultInspector();
+//#if UNITY_EDITOR
+//    [CustomEditor(typeof(StepsActivator))]
+//    public class StepActivatorEditor : Editor
+//    {
+//        public override void OnInspectorGUI()
+//        {
+//            DrawDefaultInspector();
 
-            StepsActivator stepActivator = (StepsActivator)target;
+//            StepsActivator stepActivator = (StepsActivator)target;
 
-            if (GUILayout.Button("Activate Steps Sequentially"))
-            {
-                stepActivator.ShowStepsSequentially();
-            }
-        }
-    }
-#endif
+//            if (GUILayout.Button("Activate Steps Sequentially"))
+//            {
+//                stepActivator.ShowStepsSequentially();
+//            }
+//        }
+//    }
+//#endif
 
     public void HideSteps()
     {
@@ -56,11 +56,13 @@ public class StepsActivator : MonoBehaviour
         }
     }
 
+    [ContextMenu("Activate Steps Sequentially")]
     public void ShowStepsSequentially()
     {
         StartCoroutine(ActivateStepsSequentially());
     }
 
+    [ContextMenu("Activate Steps Instantly")]
     public void ShowStepsInstantly()
     {
         foreach (GameObject step in stepInstances)

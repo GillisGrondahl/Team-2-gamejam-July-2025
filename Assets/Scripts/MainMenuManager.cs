@@ -3,7 +3,9 @@ using VContainer;
 
 public class MainMenuManager : MonoBehaviour
 {
-    AudioManager _audioManager;
+    private AudioManager _audioManager;
+
+
 
     [Inject]
     private void Construct(AudioManager audioManager)
@@ -17,4 +19,6 @@ public class MainMenuManager : MonoBehaviour
         _audioManager.HandleLevelStop();
         //AudioManager.instance.HandleLevelStop();
     }
+
+
 }

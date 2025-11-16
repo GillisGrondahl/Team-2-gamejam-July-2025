@@ -18,6 +18,10 @@ public class RecipeSystem : IStartable
     public event Action RecipeCompleted;
     public event Action AllRecipesCompleted;
 
+    public event Action NotIngredientAdded;
+    public event Action GoodIngredientAdded;
+    public event Action BadIngredientAdded;
+
 
     private List<RecipeData> _recipes = null;
     private List<RecipeStep> _currentlyAddedIngredients = new();
@@ -55,6 +59,12 @@ public class RecipeSystem : IStartable
         NewRecipe?.Invoke(_currentRecipe);
     }
 
+    public void AddNotIngredient()
+    {
+        QualityOfCurrentRecipe -= _levelData.wrongIngredientPenalty;
+        NotIngredientAdded?.Invoke();
+    }
+
 
     public void AddIngredient(IngredientData ingredient, int amountOfpices)
     {
@@ -66,6 +76,7 @@ public class RecipeSystem : IStartable
         {
             QualityOfCurrentRecipe -= _levelData.wrongIngredientPenalty;
             Debug.Log($"'{ingredient}' is not in recipe. -{_levelData.wrongIngredientPenalty}%");
+            BadIngredientAdded?.Invoke();
         }
         else
         {
@@ -81,17 +92,20 @@ public class RecipeSystem : IStartable
 
             if (recipePosition != null)
             {
+                GoodIngredientAdded?.Invoke();
                 recipePosition.IsDone = true;
             }
             else if (amountOfpices != allowedAmountOfPices)
             {
                 QualityOfCurrentRecipe -= _levelData.excessIngredientPenalty;
                 Debug.Log($"Wrong amount of '{ingredient}' pices! Allowed: {allowedAmountOfPices}, now: {amountOfpices} -{_levelData.excessIngredientPenalty}%");
+                BadIngredientAdded?.Invoke();
             }
             else if (currentCount > allowedCount)
             {
                 QualityOfCurrentRecipe -= _levelData.excessIngredientPenalty;
                 Debug.Log($"Too many '{ingredient}'! Allowed: {allowedCount}, now: {currentCount} -{_levelData.excessIngredientPenalty}%");
+                BadIngredientAdded?.Invoke();
             }
 
         }

@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenuScene.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 2734508528f86eb4796fb4c8eccb8295
   - enabled: 1
-    path: Assets/Scenes/LevelSelectScreen.unity
+    path: Assets/Scenes/LevelSelection.unity
     guid: 5e8e10aa197f0794eb209bec0e54c9a1
   - enabled: 1
-    path: Assets/Scenes/LevelOne.unity
+    path: Assets/Scenes/Level_01.unity
     guid: bbbc7106f2b70c443afaaf1af531d9f6
   - enabled: 1
-    path: Assets/Scenes/LevelTwo.unity
+    path: Assets/Scenes/Level_02.unity
     guid: 5502689d1ef5b2b45912fcd554eec3c6
   - enabled: 1
-    path: Assets/Scenes/LevelThree.unity
+    path: Assets/Scenes/Level_03.unity
     guid: 1a8803b1fd9a0034eaf151e76ca6d282
   - enabled: 1
     path: Assets/Feel/MMTools/Core/MMSceneLoading/LoadingScreens/MMAdditiveLoadingScreen.unity

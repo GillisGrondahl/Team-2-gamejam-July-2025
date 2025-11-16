@@ -31,8 +31,6 @@ public class IngredientChecker : MonoBehaviour
             
             if (other.TryGetComponent<Ingredient>(out var ingredient))
             {
-
-                
                 if (ingredient.ParentIngredient != null)
                 {
                     ingredient = ingredient.ParentIngredient;
@@ -48,7 +46,7 @@ public class IngredientChecker : MonoBehaviour
             }
             else if (other.TryGetComponent<Tool>(out var tool))
             {
-                _recipeSystem.AddIngredient(ScriptableObject.CreateInstance<IngredientData>(), 1);
+                _recipeSystem.AddNotIngredient();
                 _MMFToolDropInPot.PlayFeedbacks();
                 tool.ResetPosition();
             }
