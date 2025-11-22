@@ -159,5 +159,16 @@ public class RecipeSystem : IStartable
         _qualityList.Add(QualityOfCurrentRecipe);
         QualityOfCurrentRecipe = 100;
     }
+
+    public void FinishAllRecipes()
+    {
+        while (CurrentRecipeIndex < _recipes.Count)
+        {
+            AddAndResetQuality();
+            CurrentRecipeIndex++;
+        }
+
+        AllRecipesCompleted?.Invoke();
+    }
 }
 

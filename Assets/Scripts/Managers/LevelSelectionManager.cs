@@ -10,7 +10,10 @@ public class LevelSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        //levelCompleted = PlayerPrefs.GetInt("LevelCompleted");
+        Time.timeScale = 1f;
+        levelCompleted = PlayerPrefs.GetInt("LevelCompleted");
+
+        Debug.Log("Level Completed: " + levelCompleted);
 
         UpdateLevelSteps();
     }

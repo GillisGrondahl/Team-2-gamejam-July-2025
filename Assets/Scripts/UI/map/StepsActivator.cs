@@ -1,18 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//#if UNITY_EDITOR
-//using UnityEditor;
-//#endif
+using Cysharp.Threading.Tasks;
 
 public class StepsActivator : MonoBehaviour
 {
-    [SerializeField] private GameObject stepContainer; 
+    [SerializeField] private GameObject stepContainer;
     [SerializeField] private float timeBetweenActivations = 0.1f;
     [SerializeField] private bool startRevealOnStart = false;
     [SerializeField] private float waitForFadeIn = 2.5f;
 
-    private List<GameObject> stepInstances = new List<GameObject>(); 
+    private List<GameObject> stepInstances = new List<GameObject>();
 
     private void Awake()
     {
@@ -44,15 +42,28 @@ public class StepsActivator : MonoBehaviour
     [ContextMenu("Activate Steps Sequentially")]
     public void ShowStepsSequentially()
     {
-        StartCoroutine(ActivateStepsSequentially());
+        Debug.Log("Starting Sequential Activation of Steps of " + gameObject.name + " | Amount of steps: " + stepInstances.Count);
+        //StartCoroutine(ActivateStepsSequentially());
+        ActivateSteps().Forget();
     }
 
     [ContextMenu("Activate Steps Instantly")]
     public void ShowStepsInstantly()
     {
+        Debug.Log("Starting Instant Activation of Steps of " + gameObject.name + " | Amount of steps: " + stepInstances.Count);
         foreach (GameObject step in stepInstances)
         {
             step.SetActive(true);
+        }
+    }
+
+    private async UniTaskVoid ActivateSteps()
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(waitForFadeIn));
+        foreach (GameObject step in stepInstances)
+        {
+            step.SetActive(true);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(timeBetweenActivations));
         }
     }
 

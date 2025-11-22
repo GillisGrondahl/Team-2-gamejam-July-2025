@@ -196,6 +196,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4061235064732491954, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5488900785088696208}
+    - target: {fileID: 4061235064732491954, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayFeedbacks
+      objectReference: {fileID: 0}
     - target: {fileID: 4143935211127593885, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -501,3 +509,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
+--- !u!114 &5488900785088696208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 999545390979630747, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
+  m_PrefabInstance: {fileID: 4752255358824302859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Feedbacks.MMF_Player

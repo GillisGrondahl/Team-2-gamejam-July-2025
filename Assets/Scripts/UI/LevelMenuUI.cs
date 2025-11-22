@@ -85,7 +85,6 @@ public class LevelMenuUI : MonoBehaviour
         _levelManager.TogglePause();
     }
 
-
     private void ShowLevelMenuUI()
     {
         levelMenu.SetActive(true);
