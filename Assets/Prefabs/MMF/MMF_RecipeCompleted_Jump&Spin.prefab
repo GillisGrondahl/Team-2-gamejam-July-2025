@@ -1605,7 +1605,7 @@ MonoBehaviour:
         DebugActive: 0
         AnimatePositionTarget: {fileID: 0}
         Mode: 0
-        Space: 0
+        Space: 1
         RandomizeRemap: 0
         MovementMode: 0
         AnimatePositionDuration: 0.3
@@ -1778,10 +1778,10 @@ MonoBehaviour:
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         AllowAdditivePlays: 0
-        RelativePosition: 0
+        RelativePosition: 1
         DeterminePositionsOnPlay: 1
         InitialPosition: {x: 0, y: 0, z: 0}
-        DestinationPosition: {x: 1.15, y: 1, z: 0}
+        DestinationPosition: {x: 0, y: 0.5, z: 0}
         InitialPositionTransform: {fileID: 0}
         DestinationPositionTransform: {fileID: 0}
         AnimatePositionCurveX:
@@ -1884,7 +1884,7 @@ MonoBehaviour:
         DebugActive: 0
         AnimatePositionTarget: {fileID: 0}
         Mode: 0
-        Space: 0
+        Space: 1
         RandomizeRemap: 0
         MovementMode: 0
         AnimatePositionDuration: 0.1
@@ -2057,9 +2057,9 @@ MonoBehaviour:
           EnumConditionPropertyName: 
           EnumConditions: 0000000000000000000000000000000000000000000000000000000000000000
         AllowAdditivePlays: 0
-        RelativePosition: 0
+        RelativePosition: 1
         DeterminePositionsOnPlay: 1
-        InitialPosition: {x: 1.15, y: 1, z: 0}
+        InitialPosition: {x: 0, y: 0, z: 0}
         DestinationPosition: {x: 0, y: -0.5, z: 0}
         InitialPositionTransform: {fileID: 0}
         DestinationPositionTransform: {fileID: 0}

@@ -17,7 +17,7 @@ public class Tool : MonoBehaviour
     [Header("MM Feedbacks")]
     [SerializeField] private MMF_Player _fdbkPickUp;
     [SerializeField] private MMF_Player _fdbkDropped;
-    //[SerializeField] private MMF_Player _fbdkDroppedInPot;
+    [SerializeField] private MMF_Player _fbdkToolReset;
 
     protected virtual void Awake()
     {
@@ -64,9 +64,12 @@ public class Tool : MonoBehaviour
 
     public void ResetPosition()
     {
+        
         transform.parent = _originalParent;
         transform.localPosition = _startingPosition;
         _resting = true;
+
+        _fbdkToolReset.PlayFeedbacks();
     }
 
     private void Update()
