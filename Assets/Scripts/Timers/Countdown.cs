@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using VContainer.Unity;
 
-public class Countdown : ITimerService
+public class Countdown : ITimerService, ITickable
 {
     private float _timeScale = 1f;
 
@@ -67,7 +68,7 @@ public class Countdown : ITimerService
         IsPaused = false;
     }
 
-
+    
     public void Update(float deltaTime)
     {
         if (!IsRunning || IsPaused || Duration <= 0f || TimeScale <= 0f) return;
@@ -94,5 +95,10 @@ public class Countdown : ITimerService
         IsPaused = false;
 
         Completed();
+    }
+
+    void ITickable.Tick()
+    {
+        Update(Time.deltaTime);
     }
 }

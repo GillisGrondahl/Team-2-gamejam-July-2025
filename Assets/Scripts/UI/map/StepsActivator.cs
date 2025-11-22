@@ -64,18 +64,9 @@ public class StepsActivator : MonoBehaviour
         await UniTask.Delay(System.TimeSpan.FromSeconds(waitForFadeIn));
         foreach (GameObject step in stepInstances)
         {
+            if (step == null) return;
             step.SetActive(true);
             await UniTask.Delay(System.TimeSpan.FromSeconds(timeBetweenActivations));
-        }
-    }
-
-    private IEnumerator ActivateStepsSequentially()
-    {
-        yield return new WaitForSeconds(waitForFadeIn);
-        foreach (GameObject step in stepInstances)
-        {
-            step.SetActive(true);
-            yield return new WaitForSeconds(timeBetweenActivations);
         }
     }
 }
