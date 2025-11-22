@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{abe2de0d-9342-4f04-a631-f81e692aabe7}">
 		<property name="assetPath">
-			<value>SFX/Parrot_Insults/parrot_YouGrogsnorter.wav</value>
+			<value>SFX/Parrot Speech/parrot_YouGrogsnorter.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
