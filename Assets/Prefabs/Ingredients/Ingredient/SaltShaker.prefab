@@ -1441,9 +1441,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 1350258024180338020}
     m_Modifications:
     - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].Label
+      value: 'FMOD OneShot: Saltshaker Dropped'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
       propertyPath: managedReferences[998730614237298750].FMODEventPath.Path
       value: event:/SFX/Saltshaker_Dropped
       objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].FMODEventPath.Path
+      value: event:/SFX/Saltshaker_Dropped
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429268].BoundParticleSystem
+      value: 
+      objectReference: {fileID: 4752059284489920439}
     - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
       propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data1
       value: -770829729
@@ -1458,6 +1470,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
       propertyPath: managedReferences[998730614237298750].FMODEventPath.Guid.Data4
+      value: 183138984
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].FMODEventPath.Guid.Data1
+      value: -770829729
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].FMODEventPath.Guid.Data2
+      value: 1250348322
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].FMODEventPath.Guid.Data3
+      value: -1405194853
+      objectReference: {fileID: 0}
+    - target: {fileID: 1048844093600210024, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+      propertyPath: managedReferences[4466160666846429267].FMODEventPath.Guid.Data4
       value: 183138984
       objectReference: {fileID: 0}
     - target: {fileID: 5181732823915666098, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
@@ -1520,6 +1548,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &4752059284489920439 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7602393595276366815, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
+  m_PrefabInstance: {fileID: 2914836180190710888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8041918769636890330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5181732823915666098, guid: 26c741d3b9b046447b4e1e70880ee021, type: 3}
