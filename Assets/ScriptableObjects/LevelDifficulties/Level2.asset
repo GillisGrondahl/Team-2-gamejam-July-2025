@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   levelIndex: 2
+  sceneName: Gameplay
   showPlayerInstructions: 0
   levelDurationInSeconds: 300
   earlyWarningInSeconds: 10

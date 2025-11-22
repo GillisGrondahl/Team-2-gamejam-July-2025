@@ -6,8 +6,11 @@ public class SceneController : MonoBehaviour, ISceneController
 
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string levelSelectionSceneName = "LevelSelection";
+    [SerializeField] private string gameplaySceneName = "Gameplay";
     [SerializeField] private MMF_Player transitionPlayer;
     private MMF_LoadScene _sceneLoadFeedback;
+
+    public LevelData CurrentLevelData { get; private set; }
 
     private void Awake()
     {
@@ -30,9 +33,15 @@ public class SceneController : MonoBehaviour, ISceneController
         PlayTransitionToScene(levelSelectionSceneName);
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadSceneByName(string sceneName)
     {
         PlayTransitionToScene(sceneName);
+    }
+
+    public void LoadSceneByLevelData(LevelData levelData)
+    {
+        CurrentLevelData = levelData;
+        PlayTransitionToScene(levelData.sceneName);
     }
 
     public void RetryCurrentLevel()

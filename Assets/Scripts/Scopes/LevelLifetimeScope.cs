@@ -4,11 +4,11 @@ using VContainer.Unity;
 
 public class LevelLifetimeScope : LifetimeScope
 {
-    [SerializeField] LevelData levelData;
+   // [SerializeField] LevelData levelData;
 
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.RegisterInstance(levelData);
+        //builder.RegisterInstance(levelData);
         builder.RegisterEntryPoint<TimerTickDriver>();
         builder.RegisterEntryPoint<RecipeSystem>().AsSelf();
         builder.RegisterEntryPoint<LevelManager>().AsSelf();

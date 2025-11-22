@@ -37,9 +37,9 @@ public class ShipMotion : MonoBehaviour
     LevelData _levelData;
 
     [Inject]
-    private void Construct(LevelData levelData)
+    private void Construct(SceneController sceneController)
     {
-        _levelData = levelData;
+        _levelData = sceneController.CurrentLevelData;
     }
 
 

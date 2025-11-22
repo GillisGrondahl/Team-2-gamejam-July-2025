@@ -31,9 +31,9 @@ public class RecipeSystem : IStartable
 
     private readonly LevelData _levelData;
 
-    public RecipeSystem(LevelData LevelData)
+    public RecipeSystem(SceneController sceneController)
     {
-        _levelData = LevelData;
+        _levelData = sceneController.CurrentLevelData;
     }
 
     public void Start()

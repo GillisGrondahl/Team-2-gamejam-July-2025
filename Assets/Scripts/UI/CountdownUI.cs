@@ -18,10 +18,10 @@ public class CountdownUI : MonoBehaviour
     private AudioManager _audioManager;
 
     [Inject]
-    private void Construct(ITimerService timerService, LevelData levelData, AudioManager audioManager)
+    private void Construct(ITimerService timerService, SceneController sceneController, AudioManager audioManager)
     {
         _timerService = timerService;
-        _levelData = levelData;
+        _levelData = sceneController.CurrentLevelData;
         _audioManager = audioManager;
     }
 

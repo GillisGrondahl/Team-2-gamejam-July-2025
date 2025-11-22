@@ -22,13 +22,13 @@ public class LevelManager : IInitializable, IStartable, IDisposable
 
     public event UnityAction ShowPlayerInstructions;
 
-    public LevelManager(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, LevelData levelData)
+    public LevelManager(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController)
     {
         _timer = timerService;
         _audio = audioService;
         _input = input;
         _recipeSystem = recipeSystem;
-        _levelData = levelData;
+        _levelData = sceneController.CurrentLevelData;
     }
 
     public void Start()
@@ -42,7 +42,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         _timer.Start(_levelData.levelDurationInSeconds);
         _audio.HandleLevelStart();
 
-        if(_levelData.showPlayerInstructions)
+        if (_levelData.showPlayerInstructions)
         {
             ShowPlayerInstructions?.Invoke();
         }
@@ -68,13 +68,14 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     {
         PauseGame();
         _isLevelFinished = true;
-        PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
+        if (_levelData.levelIndex > PlayerPrefs.GetInt("LevelCompleted"))
+            PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
         LevelEnded?.Invoke();
     }
 
     public void TogglePause()
     {
-        if(_isLevelFinished) return;
+        if (_isLevelFinished) return;
 
         if (_isGamePaused)
         {

@@ -36,6 +36,9 @@ public class SettingsMenuUI : MonoBehaviour
         sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeSliderChanged);
 
 
+        landlubberMode.onValueChanged.AddListener(OnLandLubberModeChanged);
+        oneArmedMode.onValueChanged.AddListener(OnOneHandModeChanged);
+
         // set sliders to current values
         masterVolumeSlider.value = _audioManager.MasterVolume;
         bgmVolumeSlider.value = _audioManager.BgmVolume;
@@ -50,6 +53,9 @@ public class SettingsMenuUI : MonoBehaviour
         bgmVolumeSlider.onValueChanged.RemoveListener(OnBGMVolumeSliderChanged);
         ambienceVolumeSlider.onValueChanged.RemoveListener(OnAmbienceVolumeSliderChanged);
         sfxVolumeSlider.onValueChanged.RemoveListener(OnSFXVolumeSliderChanged);
+
+        landlubberMode.onValueChanged.RemoveListener(OnLandLubberModeChanged);
+        oneArmedMode.onValueChanged.RemoveListener(OnOneHandModeChanged);
     }
 
     private void OnEscapePressed(bool obj)
@@ -57,14 +63,14 @@ public class SettingsMenuUI : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public void OnLandlubberModeToggled()
+    public void OnLandLubberModeChanged(bool isOn)
     {
         //LevelDifficultyManager.Instance.landlubberMode = landlubberMode.isOn;
         //GameEvents.Instance.OnLandlubberModeToggled?.Invoke(landlubberMode.isOn);
         Debug.Log("Landlubber mode toggled: " + landlubberMode.isOn);
     }
 
-    public void OnOneHandedModeToggled(bool isOn)
+    public void OnOneHandModeChanged(bool isOn)
     {
         //GameEvents.Instance.OnOneArmedModeToggled?.Invoke(oneArmedMode.isOn);
         Debug.Log("One-armed mode toggled: " + oneArmedMode.isOn);

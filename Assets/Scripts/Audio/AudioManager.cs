@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour, IAudioService
         set
         {
             _masterVolume = Mathf.Clamp01(value);
-            SetVolume(masterBus, _masterVolume);
+            SetVolume(masterBus, _masterVolume, nameof(masterBus));
         }
     }
 
@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour, IAudioService
         set
         {
             _bgmVolume = Mathf.Clamp01(value);
-            SetVolume(BGMBus, _bgmVolume);
+            SetVolume(BGMBus, _bgmVolume, nameof(BGMBus));
         }
     }
 
@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour, IAudioService
         set
         {
             _ambVolume = Mathf.Clamp01(value);
-            SetVolume(AMBBus, _ambVolume);
+            SetVolume(AMBBus, _ambVolume, nameof(AMBBus));
         }
     }
 
@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour, IAudioService
         set
         {
             _sfxVolume = Mathf.Clamp01(value);
-            SetVolume(SFXBus, _sfxVolume);
+            SetVolume(SFXBus, _sfxVolume, nameof(SFXBus));
         }
     }
 
@@ -118,16 +118,24 @@ public class AudioManager : MonoBehaviour, IAudioService
 
         InitializeAmbience();
 
+        //Load saved volume settings
+        _masterVolume = PlayerPrefs.GetFloat(nameof(masterBus), _masterVolume);
+        _bgmVolume = PlayerPrefs.GetFloat(nameof(BGMBus), _bgmVolume);
+        _ambVolume = PlayerPrefs.GetFloat(nameof(AMBBus), _ambVolume);
+        _sfxVolume = PlayerPrefs.GetFloat(nameof(SFXBus), _sfxVolume);
+
         // Set initial Volume
-        SetVolume(masterBus, _masterVolume);
-        SetVolume(BGMBus, _bgmVolume);
-        SetVolume(AMBBus, _ambVolume);
-        SetVolume(SFXBus, _sfxVolume);
+        SetVolume(masterBus, _masterVolume, nameof(masterBus));
+        SetVolume(BGMBus, _bgmVolume, nameof(BGMBus));
+        SetVolume(AMBBus, _ambVolume, nameof(AMBBus));
+        SetVolume(SFXBus, _sfxVolume, nameof(SFXBus));
     }
 
-    private void SetVolume(Bus volumeControlBus, float volume)
+    private void SetVolume(Bus volumeControlBus, float volume, string name)
     {
         volumeControlBus.setVolume(volume);
+        PlayerPrefs.SetFloat(name, volume);
+
     }
 
     //public void HandleTimeManagerInitiated(TimeManager timeManager)

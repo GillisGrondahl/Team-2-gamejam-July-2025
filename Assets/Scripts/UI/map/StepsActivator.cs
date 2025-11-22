@@ -18,7 +18,9 @@ public class StepsActivator : MonoBehaviour
         {
             for (int i = 0; i < stepContainer.transform.childCount; i++)
             {
-                stepInstances.Add(stepContainer.transform.GetChild(i).gameObject);
+                var stepElement = stepContainer.transform.GetChild(i).gameObject;
+                stepInstances.Add(stepElement);
+                stepElement.SetActive(false);
             }
         }
     }
