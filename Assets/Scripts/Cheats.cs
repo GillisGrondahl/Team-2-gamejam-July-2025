@@ -7,6 +7,8 @@ public class Cheats : MonoBehaviour
 
     int levelCompleted = 0;
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+
     [Inject]
     private void Construct(RecipeSystem recipeSystem)
     {
@@ -26,24 +28,9 @@ public class Cheats : MonoBehaviour
 
     private void OnGUI()
     {
-        //if (!showOverlay) return;
-
-        // Simple window/box area
         GUILayout.BeginArea(new Rect(10, 10, 250, 150), "Debug", GUI.skin.window);
+        GUILayout.Label("Level Completed: " + levelCompleted);
 
-        // Example label showing some value from your script
-            GUILayout.Label("Level Completed: " + levelCompleted);
-        //if (target != null)
-        //{
-        //    GUILayout.Label("Health: " + target.health);
-        //    GUILayout.Label("Score: " + target.score);
-        //}
-        //else
-        //{
-        //    GUILayout.Label("No target assigned");
-        //}
-
-        // Button that calls a method on your script
         if (GUILayout.Button("Finish All Recipes"))
         {
             FinishLevel();
@@ -51,5 +38,7 @@ public class Cheats : MonoBehaviour
 
         GUILayout.EndArea();
     }
+
+#endif
 
 }
