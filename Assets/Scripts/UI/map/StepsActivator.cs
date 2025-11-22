@@ -10,10 +10,11 @@ public class StepsActivator : MonoBehaviour
     [SerializeField] private GameObject stepContainer; 
     [SerializeField] private float timeBetweenActivations = 0.1f;
     [SerializeField] private bool startRevealOnStart = false;
+    [SerializeField] private float waitForFadeIn = 2.5f;
 
     private List<GameObject> stepInstances = new List<GameObject>(); 
 
-    private void Start()
+    private void Awake()
     {
         if (stepContainer != null)
         {
@@ -22,31 +23,15 @@ public class StepsActivator : MonoBehaviour
                 stepInstances.Add(stepContainer.transform.GetChild(i).gameObject);
             }
         }
+    }
 
+    private void Start()
+    {
         if (startRevealOnStart)
         {
             ShowStepsSequentially();
         }
-
     }
-
-//#if UNITY_EDITOR
-//    [CustomEditor(typeof(StepsActivator))]
-//    public class StepActivatorEditor : Editor
-//    {
-//        public override void OnInspectorGUI()
-//        {
-//            DrawDefaultInspector();
-
-//            StepsActivator stepActivator = (StepsActivator)target;
-
-//            if (GUILayout.Button("Activate Steps Sequentially"))
-//            {
-//                stepActivator.ShowStepsSequentially();
-//            }
-//        }
-//    }
-//#endif
 
     public void HideSteps()
     {
@@ -73,6 +58,7 @@ public class StepsActivator : MonoBehaviour
 
     private IEnumerator ActivateStepsSequentially()
     {
+        yield return new WaitForSeconds(waitForFadeIn);
         foreach (GameObject step in stepInstances)
         {
             step.SetActive(true);

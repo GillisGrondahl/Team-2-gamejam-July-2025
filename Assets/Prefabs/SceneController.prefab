@@ -352,7 +352,7 @@ MonoBehaviour:
         Owner: {fileID: 5640874631592454413}
         DebugActive: 0
         LoadingSceneName: MMAdditiveLoadingScreen
-        DestinationSceneName: LevelOne
+        DestinationSceneName: 
         LoadingMode: 0
         Priority: 4
         SecureLoad: 1

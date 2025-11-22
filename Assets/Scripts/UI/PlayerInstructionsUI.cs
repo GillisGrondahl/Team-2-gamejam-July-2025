@@ -77,7 +77,8 @@ public class PlayerInstructionsUI : MonoBehaviour
         }
         else
         {
-            _canvas.enabled = false;
+            Debug.Log("Hiding Instructions");
+            Hide();
             _levelManager.TogglePause();
         }
     }

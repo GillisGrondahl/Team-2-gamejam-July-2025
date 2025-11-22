@@ -9,6 +9,8 @@ public class LevelMenuUI : MonoBehaviour
     [SerializeField] private GameObject levelMenu;
     [SerializeField] private GameObject settingsMenu;
 
+    [SerializeField] private Button readyButton;
+
     [SerializeField] private Button restartButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button mainMenuButton;
@@ -28,6 +30,10 @@ public class LevelMenuUI : MonoBehaviour
     {
         _levelManager.GamePaused += ShowLevelMenuUI;
         _levelManager.GameResumed += HideLevelMenuUI;
+        _levelManager.ShowPlayerInstructions += OnShowPlayerInstucations;
+
+        readyButton.onClick.AddListener(OnReadyButtonClicked);
+
         restartButton.onClick.AddListener(OnRestartButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
@@ -38,10 +44,25 @@ public class LevelMenuUI : MonoBehaviour
     {
         _levelManager.GamePaused -= ShowLevelMenuUI;
         _levelManager.GameResumed -= HideLevelMenuUI;
+        _levelManager.ShowPlayerInstructions -= OnShowPlayerInstucations;
+
+        readyButton.onClick.RemoveListener(OnReadyButtonClicked);
+
         restartButton.onClick.RemoveListener(OnRestartButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
         mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
         resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
+    }
+
+    private void OnShowPlayerInstucations()
+    {
+        readyButton.gameObject.SetActive(false);
+    }
+
+    private void OnReadyButtonClicked()
+    {
+        readyButton.gameObject.SetActive(false);
+        _levelManager.TogglePause();
     }
 
     private void OnRestartButtonClicked()

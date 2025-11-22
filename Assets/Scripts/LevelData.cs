@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LevelData : ScriptableObject
 {
-
+          public int levelIndex = 0;
     public bool showPlayerInstructions = false;
 
     public float levelDurationInSeconds = 60f;

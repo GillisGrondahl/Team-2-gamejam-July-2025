@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddb603a44c19e645b6871e526e8fb15, type: 3}
   m_Name: Level3
   m_EditorClassIdentifier: 
+  levelIndex: 3
   showPlayerInstructions: 0
   levelDurationInSeconds: 330
   earlyWarningInSeconds: 10

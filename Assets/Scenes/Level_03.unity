@@ -461,7 +461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6806090592126321563, guid: 6343d963bc71c254c81b1fcdf5a2fd9e, type: 3}
       propertyPath: m_Name
-      value: MMF_FadeinOnStart
+      value: MMF_FadeOutOnStart
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

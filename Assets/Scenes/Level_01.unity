@@ -695,6 +695,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8791899697122190109, guid: 4779a0a4a192ce64fad8f8dd021b15e6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1052,7 +1056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6806090592126321563, guid: 6343d963bc71c254c81b1fcdf5a2fd9e, type: 3}
       propertyPath: m_Name
-      value: MMF_FadeinOnStart
+      value: MMF_FadeOutOnStart
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

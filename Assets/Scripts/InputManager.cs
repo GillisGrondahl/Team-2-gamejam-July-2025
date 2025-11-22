@@ -31,7 +31,6 @@ public class InputManager : IInputService, IStartable, IDisposable, IPlayerActio
     public void Dispose()
     {
         _actions?.Disable();
-        _actions?.Disable();
         _actions = null;
     }
 

@@ -45,10 +45,9 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         if(_levelData.showPlayerInstructions)
         {
             ShowPlayerInstructions?.Invoke();
-            PauseGame();
         }
-        else
-            ResumeGame();
+
+        PauseGame();
     }
 
     public void Initialize()
@@ -69,6 +68,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     {
         PauseGame();
         _isLevelFinished = true;
+        PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
         LevelEnded?.Invoke();
     }
 
