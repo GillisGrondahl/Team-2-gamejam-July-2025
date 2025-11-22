@@ -91,7 +91,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   RemapRangeFalloff: {x: 0, y: 1}
   IgnoreRangeEvents: 0
-  CooldownDuration: 0
+  CooldownDuration: 1
   InitialDelay: 0
   CanPlay: 1
   CanPlayWhileAlreadyPlaying: 1
