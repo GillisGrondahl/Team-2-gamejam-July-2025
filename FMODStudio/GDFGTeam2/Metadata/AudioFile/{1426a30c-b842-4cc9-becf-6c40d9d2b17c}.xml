@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{036b8e0f-6bf7-4ffa-8b50-a26ac6b39553}">
+	<object class="AudioFile" id="{1426a30c-b842-4cc9-becf-6c40d9d2b17c}">
 		<property name="assetPath">
-			<value>three.ogg</value>
+			<value>SFX/door creaking.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<property name="length">
-			<value>0.61081632653061224</value>
+			<value>1.5759863945578232</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{f5b6c4f3-3661-42af-a193-793c1a6624a6}</destination>

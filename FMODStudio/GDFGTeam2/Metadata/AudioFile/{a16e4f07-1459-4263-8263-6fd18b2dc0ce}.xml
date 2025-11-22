@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{a16e4f07-1459-4263-8263-6fd18b2dc0ce}">
 		<property name="assetPath">
-			<value>SFX/hands_to_supper.wav</value>
+			<value>SFX/Parrot Speech/hands_to_supper.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>
