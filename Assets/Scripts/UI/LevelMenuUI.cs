@@ -8,6 +8,7 @@ public class LevelMenuUI : MonoBehaviour
 
     [SerializeField] private GameObject levelMenu;
     [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject readyButtonScreen;
 
     [SerializeField] private Button readyButton;
 
@@ -56,12 +57,12 @@ public class LevelMenuUI : MonoBehaviour
 
     private void OnShowPlayerInstucations()
     {
-        readyButton.gameObject.SetActive(false);
+        readyButtonScreen.gameObject.SetActive(false);
     }
 
     private void OnReadyButtonClicked()
     {
-        readyButton.gameObject.SetActive(false);
+        readyButtonScreen.gameObject.SetActive(false);
         _levelManager.TogglePause();
     }
 

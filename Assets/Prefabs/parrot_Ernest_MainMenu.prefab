@@ -52,6 +52,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611805114886346090, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.005
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 903460888412924097, guid: 03f13b45428090b45a25e12ef027ba35, type: 3}
     m_RemovedGameObjects: []

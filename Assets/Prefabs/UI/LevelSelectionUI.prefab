@@ -1383,6 +1383,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -36
       objectReference: {fileID: 0}
+    - target: {fileID: 8663852628033359954, guid: c03c17f9c0566df4c87d79dfe6c3eb89, type: 3}
+      propertyPath: m_text
+      value: LEVEL 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9076697622271059216, guid: c03c17f9c0566df4c87d79dfe6c3eb89, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
@@ -2244,6 +2248,10 @@ PrefabInstance:
     - target: {fileID: 8034537319658197339, guid: c03c17f9c0566df4c87d79dfe6c3eb89, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -36
+      objectReference: {fileID: 0}
+    - target: {fileID: 8663852628033359954, guid: c03c17f9c0566df4c87d79dfe6c3eb89, type: 3}
+      propertyPath: m_text
+      value: LEVEL 2
       objectReference: {fileID: 0}
     - target: {fileID: 9076697622271059216, guid: c03c17f9c0566df4c87d79dfe6c3eb89, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -7342,7 +7350,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1188422744172917023, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_text
-      value: Back
+      value: Main Menu
       objectReference: {fileID: 0}
     - target: {fileID: 1188422744172917023, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_fontSize
@@ -8566,7 +8574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6684750570041123110, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_Name
-      value: BackButton
+      value: MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8034650765435785151, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_Pivot.x
@@ -8594,7 +8602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8034650765435785151, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8034650765435785151, guid: 2b10e656b3485c547b85b8ddb78f9916, type: 3}
       propertyPath: m_SizeDelta.y

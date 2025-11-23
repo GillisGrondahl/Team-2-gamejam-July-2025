@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using VContainer;
 
 public class DiegeticMenuButton : MonoBehaviour
@@ -60,7 +61,10 @@ public class DiegeticMenuButton : MonoBehaviour
 
     private void CheckForInteraction()
     {
-        if (playerCamera == null || buttonCollider == null) return;
+        if (playerCamera == null || 
+            buttonCollider == null || 
+            (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())) 
+            return;
 
         // Create ray from camera center
         Ray ray = playerCamera.ScreenPointToRay(mousePosition);
