@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using VContainer;
 
-public class ShipMotion : MonoBehaviour
+public class ShipMovement : MonoBehaviour
 {
     [Header("Debug")]
     [Tooltip("Debug toggle: freeze motion")]
