@@ -106,7 +106,7 @@ MonoBehaviour:
   _pitchAmplitude: 8
   _pitchPeriod: 7
   _motionIntensity: 1
-  _sprayParticles: {fileID: 0}
+  _sprayParticles: {fileID: 8825692228403420523}
 --- !u!1001 &5863797954747929351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,5 +167,10 @@ PrefabInstance:
 --- !u!4 &6793182316015869989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+  m_PrefabInstance: {fileID: 5863797954747929351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8825692228403420523 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3106161572460940908, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
   m_PrefabInstance: {fileID: 5863797954747929351}
   m_PrefabAsset: {fileID: 0}
