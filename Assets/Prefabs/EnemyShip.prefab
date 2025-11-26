@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1719323122345343556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7415462402808411334}
+  - component: {fileID: 5303936880946007376}
+  - component: {fileID: 5564344449599624814}
+  - component: {fileID: 2681504816119991383}
+  m_Layer: 0
+  m_Name: EnemyShip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7415462402808411334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719323122345343556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.40671268, z: 0, w: 0.91355616}
+  m_LocalPosition: {x: -5.195695, y: 0.1, z: 234.14809}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6793182316015869989}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -47.997, z: 0}
+--- !u!33 &5303936880946007376
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719323122345343556}
+  m_Mesh: {fileID: -3348665560109540866, guid: 85c4bb98406761d4a90b851d939a9331, type: 3}
+--- !u!23 &5564344449599624814
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719323122345343556}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c6708899360e21541ac4f382713b87d6, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2681504816119991383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719323122345343556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958edeb156c7a5c4c8b96c36e04614ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShipMovement
+  _pitchAmplitude: 8
+  _pitchPeriod: 7
+  _motionIntensity: 1
+  _sprayParticles: {fileID: 8825692228403420523}
+--- !u!1001 &5863797954747929351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7415462402808411334}
+    m_Modifications:
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1083
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0276
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5427699
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.18489924
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.64367425
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5068498
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 58.562
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -78.611
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 36.765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518591114497917922, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+      propertyPath: m_Name
+      value: Particle_SprayEnemy Ship
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+--- !u!4 &6793182316015869989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1091663859640365858, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+  m_PrefabInstance: {fileID: 5863797954747929351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8825692228403420523 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3106161572460940908, guid: 626b8c5a2ead2bc4989a8dac4ffa9828, type: 3}
+  m_PrefabInstance: {fileID: 5863797954747929351}
+  m_PrefabAsset: {fileID: 0}

@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsMenuHolder Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 339028447540002876, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 395048638311448174, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -136,10 +132,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1514306062941638664, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1939825154796193359, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -188,22 +180,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3849035798282774079, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3997012053621622908, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4061235064732491954, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5488900785088696208}
-    - target: {fileID: 4061235064732491954, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PlayFeedbacks
-      objectReference: {fileID: 0}
     - target: {fileID: 4143935211127593885, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -258,10 +238,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4283564733816889066, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4675909159204789000, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4704189881337384975, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
@@ -378,10 +354,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5537518376795597745, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6451159558743528215, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6456785790754077339, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
@@ -517,14 +489,3 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
---- !u!114 &5488900785088696208 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 999545390979630747, guid: 8eed0b6d70f264448b4b30221af16866, type: 3}
-  m_PrefabInstance: {fileID: 4752255358824302859}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Feedbacks.MMF_Player
