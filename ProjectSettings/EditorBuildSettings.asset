@@ -15,12 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Gameplay.unity
     guid: bbbc7106f2b70c443afaaf1af531d9f6
   - enabled: 1
-    path: Assets/Scenes/Level_02_deprycated.unity
-    guid: 5502689d1ef5b2b45912fcd554eec3c6
-  - enabled: 1
-    path: Assets/Scenes/Level_03_deprycated.unity
-    guid: 1a8803b1fd9a0034eaf151e76ca6d282
-  - enabled: 1
     path: Assets/Feel/MMTools/Core/MMSceneLoading/LoadingScreens/MMAdditiveLoadingScreen.unity
     guid: d89b77a7a68c1844280c6ff2e49f95b8
   m_configObjects:
