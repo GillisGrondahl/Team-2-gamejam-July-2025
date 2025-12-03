@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{ba2e4cc9-90d9-433a-8d77-7e7f68501ec1}">
+	<object class="AudioFile" id="{8992644b-c7df-487e-8e41-61a9ac54e15a}">
 		<property name="assetPath">
-			<value>SFX/Knife/Knife_cut/knife_cut1.wav</value>
+			<value>SFX/Knife/Knife_pickup/knife 9.wav</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>44.0999985</value>
+			<value>48</value>
 		</property>
 		<property name="channelCount">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<property name="length">
-			<value>0.54458049886621318</value>
+			<value>0.824125</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{f5b6c4f3-3661-42af-a193-793c1a6624a6}</destination>

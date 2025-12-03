@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{9ffdef88-f565-493e-aff9-7f2c6ab49d32}">
+		<property name="assetPath">
+			<value>SFX/Knife/Knife_cut/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f5b6c4f3-3661-42af-a193-793c1a6624a6}</destination>
+		</relationship>
+	</object>
+</objects>
