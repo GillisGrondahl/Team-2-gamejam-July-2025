@@ -2156,6 +2156,10 @@ PrefabInstance:
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 416429477}
+    - target: {fileID: 2655934000895276387, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
+      propertyPath: CanPlayWhileAlreadyPlaying
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3263758716113648889, guid: 6de70975c38ee4e4295e69bc26f1a5e0, type: 3}
       propertyPath: m_Name
       value: MainMenu_Wheel=Settings
