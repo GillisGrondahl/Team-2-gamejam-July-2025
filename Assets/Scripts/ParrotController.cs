@@ -8,6 +8,8 @@ public class ParrotController : MonoBehaviour
     [SerializeField] private MMF_Player toolFeedback;
     [SerializeField] private MMF_Player badIngredientFeedback;
     [SerializeField] private MMF_Player goodIngredientFeedback;
+    [SerializeField] private MMF_Player recipeCompletedFeedback;
+    [SerializeField] private MMF_Player allRecipesCompletedFeedback;
 
     RecipeSystem _recipeSystem;
 
@@ -22,6 +24,8 @@ public class ParrotController : MonoBehaviour
         _recipeSystem.NotIngredientAdded += OnNotIngredientAdded;
         _recipeSystem.BadIngredientAdded += OnBadIngredientAdded;
         _recipeSystem.GoodIngredientAdded += OnGoodIngredientAdded;
+        _recipeSystem.RecipeCompleted += OnRecipeCompleted;
+        _recipeSystem.AllRecipesCompleted += OnAllRecipesCompleted;
     }
 
     private void OnDisable()
@@ -29,6 +33,8 @@ public class ParrotController : MonoBehaviour
         _recipeSystem.NotIngredientAdded -= OnNotIngredientAdded;
         _recipeSystem.BadIngredientAdded -= OnBadIngredientAdded;
         _recipeSystem.GoodIngredientAdded -= OnGoodIngredientAdded;
+        _recipeSystem.RecipeCompleted -= OnRecipeCompleted;
+        _recipeSystem.AllRecipesCompleted -= OnAllRecipesCompleted;
     }
 
     private void OnGoodIngredientAdded()
@@ -44,5 +50,15 @@ public class ParrotController : MonoBehaviour
     private void OnNotIngredientAdded()
     {
         toolFeedback.PlayFeedbacks();
+    }
+
+    private void OnRecipeCompleted()
+    {
+        recipeCompletedFeedback.PlayFeedbacks();
+    }
+
+    private void OnAllRecipesCompleted()
+    {
+        allRecipesCompletedFeedback.PlayFeedbacks();
     }
 }

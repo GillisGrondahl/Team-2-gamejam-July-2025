@@ -163,7 +163,7 @@
 			<value>950</value>
 		</property>
 		<property name="wetLevel">
-			<value>-17</value>
+			<value>-21</value>
 		</property>
 	</object>
 	<object class="LoudnessMeter" id="{1700bca7-56c3-468e-9667-41239e509ff4}" />
