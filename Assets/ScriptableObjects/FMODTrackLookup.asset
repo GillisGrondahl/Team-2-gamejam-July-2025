@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684a240e780676e42bf67921b5ab0d86, type: 3}
+  m_Name: FMODTrackLookup
+  m_EditorClassIdentifier: Assembly-CSharp::FMODTrackLookup
+  Entries:
+  - ProviderKey: bgm.whatshallwedo
+    Event:
+      Guid:
+        Data1: 426983545
+        Data2: 1288089154
+        Data3: -1379523937
+        Data4: -1124283038
+      Path: event:/BGM/BGM_WhatShallWeDo
+  - ProviderKey: bgm.sailorshornpipe
+    Event:
+      Guid:
+        Data1: -1262600968
+        Data2: 1097721814
+        Data3: 1415552680
+        Data4: -720951240
+      Path: event:/BGM/BGM_SailorsHornpipe
+  - ProviderKey: amb.track1
+    Event:
+      Guid:
+        Data1: -760500940
+        Data2: 1243595926
+        Data3: -424208719
+        Data4: 1209409010
+      Path: event:/Ambience/AMB_Track1

@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128211278}
   - component: {fileID: 128211277}
+  - component: {fileID: 128211279}
   m_Layer: 0
   m_Name: MainMenuManager
   m_TagString: Untagged
@@ -163,6 +164,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &128211279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128211276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b56d185120281e44813e0194ff5b045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneAudioController
+  _bgmTrack: {fileID: 0}
+  _ambienceTrack: {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
 --- !u!1001 &372888739
 PrefabInstance:
   m_ObjectHideFlags: 0

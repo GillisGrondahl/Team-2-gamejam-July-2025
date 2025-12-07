@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class AudioManager : MonoBehaviour, IAudioService
+public class AudioManager : MonoBehaviour //, IAudioService
 {
     private Bus masterBus;
     private Bus BGMBus;
@@ -210,12 +210,12 @@ public class AudioManager : MonoBehaviour, IAudioService
         // Create and start the selected track
         BGM_eventInstance = RuntimeManager.CreateInstance(selectedTrack);
         eventInstances.Add(BGM_eventInstance);
-        SetTempo(BGM_originalPitchValue);
+        SetBGMTempo(BGM_originalPitchValue);
         BGM_eventInstance.start();
 
     }
 
-    public void SetTempo(float newPitch)
+    public void SetBGMTempo(float newPitch)
     {
         BGM_eventInstance.setParameterByName(BGM_pitchName, newPitch);
     }
@@ -223,13 +223,13 @@ public class AudioManager : MonoBehaviour, IAudioService
     private void HandleEarlyWarningReached()
     {
         Debug.Log("Pitching up on early warning");
-        SetTempo(BGM_pitchOnEarlyWarning);
+        SetBGMTempo(BGM_pitchOnEarlyWarning);
     }
 
     private void HandleFinalCountdownReached()
     {
         Debug.Log("Pitching up on final countdown");
-        SetTempo(BGM_pitchOnFinalCountdown);
+        SetBGMTempo(BGM_pitchOnFinalCountdown);
     }
 
     public void InitializeAmbience()

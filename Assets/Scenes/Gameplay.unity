@@ -573,6 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531568807}
   - component: {fileID: 531568809}
+  - component: {fileID: 531568810}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -616,6 +617,21 @@ MonoBehaviour:
   - {fileID: 1297057819}
   - {fileID: 522434911}
   - {fileID: 1603458007}
+  - {fileID: 531568805}
+--- !u!114 &531568810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531568805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b56d185120281e44813e0194ff5b045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneAudioController
+  _bgmTrack: {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
+  _ambienceTrack: {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
 --- !u!198 &648183069 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7450608743573320148, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}

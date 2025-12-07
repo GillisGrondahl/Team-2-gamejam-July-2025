@@ -1,32 +1,30 @@
-using FMOD;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using VContainer;
 using VContainer.Unity;
 
 public class LevelManager : IInitializable, IStartable, IDisposable
 {
-    private bool _isGamePaused = false;
-    private bool _isLevelFinished = false;
-
-    private AudioManager _audio;
-    private ITimerService _timer;
-    private IInputService _input;
-    private RecipeSystem _recipeSystem;
-    private LevelData _levelData;
-
     public event UnityAction GamePaused;
     public event UnityAction GameResumed;
     public event UnityAction LevelEnded;
-
     public event UnityAction ShowPlayerInstructions;
 
-    public LevelManager(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController)
+    private bool _isGamePaused = false;
+    private bool _isLevelFinished = false;
+
+    private IAudioService _audioService;
+    private ITimerService _timerService;
+    private IInputService _inputService;
+    private RecipeSystem _recipeSystem;
+    private LevelData _levelData;
+
+
+    public LevelManager(ITimerService timerService, IAudioService audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController)
     {
-        _timer = timerService;
-        _audio = audioService;
-        _input = input;
+        _timerService = timerService;
+        _audioService = audioService;
+        _inputService = input;
         _recipeSystem = recipeSystem;
         _levelData = sceneController.CurrentLevelData;
     }
@@ -39,8 +37,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     public void StartLevel()
     {
         _isLevelFinished = false;
-        _timer.Start(_levelData.levelDurationInSeconds);
-        _audio.HandleLevelStart();
+        _timerService.Start(_levelData.levelDurationInSeconds);
 
         if (_levelData.showPlayerInstructions)
         {
@@ -52,19 +49,19 @@ public class LevelManager : IInitializable, IStartable, IDisposable
 
     public void Initialize()
     {
-        _input.Escape += TogglePause;
-        _timer.Completed += OnLevelEnd;
-        _recipeSystem.AllRecipesCompleted += OnLevelEnd;
+        _inputService.Escape += TogglePause;
+        _timerService.Completed += EndLevel;
+        _recipeSystem.AllRecipesCompleted += EndLevel;
     }
 
     public void Dispose()
     {
-        _input.Escape -= TogglePause;
-        _timer.Completed -= OnLevelEnd;
-        _recipeSystem.AllRecipesCompleted -= OnLevelEnd;
+        _inputService.Escape -= TogglePause;
+        _timerService.Completed -= EndLevel;
+        _recipeSystem.AllRecipesCompleted -= EndLevel;
     }
 
-    private void OnLevelEnd()
+    private void EndLevel()
     {
         PauseGame();
         _isLevelFinished = true;
@@ -91,7 +88,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private void PauseGame()
     {
         Time.timeScale = 0f;
-        _timer.Pause();
+        _timerService.Pause();
         _isGamePaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -101,7 +98,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private void ResumeGame()
     {
         Time.timeScale = 1f;
-        _timer.Resume();
+        _timerService.Resume();
         _isGamePaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -6,7 +6,7 @@ using VContainer;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private IInputService _input;
+    
 
     [Header("Zone Restriction")]
     [SerializeField] private BoxCollider playerZone;  // Reference to the PlayerZone collider
@@ -36,20 +36,19 @@ public class PlayerMovement : MonoBehaviour
     private float keyboardInput = 0f;
     private float mouseInput = 0f;
 
+    private IInputService _input;
+    private ISettingsService _settings;
 
     [Inject]
-    private void Construct(IInputService input)
+    private void Construct(IInputService input, ISettingsService settings)
     {
         _input = input;
+        _settings = settings;
     }
 
     private void Start()
     {
-        // Subscribe to one-armed mode event
-        //GameEvents.Instance.OnOneArmedModeToggled += HandleOneArmedModeToggled;
-
-        //Cursor.lockState = showCursor ? CursorLockMode.None : CursorLockMode.Locked;
-        //Cursor.visible = showCursor;
+        HandleOneArmedModeChange(_settings.Current.Gameplay);
 
         if (playerZone == null)
         {
@@ -65,12 +64,14 @@ public class PlayerMovement : MonoBehaviour
     {
         _input.Move += UpdateDirection;
         _input.OneArmedRMB += HandleRMBState; // for one-armed mode
+        _settings.GameplaySettingsChanged += HandleOneArmedModeChange;
     }
 
     private void OnDisable()
     {
         _input.Move -= UpdateDirection;
         _input.OneArmedRMB -= HandleRMBState;
+        _settings.GameplaySettingsChanged -= HandleOneArmedModeChange;
     }
 
     private void Update()
@@ -84,9 +85,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region OneArmedMode
-    private void HandleOneArmedModeToggled(bool oneArmedMode)
+    private void HandleOneArmedModeChange(GameplaySettings gameplaySettings)
     {
-        this.oneArmedMode = oneArmedMode;
+        oneArmedMode = gameplaySettings.OneArmedMode;
 
     }
     private void HandleRMBState(bool isPressed)
