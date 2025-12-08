@@ -85,3 +85,4 @@ public class SettingsMenuUI : MonoBehaviour
     void OnAmbienceVolumeSliderChanged(float newVolume) => _audioService.AmbVolume = newVolume;
     void OnSFXVolumeSliderChanged(float newVolume) => _audioService.SfxVolume = newVolume;
 }
+

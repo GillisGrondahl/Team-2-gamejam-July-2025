@@ -6,4 +6,5 @@ public interface IAudioService
     float SfxVolume { get; set; }
     void SetTempo(TrackChannel channel, float newValue);
     void StartTrack(AudioTrackData track);
+    void StopTrack(TrackChannel channel);
 }

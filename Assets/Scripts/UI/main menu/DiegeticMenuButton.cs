@@ -26,7 +26,7 @@ public class DiegeticMenuButton : MonoBehaviour
     private bool mouseClick = false;
 
     [Inject]
-    private void Construct(IInputService input)
+    public void Construct(IInputService input)
     {
         _input = input;
     }

@@ -24,6 +24,10 @@ public class LevelData : ScriptableObject
     [Tooltip("Speed multiplier for overall wave motion intensity (effects pitch amplitude & overall speed)")]
     [Range(0f, 2f)] public float waveMotionIntensity = 1f;
 
+    [Header("Audio")]
+    public List<AudioTrackData> bgmTrack = null;
+    public List<AudioTrackData> ambienceTrack = null;
+
     [Header("Level Recipes")]
     [Tooltip("List of recipes that need to be completed in this level")]
     public List<RecipeData> levelRecipes = new List<RecipeData>();

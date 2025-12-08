@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 public class RecipeSystem : IStartable
 {
-    public float OverallQuality { get => _qualityList.Average(); }
+    public float OverallQuality { get => _qualityList.Count > 0 ? _qualityList.Average() : 0; }
     public int QualityOfCurrentRecipe { get; private set; } = 100;
     public int CurrentRecipeIndex { get; private set; } = 0;
     public int TotalRecipes => _recipes?.Count ?? 0;

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 using VContainer.Unity;
 
 public class LevelManager : IInitializable, IStartable, IDisposable
@@ -18,15 +19,17 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private IInputService _inputService;
     private RecipeSystem _recipeSystem;
     private LevelData _levelData;
+    private ILeaderboardService _leaderboardService;
 
 
-    public LevelManager(ITimerService timerService, IAudioService audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController)
+    public LevelManager(ITimerService timerService, IAudioService audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController, ILeaderboardService leaderboardService)
     {
         _timerService = timerService;
         _audioService = audioService;
         _inputService = input;
         _recipeSystem = recipeSystem;
         _levelData = sceneController.CurrentLevelData;
+        _leaderboardService = leaderboardService;
     }
 
     public void Start()
@@ -45,6 +48,27 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         }
 
         PauseGame();
+    }
+
+    private void HandleAudio()
+    {
+        if (_levelData.bgmTrack == null || _levelData.bgmTrack.Count == 0)
+        {
+            _audioService.StopTrack(TrackChannel.BGM);
+        }
+        else
+        {
+            _audioService.StartTrack(_levelData.bgmTrack[UnityEngine.Random.Range(0, _levelData.bgmTrack.Count)]);
+        }
+
+        if (_levelData.ambienceTrack == null || _levelData.ambienceTrack.Count == 0)
+        {
+            _audioService.StopTrack(TrackChannel.Ambience);
+        }
+        else
+        {
+            _audioService.StartTrack(_levelData.ambienceTrack[UnityEngine.Random.Range(0, _levelData.ambienceTrack.Count)]);
+        }
     }
 
     public void Initialize()
@@ -67,6 +91,9 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         _isLevelFinished = true;
         if (_levelData.levelIndex > PlayerPrefs.GetInt("LevelCompleted"))
             PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
+
+        _leaderboardService.SubmitScoreAsync("test", 100);
+
         LevelEnded?.Invoke();
     }
 

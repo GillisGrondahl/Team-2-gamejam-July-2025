@@ -18,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxSpeed = 2f;
     [SerializeField] private float acceleration = 2f;
     [SerializeField] private float deceleration = 2f;
-    [SerializeField] private bool showCursor = false;
     [SerializeField] private bool oneArmedMode = false;
 
     [Header("Jitter")]
@@ -32,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
 
     // for one-armed mode
     private bool isRMBHeld = false;
-    private bool hasInitialMousePosition = false;
     private float keyboardInput = 0f;
     private float mouseInput = 0f;
 

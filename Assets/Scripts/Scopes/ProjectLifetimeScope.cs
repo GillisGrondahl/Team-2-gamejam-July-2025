@@ -25,6 +25,7 @@ public class ProjectLifetimeScope : LifetimeScope
         builder.RegisterInstance(fmodTrackLookup);
         builder.RegisterInstance(gameSettings.Value);
         builder.Register<SettingsService>(Lifetime.Singleton).As<ISettingsService>();
- 
+        builder.Register<LocalLeaderboardService>(Lifetime.Singleton).As<ILeaderboardService>();
+
     }
 }

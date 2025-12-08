@@ -6,7 +6,6 @@ public class SceneController : MonoBehaviour, ISceneController
 
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string levelSelectionSceneName = "LevelSelection";
-    [SerializeField] private string gameplaySceneName = "Gameplay";
     [SerializeField] private MMF_Player transitionPlayer;
     private MMF_LoadScene _sceneLoadFeedback;
 

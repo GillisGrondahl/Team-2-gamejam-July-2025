@@ -37,3 +37,11 @@ MonoBehaviour:
         Data3: -424208719
         Data4: 1209409010
       Path: event:/Ambience/AMB_Track1
+  - ProviderKey: amb.titlescreen
+    Event:
+      Guid:
+        Data1: 2141544159
+        Data2: 1324148805
+        Data3: 1491760057
+        Data4: -503029564
+      Path: event:/Ambience/AMB_Titlescreen

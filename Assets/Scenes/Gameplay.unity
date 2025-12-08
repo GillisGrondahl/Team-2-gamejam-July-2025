@@ -641,8 +641,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b56d185120281e44813e0194ff5b045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneAudioController
-  _bgmTrack: {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
-  _ambienceTrack: {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
+  _bgmTracks:
+  - {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
+  - {fileID: 11400000, guid: ac065c6b4be6142438c49b993a96a2b0, type: 2}
+  _ambienceTracks:
+  - {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
 --- !u!198 &648183069 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7450608743573320148, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}

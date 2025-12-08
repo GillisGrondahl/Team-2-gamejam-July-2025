@@ -18,8 +18,6 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
     private float _ambVolume = 0.7f;
     private float _sfxVolume = 1.0f;
 
-    private bool _bgmEnabled = true;
-
     private Bus masterBus;
     private Bus BGMBus;
     private Bus AMBBus;

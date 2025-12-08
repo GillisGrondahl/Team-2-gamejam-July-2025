@@ -44,15 +44,12 @@ public class StepsActivator : MonoBehaviour
     [ContextMenu("Activate Steps Sequentially")]
     public void ShowStepsSequentially()
     {
-        Debug.Log("Starting Sequential Activation of Steps of " + gameObject.name + " | Amount of steps: " + stepInstances.Count);
-        //StartCoroutine(ActivateStepsSequentially());
         ActivateSteps().Forget();
     }
 
     [ContextMenu("Activate Steps Instantly")]
     public void ShowStepsInstantly()
     {
-        Debug.Log("Starting Instant Activation of Steps of " + gameObject.name + " | Amount of steps: " + stepInstances.Count);
         foreach (GameObject step in stepInstances)
         {
             step.SetActive(true);
