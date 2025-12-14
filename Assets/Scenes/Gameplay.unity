@@ -20139,6 +20139,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7930025926871602034, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: managedReferences[7359888179562020959].BoundAnimator
+      value: 
+      objectReference: {fileID: 3692266845561087129}
+    - target: {fileID: 7930025926871602034, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: managedReferences[7359888179562020949].Timing.TrackID
       value: 0
       objectReference: {fileID: 0}
