@@ -12,6 +12,7 @@ namespace MoreMountains.Feedbacks
     [AddComponentMenu("")]
     [FeedbackHelp("This feedback lets you play an FMOD OneShot event with optional 3D positioning and parameter control.")]
     [MovedFrom(false, null, "MoreMountains.Feedbacks")]
+    [System.Serializable]
     [FeedbackPath("Audio/FMOD OneShot")]
     public class MMF_FMODOneShot : MMF_Feedback
     {
