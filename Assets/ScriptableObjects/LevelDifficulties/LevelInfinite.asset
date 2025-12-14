@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eddb603a44c19e645b6871e526e8fb15, type: 3}
+  m_Name: LevelInfinite
+  m_EditorClassIdentifier: 
+  levelIndex: 4
+  sceneName: Gameplay
+  showPlayerInstructions: 0
+  isInfinite: 1
+  levelDurationInSeconds: 30
+  earlyWarningInSeconds: 60
+  finalCountdownInSeconds: 5
+  nextLevel: {fileID: 8101103941675134267, guid: f86b3c76efc585f448be09c44634a0a2, type: 3}
+  restartLevel: {fileID: 8101103941675134267, guid: e42b915ec0fa6f44799407cdb13cf319, type: 3}
+  wrongIngredientPenalty: 10
+  excessIngredientPenalty: 10
+  waveMotionIntensity: 1.4
+  bgmTrack: []
+  ambienceTrack: []
+  levelRecipes:
+  - {fileID: 11400000, guid: 2912b436a0e2b0341a57f9d6cf749ae0, type: 2}
+  - {fileID: 11400000, guid: d6057da6d2059e34aa24dd08288ab9c9, type: 2}
+  - {fileID: 11400000, guid: 79fd334957f7e1c49bfc139d9b75f95d, type: 2}
+  - {fileID: 11400000, guid: 83d999219351ca74ca37aeb5bb54d9ae, type: 2}
+  - {fileID: 11400000, guid: 63edf97807b3bdb4ea4a3971acf1de82, type: 2}
+  - {fileID: 11400000, guid: 342c10049f2949142a6bfe814dc5dff0, type: 2}
+  - {fileID: 11400000, guid: 33b091281b2007749a654032f4061c21, type: 2}
+  - {fileID: 11400000, guid: b6549a92dc65b4b41b9622385a0f83ce, type: 2}
+  - {fileID: 11400000, guid: a04bad90dc7b58d4aa87adecdb060444, type: 2}
+  - {fileID: 11400000, guid: b5a30c42c59ddf04ebf89ea553a6c879, type: 2}
+  - {fileID: 11400000, guid: 7c95f2ee69d42c44bb2dc39a965bde25, type: 2}

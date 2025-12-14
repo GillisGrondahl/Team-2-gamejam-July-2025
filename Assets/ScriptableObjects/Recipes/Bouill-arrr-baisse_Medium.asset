@@ -13,14 +13,7 @@ MonoBehaviour:
   m_Name: Bouill-arrr-baisse_Medium
   m_EditorClassIdentifier: 
   recipeName: Bouill-arrr-baisse
-  requiredIngredientsPices:
-    keys:
-    - {fileID: 11400000, guid: daf08a20f1ea01d40a60ba7457fb7009, type: 2}
-    - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
-    - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
-    - {fileID: 11400000, guid: 48949b34dec3da441aeb315ec5ff5fff, type: 2}
-    - {fileID: 11400000, guid: 6e2c201cb1ad8094ab00118bdcf572b7, type: 2}
-    values: 0200000001000000010000000200000001000000
+  score: 50
   <RequiredIngredients>k__BackingField:
   - ingredient: {fileID: 11400000, guid: daf08a20f1ea01d40a60ba7457fb7009, type: 2}
     piecesCount: 2

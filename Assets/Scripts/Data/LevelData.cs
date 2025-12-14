@@ -7,15 +7,13 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public int levelIndex = 0;
-    public string sceneName = "Level";
+    public string sceneName = "Gameplay";
     public bool showPlayerInstructions = false;
+    public bool isInfinite = false;
 
     public float levelDurationInSeconds = 60f;
     public float earlyWarningInSeconds = 10f;
     public int finalCountdownInSeconds = 5;
-
-    public MMF_Player nextLevel;
-    public MMF_Player restartLevel;
 
     [Header("Scoring Penalties")]
     public int wrongIngredientPenalty = 10;

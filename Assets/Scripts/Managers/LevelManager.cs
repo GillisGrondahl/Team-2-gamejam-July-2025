@@ -21,6 +21,8 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private LevelData _levelData;
     private ILeaderboardService _leaderboardService;
 
+    public int Score { get; private set; } = 0;
+    public bool IsInfinite { get; private set; } = false;
 
     public LevelManager(ITimerService timerService, IAudioService audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController, ILeaderboardService leaderboardService)
     {
@@ -30,6 +32,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         _recipeSystem = recipeSystem;
         _levelData = sceneController.CurrentLevelData;
         _leaderboardService = leaderboardService;
+        IsInfinite = _levelData.isInfinite;
     }
 
     public void Start()
@@ -75,6 +78,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     {
         _inputService.Escape += TogglePause;
         _timerService.Completed += EndLevel;
+        _recipeSystem.RecipeCompleted += CheckLevelType;
         _recipeSystem.AllRecipesCompleted += EndLevel;
     }
 
@@ -82,7 +86,18 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     {
         _inputService.Escape -= TogglePause;
         _timerService.Completed -= EndLevel;
+        _recipeSystem.RecipeCompleted -= CheckLevelType;
         _recipeSystem.AllRecipesCompleted -= EndLevel;
+    }
+
+    public void CheckLevelType()
+    {
+        if (IsInfinite)
+        {
+            _timerService.AddTime(30);
+            Score += _recipeSystem.CurrentRecipeScore;
+            Debug.Log("Score: " + Score);
+        }
     }
 
     private void EndLevel()
@@ -92,7 +107,8 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         if (_levelData.levelIndex > PlayerPrefs.GetInt("LevelCompleted"))
             PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
 
-        _leaderboardService.SubmitScoreAsync("test", 100);
+        if (IsInfinite)
+            _leaderboardService.SubmitScoreAsync("Player", Score);
 
         LevelEnded?.Invoke();
     }
