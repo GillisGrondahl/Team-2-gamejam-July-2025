@@ -10,7 +10,7 @@ public class LeaderboardEntryUI : MonoBehaviour
     public void SetData(LeaderboardEntry entry)
     {
         rankText.text = entry.Rank.ToString();
-        nameText.text = entry.PlayerName;
+        nameText.text = entry.Timestamp.ToString("dd.MM.yyyy hh:mm");
         scoreText.text = entry.Score.ToString();
     }
 }

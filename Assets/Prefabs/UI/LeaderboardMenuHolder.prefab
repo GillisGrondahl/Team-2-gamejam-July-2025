@@ -398,6 +398,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1726,14 +1727,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4532128871326874468, guid: 68ad5305b7672b24393311c34f57f9ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064018613125698394, guid: 68ad5305b7672b24393311c34f57f9ec, type: 3}
-      propertyPath: m_ChildForceExpandWidth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064018613125698394, guid: 68ad5305b7672b24393311c34f57f9ec, type: 3}
-      propertyPath: m_ChildForceExpandHeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9097349220579269001, guid: 68ad5305b7672b24393311c34f57f9ec, type: 3}
