@@ -198,7 +198,8 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         ref var inst = ref GetInstanceRef(channel);
         if (!inst.isValid()) return;
 
-        inst.setPitch(newValue);
+        //inst.setPitch(newValue);
+        inst.setParameterByName("Pitch", newValue);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
