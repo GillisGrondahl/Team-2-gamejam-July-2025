@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using MoreMountains.Feedbacks;
+using System.Collections.Generic;
+using UnityEngine;
+using VContainer;
 
 public class EnemyShipMovement : MonoBehaviour
 {
@@ -11,15 +14,45 @@ public class EnemyShipMovement : MonoBehaviour
     [Header("Overall Motion Intensity")]
     [SerializeField] private float _motionIntensity = 1f;
 
+    [Header("Closing Distance")]
+    [SerializeField] private Transform _startPosition;
+    [SerializeField] private Transform _endPosition;
+
+    [Header("Gunshot Schedule")]
+    [Tooltip("List of distances (0-1 based on timer progress) at which gunshots fire")]
+    [SerializeField] private List<float> _gunshotDistances = new List<float>();
+
     [Header("References")]
     [SerializeField] private ParticleSystem _sprayParticles;
+    [SerializeField] private ParticleSystem _gunshotParticles;
+    [SerializeField] private MMF_Player _MMFGunshot;
 
     private Vector3 _initialRotation;
     private float _pitchOffset;
-
-
-    // Track when splash was last played
     private float _nextSplashTime = 0f;
+
+    private float distanceToPlayer = 0f;
+
+    // Track which gunshots have already been fired
+    private HashSet<int> _firedGunshotIndices = new HashSet<int>();
+
+    private ITimerService _timerService;
+
+    [Inject]
+    private void Construct(ITimerService timerService)
+    {
+        _timerService = timerService;
+    }
+
+    private void OnEnable()
+    {
+        _timerService.Tick += OnTimerTick;
+    }
+
+    private void OnDisable()
+    {
+        _timerService.Tick -= OnTimerTick;
+    }
 
     private void Awake()
     {
@@ -31,18 +64,15 @@ public class EnemyShipMovement : MonoBehaviour
 
         // Start at half period so splash happens at lowest point first
         _nextSplashTime = (_pitchPeriod / _motionIntensity) * 1.4f;
+
     }
 
     void Update()
     {
-
         // scale overall intensity with time 
         float _time = Time.time * _motionIntensity;
 
-
         CalcPitching(_time);
-
-
     }
 
     public void CalcPitching(float _time)
@@ -52,7 +82,6 @@ public class EnemyShipMovement : MonoBehaviour
         // Calculate pitching
         float _pitchMotion = Mathf.Sin(_time * _pitchFrequency * 2f * Mathf.PI + _pitchOffset) * (_pitchAmplitude * _motionIntensity);
 
- 
         // Apply the motion to rotation (pitching) - z-axis, because we're viewing the ship sideways!
         Vector3 newRotation = _initialRotation;
         newRotation.z += _pitchMotion;
@@ -67,6 +96,45 @@ public class EnemyShipMovement : MonoBehaviour
             }
             _nextSplashTime = Time.time + (_pitchPeriod / _motionIntensity);
         }
+    }
 
+    private void OnTimerTick(float time)
+    {
+        distanceToPlayer = _timerService.Progress;
+
+        // Update ship position
+        transform.position = new Vector3(
+            Vector3.Lerp(_startPosition.position, _endPosition.position, distanceToPlayer).x,
+            transform.position.y,
+            Vector3.Lerp(_startPosition.position, _endPosition.position, distanceToPlayer).z
+        );
+
+        // Check each gunshot distance
+        for (int i = 0; i < _gunshotDistances.Count; i++)
+        {
+            // Skip if already fired
+            if (_firedGunshotIndices.Contains(i))
+                continue;
+
+            // Check if we've reached or passed the trigger distance
+            if (distanceToPlayer >= _gunshotDistances[i])
+            {
+                FireGunshot();
+                _firedGunshotIndices.Add(i); // Mark this gunshot as fired
+            }
+        }
+    }
+
+    public void FireGunshot()
+    {
+        // we could calculate the delay between the soundwave arriving and the gunshot being fired based on the distance here,
+        // but I think that would be overengineered for now. So instead, we're using a MMF Player with a static pause of 1s between them.
+        /*
+        if (_gunshotParticles != null)
+        {
+            _gunshotParticles.Play();
+        }*/
+
+        _MMFGunshot.PlayFeedbacks();
     }
 }
