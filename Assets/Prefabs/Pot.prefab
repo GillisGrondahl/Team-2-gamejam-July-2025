@@ -10516,7 +10516,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07fb344b83a789c4bbf508c78e5fde28, type: 2}
+  - {fileID: 2100000, guid: 4f751aa2a3d9f9a4dbf836b2e62b412e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10824,7 +10824,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.02
+      scalar: 0.03
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -11202,7 +11202,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 26.02
+    angle: 17.28
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
