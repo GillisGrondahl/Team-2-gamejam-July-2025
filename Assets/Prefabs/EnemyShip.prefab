@@ -432,7 +432,7 @@ MonoBehaviour:
             Data2: 1271927196
             Data3: 835411095
             Data4: 1319560021
-          Path: event:/SFX/Cannonshot
+          Path: event:/SFX/Cannonshot_Distant
         Volume: 1
         UseIntensityForVolume: 0
         IntensityToVolumeCurve:
