@@ -48,7 +48,6 @@ MonoBehaviour:
   handTransform: {fileID: 0}
   offset: {x: 0.05, y: 0, z: 0.55}
   <SnapPoint>k__BackingField: {fileID: 6888221809634446865}
-  <OverlapedInteractable>k__BackingField: {fileID: 0}
   cooldown: 0.3
 --- !u!135 &751889866101527555
 SphereCollider:
@@ -69,5 +68,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.15
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}

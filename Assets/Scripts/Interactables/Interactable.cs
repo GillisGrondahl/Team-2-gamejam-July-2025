@@ -1,7 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour
+
+public interface IInteractable
+{
+    //Transform Transform { get; }
+    //bool CanInteract(Interactor interactor);
+    void ShowOutline();
+    void HideOutline();
+
+    void Interact(Interactor interactor);
+    void StopInteract(Interactor interactor);
+}
+
+public class Interactable : MonoBehaviour, IInteractable
 {
     [field: SerializeField] public LayerMask OriginalLayer { get; set; }
     [field: SerializeField] public LayerMask OutlineLayer { get; set; }
@@ -21,7 +33,7 @@ public class Interactable : MonoBehaviour
 
     public void Interact(Interactor interactor)
     {
-        interactor.OverlapedInteractable = this;
+        //interactor.OverlapedInteractable = this;
         OnInteract?.Invoke(interactor);
 
         if (!pickable) return;
@@ -46,7 +58,7 @@ public class Interactable : MonoBehaviour
 
     public void StopInteract(Interactor interactor)
     {
-        interactor.OverlapedInteractable = null;
+        //interactor.OverlapedInteractable = null;
         OnStopInteract?.Invoke(interactor);
     }
 

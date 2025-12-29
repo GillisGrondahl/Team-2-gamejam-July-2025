@@ -20127,6 +20127,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7399238351917204858, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Radius
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 7450608743573320148, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: looping
       value: 0
