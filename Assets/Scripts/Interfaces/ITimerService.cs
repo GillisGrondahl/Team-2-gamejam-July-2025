@@ -38,6 +38,8 @@ public interface ITimerService
     /// Stop the timer immediately (does not fire Completed).
     void Stop();
 
+    void AddTime(float time);
+
     /// Manual update: pass deltaTime (usually Time.deltaTime).
     void Update(float deltaTime);
 

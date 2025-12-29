@@ -4,7 +4,7 @@ public interface IAudioService
     float BgmVolume { get; set; }
     float AmbVolume { get; set; }
     float SfxVolume { get; set; }
-    bool BGM_enabled { get; set; }
-
-    void Initialize();
+    void SetTempo(TrackChannel channel, float newValue);
+    void StartTrack(AudioTrackData track);
+    void StopTrack(TrackChannel channel);
 }

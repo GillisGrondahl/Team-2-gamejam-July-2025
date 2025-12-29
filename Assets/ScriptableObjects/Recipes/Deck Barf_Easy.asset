@@ -13,12 +13,7 @@ MonoBehaviour:
   m_Name: Deck Barf_Easy
   m_EditorClassIdentifier: 
   recipeName: Deck Barf
-  requiredIngredientsPices:
-    keys:
-    - {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
-    - {fileID: 11400000, guid: cb28b1f2b376ef44db4e3b28676424ba, type: 2}
-    - {fileID: 11400000, guid: 1537ff4436899d8428ae9fe12d0cc52d, type: 2}
-    values: 010000000100000001000000
+  score: 20
   <RequiredIngredients>k__BackingField:
   - ingredient: {fileID: 11400000, guid: bdc4d03c780f7644facc326694e4977e, type: 2}
     piecesCount: 1

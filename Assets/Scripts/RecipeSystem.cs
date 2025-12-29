@@ -8,9 +8,10 @@ using VContainer.Unity;
 
 public class RecipeSystem : IStartable
 {
-    public float OverallQuality { get => _qualityList.Average(); }
+    public float OverallQuality { get => _qualityList.Count > 0 ? _qualityList.Average() : 0; }
     public int QualityOfCurrentRecipe { get; private set; } = 100;
     public int CurrentRecipeIndex { get; private set; } = 0;
+    public int CurrentRecipeScore { get; private set; } = 0;
     public int TotalRecipes => _recipes?.Count ?? 0;
 
     public event Action<RecipeData> NewRecipe;
@@ -21,6 +22,7 @@ public class RecipeSystem : IStartable
     public event Action NotIngredientAdded;
     public event Action GoodIngredientAdded;
     public event Action BadIngredientAdded;
+
 
 
     private List<RecipeData> _recipes = null;
@@ -45,6 +47,9 @@ public class RecipeSystem : IStartable
     {
         _recipes = _levelData.levelRecipes;
 
+        if (_levelData.isInfinite)
+            CurrentRecipeIndex = UnityEngine.Random.Range(0, _recipes.Count);
+
         if (_recipes.Count > 0)
             GetNextRecipe();
     }
@@ -55,7 +60,7 @@ public class RecipeSystem : IStartable
         _requiredIngredientsCount = _currentRecipe.RequiredIngredients
             .GroupBy(i => i.Ingredient)
             .ToDictionary(g => g.Key, g => g.Count());
-
+        CurrentRecipeScore = _currentRecipe.score;
         NewRecipe?.Invoke(_currentRecipe);
     }
 
@@ -141,6 +146,14 @@ public class RecipeSystem : IStartable
         AddAndResetQuality();
 
         RecipeCompleted?.Invoke();
+
+        if (_levelData.isInfinite)
+        {
+            CurrentRecipeIndex = UnityEngine.Random.Range(0, _recipes.Count);
+            GetNextRecipe();
+            return;
+        }
+
 
         if (++CurrentRecipeIndex < _recipes.Count)
         {

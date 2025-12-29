@@ -1,34 +1,38 @@
-using FMOD;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using VContainer;
+using UnityEngine.Networking;
 using VContainer.Unity;
 
 public class LevelManager : IInitializable, IStartable, IDisposable
 {
-    private bool _isGamePaused = false;
-    private bool _isLevelFinished = false;
-
-    private AudioManager _audio;
-    private ITimerService _timer;
-    private IInputService _input;
-    private RecipeSystem _recipeSystem;
-    private LevelData _levelData;
-
     public event UnityAction GamePaused;
     public event UnityAction GameResumed;
     public event UnityAction LevelEnded;
-
     public event UnityAction ShowPlayerInstructions;
 
-    public LevelManager(ITimerService timerService, AudioManager audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController)
+    private bool _isGamePaused = false;
+    private bool _isLevelFinished = false;
+
+    private IAudioService _audioService;
+    private ITimerService _timerService;
+    private IInputService _inputService;
+    private RecipeSystem _recipeSystem;
+    private LevelData _levelData;
+    private ILeaderboardService _leaderboardService;
+
+    public int Score { get; private set; } = 0;
+    public bool IsInfinite { get; private set; } = false;
+
+    public LevelManager(ITimerService timerService, IAudioService audioService, IInputService input, RecipeSystem recipeSystem, SceneController sceneController, ILeaderboardService leaderboardService)
     {
-        _timer = timerService;
-        _audio = audioService;
-        _input = input;
+        _timerService = timerService;
+        _audioService = audioService;
+        _inputService = input;
         _recipeSystem = recipeSystem;
         _levelData = sceneController.CurrentLevelData;
+        _leaderboardService = leaderboardService;
+        IsInfinite = _levelData.isInfinite;
     }
 
     public void Start()
@@ -39,8 +43,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     public void StartLevel()
     {
         _isLevelFinished = false;
-        _timer.Start(_levelData.levelDurationInSeconds);
-        _audio.HandleLevelStart();
+        _timerService.Start(_levelData.levelDurationInSeconds);
 
         if (_levelData.showPlayerInstructions)
         {
@@ -50,26 +53,63 @@ public class LevelManager : IInitializable, IStartable, IDisposable
         PauseGame();
     }
 
+    private void HandleAudio()
+    {
+        if (_levelData.bgmTrack == null || _levelData.bgmTrack.Count == 0)
+        {
+            _audioService.StopTrack(TrackChannel.BGM);
+        }
+        else
+        {
+            _audioService.StartTrack(_levelData.bgmTrack[UnityEngine.Random.Range(0, _levelData.bgmTrack.Count)]);
+        }
+
+        if (_levelData.ambienceTrack == null || _levelData.ambienceTrack.Count == 0)
+        {
+            _audioService.StopTrack(TrackChannel.Ambience);
+        }
+        else
+        {
+            _audioService.StartTrack(_levelData.ambienceTrack[UnityEngine.Random.Range(0, _levelData.ambienceTrack.Count)]);
+        }
+    }
+
     public void Initialize()
     {
-        _input.Escape += TogglePause;
-        _timer.Completed += OnLevelEnd;
-        _recipeSystem.AllRecipesCompleted += OnLevelEnd;
+        _inputService.Escape += TogglePause;
+        _timerService.Completed += EndLevel;
+        _recipeSystem.RecipeCompleted += CheckLevelType;
+        _recipeSystem.AllRecipesCompleted += EndLevel;
     }
 
     public void Dispose()
     {
-        _input.Escape -= TogglePause;
-        _timer.Completed -= OnLevelEnd;
-        _recipeSystem.AllRecipesCompleted -= OnLevelEnd;
+        _inputService.Escape -= TogglePause;
+        _timerService.Completed -= EndLevel;
+        _recipeSystem.RecipeCompleted -= CheckLevelType;
+        _recipeSystem.AllRecipesCompleted -= EndLevel;
     }
 
-    private void OnLevelEnd()
+    public void CheckLevelType()
+    {
+        if (IsInfinite)
+        {
+            _timerService.AddTime(30);
+            Score += _recipeSystem.CurrentRecipeScore;
+            Debug.Log("Score: " + Score);
+        }
+    }
+
+    private void EndLevel()
     {
         PauseGame();
         _isLevelFinished = true;
         if (_levelData.levelIndex > PlayerPrefs.GetInt("LevelCompleted"))
             PlayerPrefs.SetInt("LevelCompleted", _levelData.levelIndex);
+
+        if (IsInfinite)
+            _leaderboardService.SubmitScoreAsync("Player", Score);
+
         LevelEnded?.Invoke();
     }
 
@@ -91,7 +131,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private void PauseGame()
     {
         Time.timeScale = 0f;
-        _timer.Pause();
+        _timerService.Pause();
         _isGamePaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -101,7 +141,7 @@ public class LevelManager : IInitializable, IStartable, IDisposable
     private void ResumeGame()
     {
         Time.timeScale = 1f;
-        _timer.Resume();
+        _timerService.Resume();
         _isGamePaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

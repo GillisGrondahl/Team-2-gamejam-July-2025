@@ -15,14 +15,14 @@ public class CountdownUI : MonoBehaviour
 
     private ITimerService _timerService;
     private LevelData _levelData;
-    private AudioManager _audioManager;
+    private IAudioService _audioService;
 
     [Inject]
-    private void Construct(ITimerService timerService, SceneController sceneController, AudioManager audioManager)
+    private void Construct(ITimerService timerService, SceneController sceneController, IAudioService audioService)
     {
         _timerService = timerService;
         _levelData = sceneController.CurrentLevelData;
-        _audioManager = audioManager;
+        _audioService = audioService;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class CountdownUI : MonoBehaviour
         {
             _earlyWarningTriggered = true;
             ShowWarning();
-            _audioManager.SetTempo(0.3f);
+            _audioService.SetTempo(TrackChannel.BGM, 0.3f);
         }
 
 
@@ -61,7 +61,7 @@ public class CountdownUI : MonoBehaviour
             {
                 _lastAnnouncedSecond = wholeSeconds;
                 ShowTimeEnding();
-                _audioManager.SetTempo(0.5f);
+                _audioService.SetTempo(TrackChannel.BGM, 0.5f);
             }
         }
     }

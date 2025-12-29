@@ -5,6 +5,7 @@ using UnityEngine;
 public class RecipeData : ScriptableObject
 {
     public string recipeName;
+    public int score;
     //public IngredientCountDictionary requiredIngredientsPices;
     [field: SerializeField] public List<RecipeStep> RequiredIngredients { get; private set; }
 }

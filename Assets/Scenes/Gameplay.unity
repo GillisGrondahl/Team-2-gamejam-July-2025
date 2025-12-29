@@ -584,6 +584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531568807}
   - component: {fileID: 531568809}
+  - component: {fileID: 531568810}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -627,6 +628,25 @@ MonoBehaviour:
   - {fileID: 1297057819}
   - {fileID: 522434911}
   - {fileID: 1603458007}
+  - {fileID: 531568805}
+  - {fileID: 4891924021116540992}
+--- !u!114 &531568810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531568805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b56d185120281e44813e0194ff5b045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneAudioController
+  _bgmTracks:
+  - {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
+  - {fileID: 11400000, guid: ac065c6b4be6142438c49b993a96a2b0, type: 2}
+  _ambienceTracks:
+  - {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
 --- !u!198 &648183069 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7450608743573320148, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
@@ -747,8 +767,41 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 120.5}
   m_LocalScale: {x: 20, y: 1, z: 37.98}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1929736198}
+  - {fileID: 1167590109}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1167590108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167590109}
+  m_Layer: 0
+  m_Name: EnemyShip_EndPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167590109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167590108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 0, z: -0.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1110827735}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1297057818
 PrefabInstance:
@@ -1070,6 +1123,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7621828796575091418, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
   m_PrefabInstance: {fileID: 3692266845561087127}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1929736197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929736198}
+  m_Layer: 0
+  m_Name: EnemyShip_StartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1929736198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929736197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.14, y: 0, z: 4.256}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1110827735}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1959458060 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5323409504074561194, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
@@ -20007,6 +20091,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.09
       objectReference: {fileID: 0}
+    - target: {fileID: 6090160180417555181, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: managedReferences[7359888354884976756].Destination
+      value: 
+      objectReference: {fileID: 4891924021116540993}
     - target: {fileID: 6227348673787419630, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -20055,6 +20143,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.33363342
       objectReference: {fileID: 0}
+    - target: {fileID: 7930025926871602034, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: managedReferences[7359888179562020959].BoundAnimator
+      value: 
+      objectReference: {fileID: 3692266845561087129}
     - target: {fileID: 8001767616400178572, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_Size.x
       value: 0.1842432
@@ -20111,6 +20203,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyShip
       objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _endPosition
+      value: 
+      objectReference: {fileID: 1167590109}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _startPosition
+      value: 
+      objectReference: {fileID: 1929736198}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _gunshotEvents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _gunshotDistances.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: '_gunshotDistances.Array.data[0]'
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: '_gunshotDistances.Array.data[1]'
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: '_gunshotDistances.Array.data[2]'
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _gunshotEvents.Array.data[0].distance
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _gunshotEvents.Array.data[1].distance
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681504816119991383, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+      propertyPath: _gunshotEvents.Array.data[2].distance
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7415462402808411334, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.195695
@@ -20156,6 +20288,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+--- !u!1 &4891924021116540992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1719323122345343556, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+  m_PrefabInstance: {fileID: 4891924021116540991}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4891924021116540993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7415462402808411334, guid: 0fef2fb133583dd4b8df2df80c7a3905, type: 3}
+  m_PrefabInstance: {fileID: 4891924021116540991}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8717314649774441593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20166,15 +20308,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 359873322063190391, guid: 26edd0bea1af5a5468bb75dc53716af1, type: 3}
       propertyPath: FeedbacksList.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 359873322063190391, guid: 26edd0bea1af5a5468bb75dc53716af1, type: 3}
       propertyPath: 'FeedbacksList.Array.data[1]'
-      value: 4732486239144640604
+      value: 9162141710737473733
       objectReference: {fileID: 0}
     - target: {fileID: 359873322063190391, guid: 26edd0bea1af5a5468bb75dc53716af1, type: 3}
       propertyPath: 'FeedbacksList.Array.data[2]'
-      value: 9162141710737473733
+      value: 9162141710737473716
       objectReference: {fileID: 0}
     - target: {fileID: 359873322063190391, guid: 26edd0bea1af5a5468bb75dc53716af1, type: 3}
       propertyPath: 'FeedbacksList.Array.data[3]'

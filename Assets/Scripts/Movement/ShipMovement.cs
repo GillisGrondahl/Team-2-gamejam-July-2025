@@ -35,27 +35,19 @@ public class ShipMovement : MonoBehaviour
     private float _pitchOffset;
 
     LevelData _levelData;
+    ISettingsService _settings;
 
     [Inject]
-    private void Construct(SceneController sceneController)
+    private void Construct(SceneController sceneController, ISettingsService settings)
     {
         _levelData = sceneController.CurrentLevelData;
+        _settings = settings;
     }
 
 
     void Start()
     {
-        // Subscribe to landlubber mode event
-        //GameEvents.Instance.OnLandlubberModeToggled += HandleLandlubberModeToggled;
-
-        // get motion intensity from difficulty manager
-        _motionIntensity = _levelData.waveMotionIntensity;
-
-        // if landlubber mode is enabled, disable motion
-        //if (LevelDifficultyManager.Instance.landlubberMode == true)
-        //{
-        //    _motionIntensity = 0f;
-        //}
+        HandleLandlubberModeChanged(_settings.Current.Gameplay);
 
         // Store the initial position and rotation
         _initialPosition = transform.position;
@@ -64,6 +56,15 @@ public class ShipMovement : MonoBehaviour
         // Add random offsets to make motion feel less predictable
         _heaveOffset = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
         _pitchOffset = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
+    }
+
+    private void OnEnable()
+    {
+        _settings.GameplaySettingsChanged += HandleLandlubberModeChanged;
+    }
+    private void OnDisable()
+    {
+        _settings.GameplaySettingsChanged -= HandleLandlubberModeChanged;
     }
 
     void Update()
@@ -82,10 +83,9 @@ public class ShipMovement : MonoBehaviour
 
     }
 
-    public void HandleLandlubberModeToggled(bool landlubberMode)
+    public void HandleLandlubberModeChanged(GameplaySettings gameplaySettings)
     {
-        _motionIntensity = landlubberMode ? 0f : 1f;
-        //LevelDifficultyManager.Instance.landlubberMode = landlubberMode;
+        _motionIntensity = gameplaySettings.LandlubberMode ? 0f : _levelData.waveMotionIntensity;
     }
 
     public void CalcHeaving(float _time)

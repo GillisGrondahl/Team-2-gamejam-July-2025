@@ -13,12 +13,7 @@ MonoBehaviour:
   m_Name: Bilge Broth_Easy
   m_EditorClassIdentifier: 
   recipeName: Bilge Broth
-  requiredIngredientsPices:
-    keys:
-    - {fileID: 11400000, guid: 48949b34dec3da441aeb315ec5ff5fff, type: 2}
-    - {fileID: 11400000, guid: cb28b1f2b376ef44db4e3b28676424ba, type: 2}
-    - {fileID: 11400000, guid: 6e2c201cb1ad8094ab00118bdcf572b7, type: 2}
-    values: 010000000100000001000000
+  score: 20
   <RequiredIngredients>k__BackingField:
   - ingredient: {fileID: 11400000, guid: 48949b34dec3da441aeb315ec5ff5fff, type: 2}
     piecesCount: 1

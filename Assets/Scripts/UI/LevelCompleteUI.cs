@@ -101,6 +101,12 @@ public class LevelCompleteUI : MonoBehaviour
 
     public void SetNrMealsCompletedText(int mealsCompleted, int maxMeals)
     {
-        _NrMealsCompletedText.text = "Meals completed: " + mealsCompleted.ToString() + "/" + maxMeals.ToString();
+        var text = "";
+        if (_levelManager.IsInfinite)
+            text = $"Meals completed: {mealsCompleted}\nScore: {_levelManager.Score}";
+        else
+            text = $"Meals completed: {mealsCompleted}/ {maxMeals}";
+
+        _NrMealsCompletedText.text = text;
     }
 }

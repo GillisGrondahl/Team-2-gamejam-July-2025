@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class ProjectLifetimeScope : LifetimeScope
 {
-    [SerializeField] AudioManager audioManager;
-    [SerializeField] SceneController sceneController;
+    [SerializeField] private SceneController sceneController;
+    [SerializeField] private GameSettingsData gameSettings;
+    [SerializeField] private FMODTrackLookup fmodTrackLookup;
 
     protected override void Configure(IContainerBuilder builder)
     {
-        builder.RegisterComponentInNewPrefab(audioManager, Lifetime.Singleton).DontDestroyOnLoad();
         builder.RegisterComponentInNewPrefab(sceneController, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
+        builder.RegisterEntryPoint<FMODAudioManager>();
         builder.RegisterEntryPoint<InputManager>();
 
-        builder.RegisterBuildCallback(r => r.Resolve<AudioManager>());
-        builder.RegisterBuildCallback(r => r.Resolve<SceneController>());   
+        builder.RegisterBuildCallback(r => r.Resolve<ISceneController>());
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        builder.Register<ISettingsStorage, PlayerPrefsSettingsStorage>(Lifetime.Singleton);
+#else
+        builder.Register<ISettingsStorage, FileSettingsStorage>(Lifetime.Singleton);
+#endif
+
+        builder.RegisterInstance(fmodTrackLookup);
+        builder.RegisterInstance(gameSettings.Value);
+        builder.Register<SettingsService>(Lifetime.Singleton).As<ISettingsService>();
+        builder.Register<LocalLeaderboardService>(Lifetime.Singleton).As<ILeaderboardService>();
+
     }
 }

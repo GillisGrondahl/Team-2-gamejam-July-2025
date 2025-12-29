@@ -68,7 +68,7 @@ public class Countdown : ITimerService, ITickable
         IsPaused = false;
     }
 
-    
+
     public void Update(float deltaTime)
     {
         if (!IsRunning || IsPaused || Duration <= 0f || TimeScale <= 0f) return;
@@ -83,6 +83,11 @@ public class Countdown : ITimerService, ITickable
 
         if (Remaining <= 0f)
             CompleteNow();
+    }
+
+    public void AddTime(float time)
+    {
+        Elapsed -= time;
     }
 
 
