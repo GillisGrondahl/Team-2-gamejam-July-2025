@@ -9,6 +9,6 @@ public class IngredientSpawner : MonoBehaviour
         var ingredientInstance = Instantiate(IngredientPrefab, interactor.transform.position, interactor.transform.rotation, transform.parent);
         var interactable = ingredientInstance.GetComponent<Interactable>();
         interactor.ForceSelection(interactable);
-        interactable.Interact(interactor);
+        interactable.OnInteractStart(interactor);
     }
 }

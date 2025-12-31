@@ -6,14 +6,35 @@ using Unity.VisualScripting;
 using UnityEngine;
 using VContainer;
 
-public class Interactor : MonoBehaviour
+
+public interface IInteractor
+{
+    Transform Transform { get; }
+    Vector3 CurrentVelocity { get; }
+    Transform SnapPoint { get; }
+}
+
+public readonly struct InteractionContext
+{
+    public readonly IInteractor Interactor;
+    public readonly IInteractable Interactable;
+
+    public InteractionContext(IInteractor interactor, IInteractable interactable)
+    {
+        Interactor = interactor;
+        Interactable = interactable;
+    }
+}
+
+public class Interactor : MonoBehaviour, IInteractor
 {
 
     public Vector3 CurrentVelocity { get; private set; }
+    public Transform Transform => transform;
+    [field: SerializeField] public Transform SnapPoint { get; private set; }
 
     [SerializeField] Transform handTransform;
     [SerializeField] Vector3 offset;
-    [field: SerializeField] public Transform SnapPoint { get; private set; }
 
     [SerializeField] float cooldown = 0.5f;
     bool _canInteract = true;
@@ -23,7 +44,7 @@ public class Interactor : MonoBehaviour
     List<Collider> handColliders = null;
     List<Collider> interactableColliders = new();
 
-
+    readonly HashSet<IDespawnNotifiable> _despawnSubscriptions = new();
     HashSet<IInteractable> hoveredInteractables = new();
     public IInteractable Selected { get; private set; }
     public IInteractable Candidate { get; private set; }
@@ -56,20 +77,76 @@ public class Interactor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IInteractable>(out var interactable))
+        if (!other.gameObject.TryGetComponent<IInteractable>(out var interactable))
+            return;
+
+        hoveredInteractables.Add(interactable);
+
+        if (interactable is IDespawnNotifiable despawn)
         {
-            hoveredInteractables.Add(interactable);
-            RefreshCandidate();
+            // Avoid double subscription
+            if (_despawnSubscriptions.Add(despawn))
+                despawn.Despawned += OnInteractableDespawned;
         }
+
+        RefreshCandidate();
+
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IInteractable>(out var interactable))
+        if (!other.gameObject.TryGetComponent<IInteractable>(out var interactable))
+            return;
+
+        hoveredInteractables.Remove(interactable);
+
+        if (interactable is IDespawnNotifiable despawn)
         {
-            hoveredInteractables.Remove(interactable);
-            RefreshCandidate();
+            if (_despawnSubscriptions.Remove(despawn))
+                despawn.Despawned -= OnInteractableDespawned;
         }
+
+        //if (ReferenceEquals(Candidate, interactable))
+        //{
+        //    Candidate.OnHoverEnd(this);
+        //    Candidate = null;
+        //}
+
+        RefreshCandidate();
+
+
+    }
+
+    private void OnInteractableDespawned(IDespawnNotifiable despawned)
+    {
+        // Convert back to IInteractable
+        var interactable = despawned as IInteractable;
+        if (interactable == null)
+            return;
+
+        // Clean all references
+        hoveredInteractables.Remove(interactable);
+
+        if (ReferenceEquals(Candidate, interactable))
+        {
+            Candidate.OnHoverEnd(this);
+            Candidate = null;
+        }
+
+        if (ReferenceEquals(Selected, interactable))
+        {
+            // End interaction safely
+            Selected.OnInteractEnd(this);
+            Selected = null;
+            StartCoroutine(Cooldown());
+        }
+
+        // Unsubscribe defensively
+        despawned.Despawned -= OnInteractableDespawned;
+        _despawnSubscriptions.Remove(despawned);
+
+        RefreshCandidate();
     }
 
     private void RefreshCandidate()
@@ -79,15 +156,17 @@ public class Interactor : MonoBehaviour
 
         IInteractable best = null;
         float bestScore = float.NegativeInfinity;
-        List<Interactable> candidates = new List<Interactable>();
-        candidates.AddRange(hoveredInteractables);
+        var candidates = hoveredInteractables.ToList();
 
         for (int i = 0; i < candidates.Count; i++)
         {
             var it = candidates[i];
             if (it == null) continue;
 
-            float dist = Vector3.Distance(transform.position, it.transform.position);
+            var itMB = it as MonoBehaviour;
+            if (itMB == null) continue;
+
+            float dist = Vector3.Distance(transform.position, itMB.transform.position);
             float score = -dist;
             if (score > bestScore)
             {
@@ -114,11 +193,11 @@ public class Interactor : MonoBehaviour
         if (ReferenceEquals(Candidate, next))
             return;
 
-        Candidate?.HideOutline();
+        Candidate?.OnHoverEnd(this);
 
         Candidate = next;
 
-        Candidate?.ShowOutline();
+        Candidate?.OnHoverStart(this);
     }
 
 
@@ -138,7 +217,8 @@ public class Interactor : MonoBehaviour
     {
         Selected = target;
         _canInteract = false;
-        Selected.Interact(this);
+
+        Selected.OnInteractStart(this);
         hand?.CloseHand(true);
         interactableColliders = transform.GetComponentsInChildren<Collider>().Skip(1).ToList();
         IgnoreCollisionWithInteractable(true);
@@ -146,7 +226,10 @@ public class Interactor : MonoBehaviour
 
     private void StopInteraction()
     {
-        Selected.StopInteract(this);
+        if (Selected == null)
+            return;
+
+        Selected.OnInteractEnd(this);
         IgnoreCollisionWithInteractable(false);
         interactableColliders.Clear();
         Selected = null;
@@ -159,10 +242,8 @@ public class Interactor : MonoBehaviour
     {
         foreach (var handCollider in handColliders)
         {
-            //Debug.Log($"Hand Colliders: {handCollider.name}");
             foreach (var interactableCollider in interactableColliders)
             {
-                //Debug.Log($"Interactable Colliders: {interactableCollider.name}");
                 Physics.IgnoreCollision(handCollider, interactableCollider, toggle);
             }
         }
