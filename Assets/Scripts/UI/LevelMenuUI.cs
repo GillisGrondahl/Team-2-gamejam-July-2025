@@ -37,7 +37,7 @@ public class LevelMenuUI : MonoBehaviour
 
         restartButton.onClick.AddListener(OnRestartButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsButtonClicked);
-        mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        mainMenuButton.onClick.AddListener(OnLevelSelectionButtonClicked);
         resumeButton.onClick.AddListener(OnResumeButtonClicked);
     }
 
@@ -51,7 +51,7 @@ public class LevelMenuUI : MonoBehaviour
 
         restartButton.onClick.RemoveListener(OnRestartButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
-        mainMenuButton.onClick.RemoveListener(OnMainMenuButtonClicked);
+        mainMenuButton.onClick.RemoveListener(OnLevelSelectionButtonClicked);
         resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
     }
 
@@ -76,9 +76,9 @@ public class LevelMenuUI : MonoBehaviour
         settingsMenu.SetActive(true);
     }
 
-    private void OnMainMenuButtonClicked()
+    private void OnLevelSelectionButtonClicked()
     {
-        _sceneController.LoadMainMenu();
+        _sceneController.LoadLevelSelection();
     }
 
     private void OnResumeButtonClicked()

@@ -1,7 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour
+
+public interface IInteractable
+{
+    void OnHoverStart(IInteractor interactor);
+    void OnHoverEnd(IInteractor interactor);
+
+    void OnInteractStart(IInteractor interactor);
+    void OnInteractEnd(IInteractor interactor);
+}
+
+public interface IDespawnNotifiable
+{
+    event Action<IDespawnNotifiable> Despawned;
+}
+
+public class Interactable : MonoBehaviour, IInteractable, IDespawnNotifiable
 {
     [field: SerializeField] public LayerMask OriginalLayer { get; set; }
     [field: SerializeField] public LayerMask OutlineLayer { get; set; }
@@ -12,17 +28,28 @@ public class Interactable : MonoBehaviour
     public UnityEvent<Interactor> OnInteract = new UnityEvent<Interactor>();
     public UnityEvent<Interactor> OnStopInteract = new UnityEvent<Interactor>();
 
+    public event Action<IDespawnNotifiable> Despawned;
+
     private void Awake()
     {
         gameObject.layer = GetLayerFromMask(OriginalLayer.value);
-
     }
 
 
-    public void Interact(Interactor interactor)
+    public void OnHoverStart(IInteractor interactor)
     {
-        interactor.OverlapedInteractable = this;
-        OnInteract?.Invoke(interactor);
+        ShowOutline();
+    }
+
+    public void OnHoverEnd(IInteractor interactor)
+    {
+        HideOutline();
+    }
+
+    public void OnInteractStart(IInteractor interactor)
+    {
+        //interactor.OverlapedInteractable = this;
+        OnInteract?.Invoke(interactor as Interactor);
 
         if (!pickable) return;
 
@@ -44,15 +71,14 @@ public class Interactable : MonoBehaviour
     }
 
 
-    public void StopInteract(Interactor interactor)
+    public void OnInteractEnd(IInteractor interactor)
     {
-        interactor.OverlapedInteractable = null;
-        OnStopInteract?.Invoke(interactor);
+        OnStopInteract?.Invoke(interactor as Interactor);
     }
 
     public void ShowOutline()
     {
-
+        // if (gameObject != null)
         gameObject.layer = GetLayerFromMask(OutlineLayer.value);
         //for (int i = 0; i < gameObject.transform.childCount; i++)
         //{
@@ -62,6 +88,7 @@ public class Interactable : MonoBehaviour
 
     public void HideOutline()
     {
+        // if (gameObject != null)
         gameObject.layer = GetLayerFromMask(OriginalLayer.value);
         //for (int i = 0; i < gameObject.transform.childCount; i++)
         //{
@@ -81,6 +108,7 @@ public class Interactable : MonoBehaviour
     {
         OnInteract.RemoveAllListeners();
         OnStopInteract.RemoveAllListeners();
+        Despawned?.Invoke(this);
     }
 
 }
