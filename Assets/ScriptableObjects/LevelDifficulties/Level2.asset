@@ -15,14 +15,20 @@ MonoBehaviour:
   levelIndex: 2
   sceneName: Gameplay
   showPlayerInstructions: 0
-  levelDurationInSeconds: 300
+  isInfinite: 0
+  levelDurationInSeconds: 180
   earlyWarningInSeconds: 10
   finalCountdownInSeconds: 5
-  nextLevel: {fileID: 8101103941675134267, guid: e42b915ec0fa6f44799407cdb13cf319, type: 3}
-  restartLevel: {fileID: 8101103941675134267, guid: 63250db5554bace45b02e778b7b1e359, type: 3}
   wrongIngredientPenalty: 10
   excessIngredientPenalty: 10
   waveMotionIntensity: 1
+  bgmTracks:
+  - {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
+  - {fileID: 11400000, guid: ac065c6b4be6142438c49b993a96a2b0, type: 2}
+  ambienceTracks:
+  - {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
+  earlyPitch: 0.3
+  finalPitch: 0.5
   levelRecipes:
   - {fileID: 11400000, guid: a04bad90dc7b58d4aa87adecdb060444, type: 2}
   - {fileID: 11400000, guid: 79fd334957f7e1c49bfc139d9b75f95d, type: 2}

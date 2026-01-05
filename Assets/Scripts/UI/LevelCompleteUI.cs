@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,24 +8,31 @@ using VContainer;
 public class LevelCompleteUI : MonoBehaviour
 {
 
-    [SerializeField] private MMF_Player _MMFLevelEnd;
-    [SerializeField] private float _scoreToComplete = 0.6f;
-    [SerializeField] private Canvas _canvas;
-    [SerializeField] private Sprite _starOutline, _starFilled;
-    [SerializeField] private Image _star1, _star2, _star3, _star4, _star5;
-    [SerializeField] private TMP_Text _evaluationText, _NrMealsCompletedText;
-    [SerializeField] private Button _continueButton, _retryButton;
+    [SerializeField] MMF_Player _MMFLevelEnd;
+    [SerializeField] float _scoreToComplete = 0.6f;
+    [SerializeField] Canvas _canvas;
+    [SerializeField] Sprite _starOutline, _starFilled;
+    [SerializeField] Image _star1, _star2, _star3, _star4, _star5;
+    [SerializeField] TMP_Text _evaluationText, _NrMealsCompletedText;
+    [SerializeField] Button _continueButton, _retryButton;
 
-    private LevelManager _levelManager;
-    private RecipeSystem _recipeSystem;
-    private ISceneController _sceneController;
+    LevelManager _levelManager;
+    RecipeSystem _recipeSystem;
+    ISceneController _sceneController;
+    IGameStateService _state;
+
+    private static readonly StateMask MenuMask =
+    StateMask.TimeScale |
+    StateMask.CursorVisible |
+    StateMask.CursorUnlocked;
 
     [Inject]
-    private void Construct(LevelManager levelManager, RecipeSystem recipeSystem, ISceneController sceneController)
+    private void Construct(LevelManager levelManager, RecipeSystem recipeSystem, ISceneController sceneController, IGameStateService stateService)
     {
         _levelManager = levelManager;
         _recipeSystem = recipeSystem;
         _sceneController = sceneController;
+        _state = stateService;
     }
 
     private void Awake()
@@ -50,24 +58,15 @@ public class LevelCompleteUI : MonoBehaviour
     private void OnLevelEnd()
     {
         _canvas.enabled = true;
+        _state.Register(this, MenuMask);
 
         SetNrMealsCompletedText(_recipeSystem.CurrentRecipeIndex, _recipeSystem.TotalRecipes);
-
         _MMFLevelEnd.PlayFeedbacks();
-
         EvaluateScore(_recipeSystem.OverallQuality);
-        Debug.Log($"LEVEL FINISHED! Quality: {_recipeSystem.OverallQuality}%");
     }
 
     public void EvaluateScore(float score)
     {
-
-        if (!Cursor.visible)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-
         if (score >= _scoreToComplete)
         {
             SetEvaluationText("brilliantly");
@@ -108,5 +107,10 @@ public class LevelCompleteUI : MonoBehaviour
             text = $"Meals completed: {mealsCompleted}/ {maxMeals}";
 
         _NrMealsCompletedText.text = text;
+    }
+
+    private void OnDestroy()
+    {
+        _state.Unregister(this);
     }
 }

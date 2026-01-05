@@ -143,6 +143,9 @@ MonoBehaviour:
   RestoreInitialValuesOnDisable: 0
   StopFeedbacksOnDisable: 0
   PlayCount: 0
+  MMF_ChannelMode: 0
+  MMF_Channel: 0
+  MMF_ChannelDefinition: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -469,8 +472,9 @@ GameObject:
   - component: {fileID: 8399414685415520940}
   - component: {fileID: 7504712190187157382}
   - component: {fileID: 4263806051922974611}
+  - component: {fileID: 1336457098297178060}
   m_Layer: 6
-  m_Name: knife
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,6 +556,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!54 &4396773265816780447
 Rigidbody:
@@ -614,14 +619,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff7278706bb5847883325a5dc1f30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <OriginalLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
-  <OutlineLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128
   attachTransform: {fileID: 3604211290336510790}
   pickable: 1
+  OnHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1336457098297178060}
+        m_TargetAssemblyTypeName: LayerOutlinePresenter, Assembly-CSharp
+        m_MethodName: SetOutlined
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnStopHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1336457098297178060}
+        m_TargetAssemblyTypeName: LayerOutlinePresenter, Assembly-CSharp
+        m_MethodName: SetOutlined
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -716,6 +745,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d776ae0fb6d894048b69c2460667452a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1336457098297178060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809751110322441986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc84892ca810a849a32a2a413a8e873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LayerOutlinePresenter
+  <OriginalLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <OutlineLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  <ApplyToChildren>k__BackingField: 0
 --- !u!1 &3766938216619704463
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +1032,9 @@ MonoBehaviour:
   RestoreInitialValuesOnDisable: 0
   StopFeedbacksOnDisable: 0
   PlayCount: 0
+  MMF_ChannelMode: 0
+  MMF_Channel: 0
+  MMF_ChannelDefinition: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -1356,6 +1407,9 @@ MonoBehaviour:
   RestoreInitialValuesOnDisable: 0
   StopFeedbacksOnDisable: 0
   PlayCount: 0
+  MMF_ChannelMode: 0
+  MMF_Channel: 0
+  MMF_ChannelDefinition: {fileID: 0}
   references:
     version: 2
     RefIds:

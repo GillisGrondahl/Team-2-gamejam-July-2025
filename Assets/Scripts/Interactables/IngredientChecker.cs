@@ -37,7 +37,7 @@ public class IngredientChecker : MonoBehaviour
                 }
 
                 int pices = ingredient.ingredientParts.Count + 1;
-                Debug.Log($"Ingredient {ingredient.ingredient.ingredientName} has {pices} pices.");
+                //Debug.Log($"Ingredient {ingredient.ingredient.ingredientName} has {pices} pices.");
                 _recipeSystem.AddIngredient(ingredient.ingredient, pices);
                 Destroy(ingredient.gameObject);
 

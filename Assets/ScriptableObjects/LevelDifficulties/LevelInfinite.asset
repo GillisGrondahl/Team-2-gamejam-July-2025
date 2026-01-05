@@ -22,8 +22,13 @@ MonoBehaviour:
   wrongIngredientPenalty: 10
   excessIngredientPenalty: 10
   waveMotionIntensity: 1.4
-  bgmTrack: []
-  ambienceTrack: []
+  bgmTracks:
+  - {fileID: 11400000, guid: 5c5a9d832f78f314b8d7277cb8a6904e, type: 2}
+  - {fileID: 11400000, guid: ac065c6b4be6142438c49b993a96a2b0, type: 2}
+  ambienceTracks:
+  - {fileID: 11400000, guid: 02d8c8b8c33adb64fbfc205b4c0e7165, type: 2}
+  earlyPitch: 0.3
+  finalPitch: 0.5
   levelRecipes:
   - {fileID: 11400000, guid: 2912b436a0e2b0341a57f9d6cf749ae0, type: 2}
   - {fileID: 11400000, guid: d6057da6d2059e34aa24dd08288ab9c9, type: 2}

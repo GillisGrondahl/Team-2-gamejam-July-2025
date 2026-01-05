@@ -51,6 +51,16 @@ public class Cutter : MonoBehaviour
         originalGameObject.GetComponent<MeshRenderer>().materials = mats;
         var originalIngredient = originalGameObject.GetComponent<Ingredient>();
 
+        var group = originalGameObject.GetComponent<InteractableGroup>();
+        if (group == null)
+            group = originalGameObject.AddComponent<InteractableGroup>();
+
+        var originalMember = originalGameObject.GetComponent<InteractableGroupMember>();
+        if (originalMember == null)
+            originalMember = originalGameObject.AddComponent<InteractableGroupMember>();
+
+        originalMember.SetGroup(group);
+
         GameObject part = new GameObject(originalGameObject.name + "_Part");
         part.transform.position = originalGameObject.transform.position + (Vector3.up * .05f);
         part.transform.rotation = originalGameObject.transform.rotation;
@@ -78,10 +88,17 @@ public class Cutter : MonoBehaviour
         partIngredient.ParentIngredient.ingredientParts.Add(partIngredient);
 
         var partInteractable = part.AddComponent<Interactable>();
+        //partInteractable.OnHover.AddListener(partIngredient.Hover);
+        //partInteractable.OnStopHover.AddListener(partIngredient.StopHover);
         partInteractable.OnInteract.AddListener(partIngredient.PickUp);
         partInteractable.OnStopInteract.AddListener(partIngredient.Release);
-        partInteractable.OriginalLayer = originalGameObject.GetComponent<Interactable>().OriginalLayer;
-        partInteractable.OutlineLayer = originalGameObject.GetComponent<Interactable>().OutlineLayer;
+
+        var partOutlinePresenter = part.AddComponent<LayerOutlinePresenter>();
+        partOutlinePresenter.OriginalLayer = originalGameObject.GetComponent<LayerOutlinePresenter>().OriginalLayer;
+        partOutlinePresenter.OutlineLayer = originalGameObject.GetComponent<LayerOutlinePresenter>().OutlineLayer;
+
+        var partMember = part.AddComponent<InteractableGroupMember>();
+        partMember.SetGroup(group);
 
         //Transform parentToSet = originalGameObject.transform;
 

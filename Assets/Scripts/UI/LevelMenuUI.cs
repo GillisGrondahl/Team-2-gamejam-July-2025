@@ -19,18 +19,35 @@ public class LevelMenuUI : MonoBehaviour
 
     LevelManager _levelManager;
     ISceneController _sceneController;
+    IInputService _inputService;
+    IGameStateService _state;
+
+    private static readonly StateMask MenuMask =
+        StateMask.TimeScale |
+        StateMask.CursorVisible |
+        StateMask.CursorUnlocked;
 
     [Inject]
-    private void Construct(LevelManager levelManager, ISceneController sceneController)
+    private void Construct(LevelManager levelManager, ISceneController sceneController, IGameStateService stateService, IInputService inputService)
     {
         _levelManager = levelManager;
         _sceneController = sceneController;
+        _inputService = inputService;
+        _state = stateService;
+
     }
+
+    private void Awake()
+    {
+        _state.Register(readyButton, MenuMask);
+    }
+
 
     private void OnEnable()
     {
-        _levelManager.GamePaused += ShowLevelMenuUI;
-        _levelManager.GameResumed += HideLevelMenuUI;
+        //_levelManager.GamePaused += ShowLevelMenuUI;
+        //_levelManager.GameResumed += HideLevelMenuUI;
+        _inputService.Escape += ToggleMenu;
         _levelManager.ShowPlayerInstructions += OnShowPlayerInstucations;
 
         readyButton.onClick.AddListener(OnReadyButtonClicked);
@@ -43,8 +60,9 @@ public class LevelMenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        _levelManager.GamePaused -= ShowLevelMenuUI;
-        _levelManager.GameResumed -= HideLevelMenuUI;
+        //_levelManager.GamePaused -= ShowLevelMenuUI;
+        //_levelManager.GameResumed -= HideLevelMenuUI;
+        _inputService.Escape -= ToggleMenu;
         _levelManager.ShowPlayerInstructions -= OnShowPlayerInstucations;
 
         readyButton.onClick.RemoveListener(OnReadyButtonClicked);
@@ -55,15 +73,31 @@ public class LevelMenuUI : MonoBehaviour
         resumeButton.onClick.RemoveListener(OnResumeButtonClicked);
     }
 
+    private void ToggleMenu()
+    {
+        if (!levelMenu.activeSelf)
+        {
+            levelMenu.SetActive(true);
+            _state.Register(this, MenuMask);
+        }
+        else
+        {
+            levelMenu.SetActive(false);
+            _state.Unregister(this);
+        }
+    }
+
     private void OnShowPlayerInstucations()
     {
         readyButtonScreen.gameObject.SetActive(false);
+        _state.Unregister(readyButton);
     }
 
     private void OnReadyButtonClicked()
     {
         readyButtonScreen.gameObject.SetActive(false);
-        _levelManager.TogglePause();
+        _state.Unregister(readyButton);
+
     }
 
     private void OnRestartButtonClicked()
@@ -83,16 +117,12 @@ public class LevelMenuUI : MonoBehaviour
 
     private void OnResumeButtonClicked()
     {
-        _levelManager.TogglePause();
+        ToggleMenu();
     }
 
-    private void ShowLevelMenuUI()
+    private void OnDestroy()
     {
-        levelMenu.SetActive(true);
-    }
-
-    private void HideLevelMenuUI()
-    {
-        levelMenu.SetActive(false);
+        _state.Unregister(readyButton);
+        _state.Unregister(this);
     }
 }
