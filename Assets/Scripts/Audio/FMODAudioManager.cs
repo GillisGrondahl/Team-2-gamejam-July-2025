@@ -150,7 +150,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         ref var inst = ref GetInstanceRef(channel);
         if (!inst.isValid()) return;
 
-        inst.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         inst.release();
         _eventInstances.Remove(inst);
         inst.clearHandle();
@@ -162,7 +162,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
         if (inst.isValid())
         {
-            inst.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             inst.release();
             _eventInstances.Remove(inst);
             inst.clearHandle();
@@ -212,7 +212,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         // Clean up FMOD instances
         foreach (EventInstance instance in _eventInstances)
         {
-            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             instance.release();
         }
     }
