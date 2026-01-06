@@ -1,4 +1,5 @@
 using MoreMountains.Feedbacks;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -13,11 +14,19 @@ public class PlayerInstructionsUI : MonoBehaviour
     private bool _countdownArrowPlayed = false;
 
     LevelManager _levelManager;
+    IGameStateService _state;
+
+
+    private static readonly StateMask PlayerInstractionsMask =
+    StateMask.TimeScale |
+    StateMask.CursorVisible |
+    StateMask.CursorUnlocked;
 
     [Inject]
-    private void Construct(LevelManager levelManager)
+    private void Construct(LevelManager levelManager, IGameStateService stateService)
     {
         _levelManager = levelManager;
+        _state = stateService;
     }
 
     private void Awake()
@@ -37,30 +46,14 @@ public class PlayerInstructionsUI : MonoBehaviour
 
     private void Show()
     {
-
         _canvas.enabled = true;
-        //_continueButton.onClick.AddListener(() =>
-        //{
-        //    if (!_recipeArrowPlayed)
-        //    {
-        //        _recipeArrow.PlayFeedbacks();
-        //        _recipeArrowPlayed = true;
-        //    }
-        //    else if (!_countdownArrowPlayed)
-        //    {
-        //        _countdownArrow.PlayFeedbacks();
-        //        _countdownArrowPlayed = true;
-        //    }
-        //    else
-        //    {
-        //        gameObject.SetActive(false);
-        //    }
-        //});
+        _state.Register(this, PlayerInstractionsMask);
     }
 
     private void Hide()
     {
         _canvas.enabled = false;
+        _state.Unregister(this);
     }
 
     public void NextInstruction()
@@ -77,9 +70,12 @@ public class PlayerInstructionsUI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hiding Instructions");
             Hide();
-            _levelManager.TogglePause();
         }
+    }
+
+    private void OnDestroy()
+    {
+        _state.Unregister(this);
     }
 }

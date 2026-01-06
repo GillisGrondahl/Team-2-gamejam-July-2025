@@ -19,31 +19,25 @@ public interface IDespawnNotifiable
 
 public class Interactable : MonoBehaviour, IInteractable, IDespawnNotifiable
 {
-    [field: SerializeField] public LayerMask OriginalLayer { get; set; }
-    [field: SerializeField] public LayerMask OutlineLayer { get; set; }
     [SerializeField] Transform attachTransform;
     [SerializeField] bool pickable = true;
 
     [Header("Events")]
-    public UnityEvent<Interactor> OnInteract = new UnityEvent<Interactor>();
-    public UnityEvent<Interactor> OnStopInteract = new UnityEvent<Interactor>();
+    public UnityEvent<Interactor> OnHover = new();
+    public UnityEvent<Interactor> OnStopHover = new();
+    public UnityEvent<Interactor> OnInteract = new();
+    public UnityEvent<Interactor> OnStopInteract = new();
 
     public event Action<IDespawnNotifiable> Despawned;
 
-    private void Awake()
-    {
-        gameObject.layer = GetLayerFromMask(OriginalLayer.value);
-    }
-
-
     public void OnHoverStart(IInteractor interactor)
     {
-        ShowOutline();
+        OnHover?.Invoke(interactor as Interactor);
     }
 
     public void OnHoverEnd(IInteractor interactor)
     {
-        HideOutline();
+        OnStopHover?.Invoke(interactor as Interactor);
     }
 
     public void OnInteractStart(IInteractor interactor)
@@ -70,38 +64,9 @@ public class Interactable : MonoBehaviour, IInteractable, IDespawnNotifiable
         }
     }
 
-
     public void OnInteractEnd(IInteractor interactor)
     {
         OnStopInteract?.Invoke(interactor as Interactor);
-    }
-
-    public void ShowOutline()
-    {
-        // if (gameObject != null)
-        gameObject.layer = GetLayerFromMask(OutlineLayer.value);
-        //for (int i = 0; i < gameObject.transform.childCount; i++)
-        //{
-        //    gameObject.transform.GetChild(i).gameObject.layer = GetLayerFromMask(OutlineLayer.value);
-        //}
-    }
-
-    public void HideOutline()
-    {
-        // if (gameObject != null)
-        gameObject.layer = GetLayerFromMask(OriginalLayer.value);
-        //for (int i = 0; i < gameObject.transform.childCount; i++)
-        //{
-        //    gameObject.transform.GetChild(i).gameObject.layer = GetLayerFromMask(OriginalLayer.value);
-        //}
-    }
-
-    public int GetLayerFromMask(int mask)
-    {
-        int layer = 0;
-        while ((mask >>= 1) != 0)
-            layer++;
-        return layer;
     }
 
     private void OnDestroy()

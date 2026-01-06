@@ -10,18 +10,18 @@ using VContainer.Unity;
 
 public class FMODAudioManager : IAudioService, IStartable, IDisposable
 {
-    private readonly FMODTrackLookup _fmodLookup;
-    private readonly ISettingsService _settingsService;
+    readonly FMODTrackLookup _fmodLookup;
+    readonly ISettingsService _settingsService;
 
-    private float _masterVolume = 0.9f;
-    private float _bgmVolume = 0.7f;
-    private float _ambVolume = 0.7f;
-    private float _sfxVolume = 1.0f;
+    float _masterVolume = 0.9f;
+    float _bgmVolume = 0.7f;
+    float _ambVolume = 0.7f;
+    float _sfxVolume = 1.0f;
 
-    private Bus masterBus;
-    private Bus BGMBus;
-    private Bus AMBBus;
-    private Bus SFXBus;
+    Bus masterBus;
+    Bus BGMBus;
+    Bus AMBBus;
+    Bus SFXBus;
 
     public float MasterVolume
     {
@@ -67,10 +67,12 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         }
     }                                                                                                          
 
-    private EventInstance _bgmInstance;
-    private EventInstance _ambInstance;
+    EventInstance _bgmInstance;
+    EventInstance _ambInstance;
 
-    private List<EventInstance> _eventInstances = new List<EventInstance>();
+    List<EventInstance> _eventInstances = new ();
+    readonly Dictionary<TrackChannel, string> _currentProviderKeyByChannel = new();
+
 
     [Inject]
     public FMODAudioManager(FMODTrackLookup fmodLookup, ISettingsService settingsService)
@@ -122,7 +124,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         volumeControlBus.setVolume(volume);
     }
 
-    public void StartTrack(AudioTrackData track)
+    public void StartTrack(AudioTrackData track, float fadeOutSeconds = 0.5f, float fadeInSeconds = 0.5f)
     {
         if (track == null)
         {
@@ -136,27 +138,48 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
             return;
         }
 
+        if (_currentProviderKeyByChannel.TryGetValue(track.Channel, out var currentKey) &&
+            currentKey == track.ProviderKey)
+        {
+            return;
+        }
+
         if (!_fmodLookup.TryGet(track.ProviderKey, out var eventRef))
         {
             Debug.LogWarning($"No FMOD event for ProviderKey '{track.ProviderKey}'");
             return;
         }
 
-        PlayPersistent(eventRef, track.Channel);
+        StopTrack(track.Channel, fadeOutSeconds);
+        PlayPersistent(eventRef, track.Channel, fadeInSeconds);
+
+        _currentProviderKeyByChannel[track.Channel] = track.ProviderKey;
     }
 
-    public void StopTrack(TrackChannel channel)
+
+    public void StopTrack(TrackChannel channel, float fadeOutSeconds = 0f)
     {
         ref var inst = ref GetInstanceRef(channel);
         if (!inst.isValid()) return;
 
-        inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        if (fadeOutSeconds > 0f)
+        {
+            inst.setParameterByName("Fade", 0f);
+            inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+        else
+        {
+            inst.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        }
+
         inst.release();
         _eventInstances.Remove(inst);
         inst.clearHandle();
+
+        _currentProviderKeyByChannel.Remove(channel);
     }
 
-    private void PlayPersistent(EventReference eventRef, TrackChannel channel)
+    private void PlayPersistent(EventReference eventRef, TrackChannel channel, float fadeIn = 0f)
     {
         ref var inst = ref GetInstanceRef(channel);
 
@@ -176,6 +199,15 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
         inst = RuntimeManager.CreateInstance(eventRef);
         _eventInstances.Add(inst);
+
+
+        if (fadeIn > 0f)
+        {
+            inst.setParameterByName("Fade", 0f);
+            inst.start();
+            inst.setParameterByName("Fade", 1f);
+        } 
+
         inst.start();
     }
 
@@ -192,19 +224,33 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         }
     }
 
-    public void SetTempo(TrackChannel channel, float newValue)
+    public void SetParameter(TrackChannel channel, string paramName, float newValue)
     {
 
         ref var inst = ref GetInstanceRef(channel);
         if (!inst.isValid()) return;
 
-        //inst.setPitch(newValue);
-        inst.setParameterByName("Pitch", newValue);
+        inst.setParameterByName(paramName, newValue);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
     {
         RuntimeManager.PlayOneShot(sound, worldPos);
+    }
+
+    public void ResetAudio()
+    {
+        ResetTrack(TrackChannel.BGM);
+        ResetTrack(TrackChannel.Ambience);
+    }
+
+    private void ResetTrack(TrackChannel channel)
+    {
+        ref var inst = ref GetInstanceRef(channel);
+        if (!inst.isValid()) return;
+
+        inst.setParameterByName("Pitch", 0f);
+        inst.setParameterByName("Fade", 1f);
     }
 
     public void Dispose()

@@ -8,31 +8,39 @@ public class SceneAudioController : MonoBehaviour
     [SerializeField] private List<AudioTrackData> _ambienceTracks;
 
     private IAudioService _audioService;
+    private LevelData _levelData;
 
     [Inject]
-    public void Construct(IAudioService audioService)
+    public void Construct(IAudioService audioService, SceneController sceneController)
     {
         _audioService = audioService;
+        _levelData = sceneController.CurrentLevelData;
     }
 
     private void Start()
     {
-        if (_bgmTracks == null || _bgmTracks.Count == 0)
+        _audioService.ResetAudio();
+
+        List<AudioTrackData> bgmTracks = _levelData ? _levelData.bgmTracks : _bgmTracks;
+        List<AudioTrackData> ambienceTracks = _levelData ? _levelData.ambienceTracks : _ambienceTracks;
+
+
+        if (bgmTracks == null || bgmTracks.Count == 0)
         {
-            _audioService.StopTrack(TrackChannel.BGM);
+            _audioService.StopTrack(TrackChannel.BGM, 1f);
         }
         else
         {
-            _audioService.StartTrack(_bgmTracks[UnityEngine.Random.Range(0, _bgmTracks.Count)]);
+            _audioService.StartTrack(bgmTracks[Random.Range(0, bgmTracks.Count)], 1f);
         }
 
-        if (_ambienceTracks == null || _ambienceTracks.Count == 0)
+        if (ambienceTracks == null || ambienceTracks.Count == 0)
         {
-            _audioService.StopTrack(TrackChannel.Ambience);
+            _audioService.StopTrack(TrackChannel.Ambience, 1f);
         }
         else
         {
-            _audioService.StartTrack(_ambienceTracks[UnityEngine.Random.Range(0, _ambienceTracks.Count)]);
+            _audioService.StartTrack(ambienceTracks[Random.Range(0, ambienceTracks.Count)], 1f, 1f);
         }
 
     }

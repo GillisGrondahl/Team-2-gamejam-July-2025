@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -11,19 +10,24 @@ public class LevelSelectionManager : MonoBehaviour
 
     SceneController _sceneController;
 
+    IGameStateService _state;
+
+    StateMask LevelSelectionMask = StateMask.CursorVisible | StateMask.CursorUnlocked;
+
     [Inject]
-    private void Constructor(SceneController sceneController)
+    private void Constructor(SceneController sceneController, IGameStateService stateService)
     {
         _sceneController = sceneController;
+        _state = stateService;
+    }
+    private void Awake()
+    {
+        _state.SetGameState(GameState.LevelSelect);
+        levelCompleted = PlayerPrefs.GetInt("LevelCompleted");
     }
 
     private void Start()
     {
-        Time.timeScale = 1f;
-        levelCompleted = PlayerPrefs.GetInt("LevelCompleted");
-
-        Debug.Log("Level Completed: " + levelCompleted);
-
         UpdateLevelSteps();
     }
 

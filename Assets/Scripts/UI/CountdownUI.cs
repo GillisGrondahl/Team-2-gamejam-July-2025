@@ -50,7 +50,7 @@ public class CountdownUI : MonoBehaviour
         {
             _earlyWarningTriggered = true;
             ShowWarning();
-            _audioService.SetTempo(TrackChannel.BGM, 0.3f);
+            _audioService.SetParameter(TrackChannel.BGM, "Pitch", _levelData.earlyPitch);
         }
 
 
@@ -61,7 +61,7 @@ public class CountdownUI : MonoBehaviour
             {
                 _lastAnnouncedSecond = wholeSeconds;
                 ShowTimeEnding();
-                _audioService.SetTempo(TrackChannel.BGM, 0.5f);
+                _audioService.SetParameter(TrackChannel.BGM, "Pitch", _levelData.finalPitch);
             }
         }
     }
@@ -83,15 +83,10 @@ public class CountdownUI : MonoBehaviour
         _countdownTickFeedback?.PlayFeedbacks();
     }
 
-    public void ShowTimeUp()
-    {
-        // Optionally implement any UI changes when time is up
-    }
-
     public string GetFormattedTime(float timeInSeconds)
     {
         int minutes = Mathf.FloorToInt(timeInSeconds / 60f);
-        int seconds = Mathf.FloorToInt(timeInSeconds % 60f);
+        int seconds = Mathf.RoundToInt(timeInSeconds % 60f);
         return string.Format($"{minutes:00}:{seconds:00}");
     }
 }

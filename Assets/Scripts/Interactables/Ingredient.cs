@@ -132,7 +132,7 @@ public class Ingredient : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach(var ingredient in ingredientParts)
+        foreach (var ingredient in ingredientParts)
             Destroy(ingredient.gameObject);
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6705740775688814185}
   - component: {fileID: 219912300030152495}
   - component: {fileID: 8767983649014256063}
+  - component: {fileID: 1619861751792866589}
   m_Layer: 10
   m_Name: IngredientSpawner
   m_TagString: Untagged
@@ -66,6 +67,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -87,9 +90,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7992021575687488955
 BoxCollider:
@@ -124,14 +129,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ff7278706bb5847883325a5dc1f30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <OriginalLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
-  <OutlineLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128
   attachTransform: {fileID: 0}
   pickable: 0
+  OnHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1619861751792866589}
+        m_TargetAssemblyTypeName: LayerOutlinePresenter, Assembly-CSharp
+        m_MethodName: SetOutlined
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnStopHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1619861751792866589}
+        m_TargetAssemblyTypeName: LayerOutlinePresenter, Assembly-CSharp
+        m_MethodName: SetOutlined
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -190,6 +219,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1619861751792866589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785615115743855522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc84892ca810a849a32a2a413a8e873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LayerOutlinePresenter
+  <OriginalLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <OutlineLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  <ApplyToChildren>k__BackingField: 0
 --- !u!1 &7826703402044751694
 GameObject:
   m_ObjectHideFlags: 0

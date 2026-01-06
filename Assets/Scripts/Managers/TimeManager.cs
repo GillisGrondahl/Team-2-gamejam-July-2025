@@ -77,15 +77,15 @@ public class TimeManager : MonoBehaviour
     {
         if (!_ingameMenuShown)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
             ingameMenu.SetActive(true);
             _ingameMenuShown = true;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
             ingameMenu.SetActive(false);
             _ingameMenuShown = false;
             UnpauseGame();

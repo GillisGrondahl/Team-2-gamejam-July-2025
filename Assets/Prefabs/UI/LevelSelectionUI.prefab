@@ -562,6 +562,7 @@ GameObject:
   - component: {fileID: 7074651181748596563}
   - component: {fileID: 4728200556295918026}
   - component: {fileID: 7029396313382116764}
+  - component: {fileID: 6422558719204995189}
   m_Layer: 5
   m_Name: LevelSelectionUI
   m_TagString: Untagged
@@ -693,6 +694,21 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 8569838902317062139}
+--- !u!114 &6422558719204995189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8569838902317062139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b56d185120281e44813e0194ff5b045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneAudioController
+  _bgmTracks: []
+  _ambienceTracks:
+  - {fileID: 11400000, guid: bb02aef79730fae46bd03a35ab450fb4, type: 2}
 --- !u!1 &8887467073674740491
 GameObject:
   m_ObjectHideFlags: 0

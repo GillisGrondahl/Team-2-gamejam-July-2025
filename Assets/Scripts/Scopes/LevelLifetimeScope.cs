@@ -8,6 +8,6 @@ public class LevelLifetimeScope : LifetimeScope
     {
         builder.RegisterEntryPoint<RecipeSystem>().AsSelf();
         builder.RegisterEntryPoint<LevelManager>().AsSelf();
-        builder.Register<Countdown>(Lifetime.Scoped).AsImplementedInterfaces();
+        builder.RegisterEntryPoint<Countdown>(Lifetime.Scoped);
     }
 }

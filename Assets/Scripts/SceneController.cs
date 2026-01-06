@@ -29,6 +29,7 @@ public class SceneController : MonoBehaviour, ISceneController
 
     public void LoadLevelSelection()
     {
+        ResetLevelData();
         PlayTransitionToScene(levelSelectionSceneName);
     }
 
@@ -51,7 +52,13 @@ public class SceneController : MonoBehaviour, ISceneController
 
     public void LoadMainMenu()
     {
+        ResetLevelData();
         PlayTransitionToScene(mainMenuSceneName);
+    }
+
+    private void ResetLevelData()
+    {
+        CurrentLevelData = null;
     }
 
 }

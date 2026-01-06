@@ -23,8 +23,10 @@ public class LevelData : ScriptableObject
     [Range(0f, 2f)] public float waveMotionIntensity = 1f;
 
     [Header("Audio")]
-    public List<AudioTrackData> bgmTrack = null;
-    public List<AudioTrackData> ambienceTrack = null;
+    public List<AudioTrackData> bgmTracks = null;
+    public List<AudioTrackData> ambienceTracks = null;
+    public float earlyPitch = 0.3f;
+    public float finalPitch = 0.5f;
 
     [Header("Level Recipes")]
     [Tooltip("List of recipes that need to be completed in this level")]
