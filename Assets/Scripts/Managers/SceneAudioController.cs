@@ -27,20 +27,20 @@ public class SceneAudioController : MonoBehaviour
 
         if (bgmTracks == null || bgmTracks.Count == 0)
         {
-            _audioService.StopTrack(TrackChannel.BGM, 1f);
+            _audioService.StopTrack(TrackChannel.BGM, true);
         }
         else
         {
-            _audioService.StartTrack(bgmTracks[Random.Range(0, bgmTracks.Count)], 1f);
+            _audioService.StartTrack(bgmTracks[Random.Range(0, bgmTracks.Count)], true);
         }
 
         if (ambienceTracks == null || ambienceTracks.Count == 0)
         {
-            _audioService.StopTrack(TrackChannel.Ambience, 1f);
+            _audioService.StopTrack(TrackChannel.Ambience, true);
         }
         else
         {
-            _audioService.StartTrack(ambienceTracks[Random.Range(0, ambienceTracks.Count)], 1f, 1f);
+            _audioService.StartTrack(ambienceTracks[Random.Range(0, ambienceTracks.Count)], true, 1f);
         }
 
     }
