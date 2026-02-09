@@ -9,7 +9,7 @@ public class SceneController : MonoBehaviour, ISceneController
     [SerializeField] private MMF_Player transitionPlayer;
     private MMF_LoadScene _sceneLoadFeedback;
 
-    public LevelData CurrentLevelData { get; private set; }
+    [field: SerializeField] public LevelData CurrentLevelData { get; private set; }
 
     private void Awake()
     {

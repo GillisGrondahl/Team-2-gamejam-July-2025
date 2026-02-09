@@ -48,6 +48,7 @@ MonoBehaviour:
   mainMenuSceneName: MainMenu
   levelSelectionSceneName: LevelSelection
   transitionPlayer: {fileID: 5640874631592454413}
+  <CurrentLevelData>k__BackingField: {fileID: 11400000, guid: fcac95f7e5b783b46864408c4b2c0395, type: 2}
 --- !u!114 &5640874631592454413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +160,9 @@ MonoBehaviour:
   RestoreInitialValuesOnDisable: 0
   StopFeedbacksOnDisable: 0
   PlayCount: 0
+  MMF_ChannelMode: 0
+  MMF_Channel: 0
+  MMF_ChannelDefinition: {fileID: 0}
   references:
     version: 2
     RefIds:
