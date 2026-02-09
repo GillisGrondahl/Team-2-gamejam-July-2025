@@ -124,7 +124,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         volumeControlBus.setVolume(volume);
     }
 
-    public void StartTrack(AudioTrackData track, float fadeOutSeconds = 0.5f, float fadeInSeconds = 0.5f)
+    public void StartTrack(AudioTrackData track, bool fadeout = true, float fadeInSeconds = 0.5f)
     {
         if (track == null)
         {
@@ -150,21 +150,20 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
             return;
         }
 
-        StopTrack(track.Channel, fadeOutSeconds);
-        PlayPersistent(eventRef, track.Channel, fadeInSeconds);
+        StopTrack(track.Channel, fadeout);
+        PlayPersistent(eventRef, track.Channel, fadeout, fadeInSeconds);
 
         _currentProviderKeyByChannel[track.Channel] = track.ProviderKey;
     }
 
 
-    public void StopTrack(TrackChannel channel, float fadeOutSeconds = 0f)
+    public void StopTrack(TrackChannel channel, bool fadeout=true)
     {
         ref var inst = ref GetInstanceRef(channel);
         if (!inst.isValid()) return;
 
-        if (fadeOutSeconds > 0f)
+        if (fadeout)
         {
-            inst.setParameterByName("Fade", 0f);
             inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
         else
@@ -179,13 +178,20 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         _currentProviderKeyByChannel.Remove(channel);
     }
 
-    private void PlayPersistent(EventReference eventRef, TrackChannel channel, float fadeIn = 0f)
+    private void PlayPersistent(EventReference eventRef, TrackChannel channel, bool fadeOut = true, float fadeIn = 0f)
     {
         ref var inst = ref GetInstanceRef(channel);
 
         if (inst.isValid())
         {
-            inst.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            if(fadeOut)
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+            else
+            {
+                inst.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            }
             inst.release();
             _eventInstances.Remove(inst);
             inst.clearHandle();
@@ -199,14 +205,6 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
         inst = RuntimeManager.CreateInstance(eventRef);
         _eventInstances.Add(inst);
-
-
-        if (fadeIn > 0f)
-        {
-            inst.setParameterByName("Fade", 0f);
-            inst.start();
-            inst.setParameterByName("Fade", 1f);
-        } 
 
         inst.start();
     }
@@ -258,7 +256,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         // Clean up FMOD instances
         foreach (EventInstance instance in _eventInstances)
         {
-            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             instance.release();
         }
     }
