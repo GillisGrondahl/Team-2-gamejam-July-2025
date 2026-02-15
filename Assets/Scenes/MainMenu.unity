@@ -3709,6 +3709,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenu_Pot=Start
       objectReference: {fileID: 0}
+    - target: {fileID: 9134829234710128879, guid: c9e1030cf782c3c458b14df39f6f39a1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.331
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

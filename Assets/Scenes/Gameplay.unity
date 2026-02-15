@@ -1215,6 +1215,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2392812360670075259, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Center.x
+      value: 2.475
+      objectReference: {fileID: 0}
     - target: {fileID: 5323409504074561194, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_Name
       value: Ship
@@ -1222,6 +1226,18 @@ PrefabInstance:
     - target: {fileID: 7249298188875691109, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.279
+      objectReference: {fileID: 0}
+    - target: {fileID: 7765601755397814962, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Center.z
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001767616400178572, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Center.x
+      value: -2.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641746334696106664, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: m_Center.x
+      value: -0.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
