@@ -121,7 +121,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2569931035432700533}
-  - component: {fileID: 7394384744268144838}
   m_Layer: 0
   m_Name: HandPivot
   m_TagString: Player
@@ -145,33 +144,6 @@ Transform:
   - {fileID: 5212029000041809385}
   m_Father: {fileID: 950232374691278063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &7394384744268144838
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5503987834294660575}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 78
-  m_CollisionDetection: 2
 --- !u!1 &7608596286144056553
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +396,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampingSpeed: 0.6
+  shipTransform: {fileID: 0}
+  cameraTransform: {fileID: 0}
 --- !u!114 &3236987937718833828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,7 +495,7 @@ MonoBehaviour:
   acceleration: 2
   deceleration: 2
   oneArmedMode: 0
-  jitterEnabled: 1
+  jitterEnabled: 0
   jitterIntensity: 0.7
   jitterFrequency: 1.1
 --- !u!114 &3007366589477008067
@@ -537,15 +511,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handPivot: {fileID: 2569931035432700533}
+  handPoint: {fileID: 5212029000041809385}
   sensitivity: 0.2
   minPitch: -45
   maxPitch: 45
   minYaw: -60
   maxYaw: 60
-  handPoint: {fileID: 5212029000041809385}
-  handReachMin: -0.2
-  handReachMax: 1
-  reachSpeed: 0.02
+  aimDistance: 0.26
+  handReachMin: -0.6
+  handReachMax: 1.8
+  reachSpeed: 3.5
 --- !u!1001 &2877582393600200799
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -58,6 +58,12 @@ MonoBehaviour:
   _pitchAmplitude: 8
   _pitchPeriod: 10
   _waveVariation: 0.1
+  shipContentRoot: {fileID: 0}
+  actorsRoot: {fileID: 0}
+  useDecoupledActorsFrame: 0
+  detachActorsRootAtRuntime: 0
+  applyShipDeltaToActors: 0
+  autoGroupPlayerAndHand: 1
 --- !u!1 &9150168592264985583
 GameObject:
   m_ObjectHideFlags: 0
