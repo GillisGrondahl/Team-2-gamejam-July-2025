@@ -2,30 +2,33 @@ using UnityEngine;
 
 public class CameraLag : MonoBehaviour
 {
-    [Tooltip("How quickly camera catches up to ship rotation")]
-    public float dampingSpeed = 0.7f;
+    [Tooltip("How quickly camera catches up to ship rotation.")]
+    [SerializeField] private float dampingSpeed = 0.7f;
 
-    private Transform shipTransform;
+    [Tooltip("Explicit ship transform. Leave empty to disable ship counter-rotation.")]
+    [SerializeField] private Transform shipTransform;
+
+    [Tooltip("Transform to lag. Defaults to this transform.")]
+    [SerializeField] private Transform cameraTransform;
     private Vector3 initialLocalPosition;
     private Quaternion initialLocalRotation;
 
-    void Start()
+    private void Awake()
     {
-        shipTransform = transform.parent.parent; // assuming Ship -> Player -> Camera
+        if (cameraTransform == null)
+            cameraTransform = transform;
 
-        initialLocalPosition = transform.localPosition;
-        initialLocalRotation = transform.localRotation;
-
-
+        initialLocalPosition = cameraTransform.localPosition;
+        initialLocalRotation = cameraTransform.localRotation;
     }
 
-    void Update()
+    private void LateUpdate()
     {
-        // Target rotation is "opposite" to ship's current rotation change
-        Quaternion targetRotation = Quaternion.Inverse(shipTransform.rotation) * initialLocalRotation;
+        if (shipTransform == null)
+            return;
 
-        // Dampen rotation using dampingSpeed
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * dampingSpeed);
-        transform.localPosition = initialLocalPosition;
+        Quaternion targetRotation = Quaternion.Inverse(shipTransform.rotation) * initialLocalRotation;
+        cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, targetRotation, Time.deltaTime * dampingSpeed);
+        cameraTransform.localPosition = initialLocalPosition;
     }
 }

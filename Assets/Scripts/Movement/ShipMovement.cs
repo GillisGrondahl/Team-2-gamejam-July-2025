@@ -1,41 +1,49 @@
-using System;
 using UnityEngine;
 using VContainer;
 
-public class ShipMovement : MonoBehaviour
+[DefaultExecutionOrder(-300)]
+[RequireComponent(typeof(Rigidbody))]
+public sealed class ShipMovement : MonoBehaviour
 {
     [Header("Debug")]
-    [Tooltip("Debug toggle: freeze motion")]
     [SerializeField] private bool _freeze = false;
 
     [Header("Heaving Motion (Up/Down)")]
-    [Tooltip("How high the ship moves up and down")]
     [SerializeField] private float _heaveAmplitude = 1f;
-    [Tooltip("How often the heaving motion occurs (every X seconds)")]
     [SerializeField] private float _heavePeriod = 10f;
-    
 
-    [Header("Pitching Motion (Bow/Stern lifting/falling)")]
-    [Tooltip("Maximum pitch angle in degrees")]
+    [Header("Pitching Motion")]
     [SerializeField] private float _pitchAmplitude = 8f;
-    [Tooltip("How often the pitching motion occurs (every X seconds)")]
     [SerializeField] private float _pitchPeriod = 10f;
 
     [Header("Wave Variation")]
-    [Tooltip("Adds randomness to wave timing for more natural motion")]
     [SerializeField] private float _waveVariation = 0.1f;
 
-    //[Tooltip("Speed multiplier for overall motion intensity")]
-    //[Range(0f, 3f)] [SerializeField] private float _motionIntensity = 1f;
+    [Header("Frame Roots")]
+    [Tooltip("Root for ship deck/environment content that should sway with ship motion. Defaults to this transform.")]
+    [SerializeField] private Transform shipContentRoot;
+
+    [Tooltip("Root for actors (player/hand/interactor) that should ride ship via delta transform, not parenting side effects.")]
+    [SerializeField] private Transform actorsRoot;
+
+    [SerializeField] private bool useDecoupledActorsFrame = false;
+    [SerializeField] private bool detachActorsRootAtRuntime = false;
+    [SerializeField] private bool applyShipDeltaToActors = false;
+    [SerializeField] private bool autoGroupPlayerAndHand = true;
+
     private float _motionIntensity = 1f;
 
     private Vector3 _initialPosition;
-    private Vector3 _initialRotation;
+    private Quaternion _initialRotation;
     private float _heaveOffset;
     private float _pitchOffset;
+    private Vector3 _previousPosition;
+    private Quaternion _previousRotation;
 
-    LevelData _levelData;
-    ISettingsService _settings;
+    private Rigidbody _rb;
+
+    private LevelData _levelData;
+    private ISettingsService _settings;
 
     [Inject]
     private void Construct(SceneController sceneController, ISettingsService settings)
@@ -44,87 +52,219 @@ public class ShipMovement : MonoBehaviour
         _settings = settings;
     }
 
-
-    void Start()
+    private void Awake()
     {
-        HandleLandlubberModeChanged(_settings.Current.Gameplay);
+        EnsureRigidbody();
+        ConfigureRigidbody();
+    }
 
-        // Store the initial position and rotation
-        _initialPosition = transform.position;
-        _initialRotation = transform.eulerAngles;
+    private void OnValidate()
+    {
+        if (Application.isPlaying)
+            return;
 
-        // Add random offsets to make motion feel less predictable
-        _heaveOffset = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
-        _pitchOffset = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
+        EnsureRigidbody();
+        ConfigureRigidbody();
+    }
+
+    private void EnsureRigidbody()
+    {
+        if (_rb == null)
+            TryGetComponent(out _rb);
+
+        if (_rb == null)
+            _rb = gameObject.AddComponent<Rigidbody>();
+    }
+
+    private void ConfigureRigidbody()
+    {
+        if (_rb == null)
+            return;
+
+        _rb.isKinematic = true;
+        _rb.useGravity = false;
+        _rb.interpolation = RigidbodyInterpolation.Interpolate;
+        _rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+    }
+
+    private void Start()
+    {
+        if (_settings != null)
+            HandleLandlubberModeChanged(_settings.Current.Gameplay);
+
+        _initialPosition = _rb.position;
+        _initialRotation = _rb.rotation;
+
+        _heaveOffset = Random.Range(0f, 2f * Mathf.PI);
+        _pitchOffset = Random.Range(0f, 2f * Mathf.PI);
+
+        if (useDecoupledActorsFrame)
+            ResolveFrameRoots();
+
+        _previousPosition = _rb.position;
+        _previousRotation = _rb.rotation;
     }
 
     private void OnEnable()
     {
-        _settings.GameplaySettingsChanged += HandleLandlubberModeChanged;
+        if (_settings != null)
+            _settings.GameplaySettingsChanged += HandleLandlubberModeChanged;
     }
+
     private void OnDisable()
     {
-        _settings.GameplaySettingsChanged -= HandleLandlubberModeChanged;
+        if (_settings != null)
+            _settings.GameplaySettingsChanged -= HandleLandlubberModeChanged;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
+        float t = Time.fixedTime * _motionIntensity;
 
-        // scale overall intensity with time 
-        float _time = Time.time * _motionIntensity;
+        Vector3 pos = _rb.position;
+        Quaternion rot = _rb.rotation;
 
-
-        if (_freeze != true)    // debug toggle
+        if (!_freeze)
         {
-            CalcHeaving(_time);
-
-            CalcPitching(_time);
+            pos = CalcHeavingPosition(t);
+            rot = CalcPitchingRotation(t);
         }
 
+        _rb.MovePosition(pos);
+        _rb.MoveRotation(rot);
+
+        ApplyShipDeltaToActors(pos, rot);
+        _previousPosition = pos;
+        _previousRotation = rot;
     }
 
     public void HandleLandlubberModeChanged(GameplaySettings gameplaySettings)
     {
-        _motionIntensity = gameplaySettings.LandlubberMode ? 0f : _levelData.waveMotionIntensity;
+        float configuredIntensity = _levelData != null ? _levelData.waveMotionIntensity : 1f;
+        _motionIntensity = gameplaySettings.LandlubberMode ? 0f : configuredIntensity;
     }
 
-    public void CalcHeaving(float _time)
+    private Vector3 CalcHeavingPosition(float t)
     {
-        float _heaveFrequency = 1f / _heavePeriod;
+        float f = 1f / _heavePeriod;
 
-        // Calculate heaving (up/down)
-        float _heaveMotion = Mathf.Sin(_time * _heaveFrequency * 2f * Mathf.PI + _heaveOffset) * _heaveAmplitude;
+        float heave = Mathf.Sin(t * f * 2f * Mathf.PI + _heaveOffset) * _heaveAmplitude;
+        float variation = Mathf.Sin(t * f * 1.3f * 2f * Mathf.PI + _heaveOffset + 1f) * (_heaveAmplitude * _waveVariation);
 
-        // wave variation for more chatic waves
-        float _heaveVariation = Mathf.Sin(_time * _heaveFrequency * 1.3f * 2f * Mathf.PI + _heaveOffset + 1f) * (_heaveAmplitude * _waveVariation);
-
-
-        // Apply the motion to position (heaving)
-        Vector3 newPosition = _initialPosition;
-        newPosition.y += _heaveMotion + _heaveVariation;
-        transform.position = newPosition;
+        Vector3 p = _initialPosition;
+        p.y += heave + variation;
+        return p;
     }
 
-    public void CalcPitching(float _time)
+    private Quaternion CalcPitchingRotation(float t)
     {
-        float _pitchFrequency = 1f / _pitchPeriod;
+        float f = 1f / _pitchPeriod;
 
-        // Calculate pitching
-        float _pitchMotion = Mathf.Sin(_time * _pitchFrequency * 2f * Mathf.PI + _pitchOffset) * (_pitchAmplitude * _motionIntensity);
+        float pitch = Mathf.Sin(t * f * 2f * Mathf.PI + _pitchOffset) * (_pitchAmplitude * _motionIntensity);
+        float variation = Mathf.Sin(t * f * 0.8f * 2f * Mathf.PI + _pitchOffset + 2f) * (_pitchAmplitude * _waveVariation);
 
-        // wave variation for more chaotic waves
-        float _pitchVariation = Mathf.Sin(_time * _pitchFrequency * 0.8f * 2f * Mathf.PI + _pitchOffset + 2f) * (_pitchAmplitude * _waveVariation);
-
-        // Apply the motion to rotation (pitching) - z-axis, because we're viewing the ship sideways!
-        Vector3 newRotation = _initialRotation;
-        newRotation.z += _pitchMotion + _pitchVariation;
-        transform.eulerAngles = newRotation;
-
+        // Your original used Z axis for pitch (side view). Keep that.
+        Vector3 e = _initialRotation.eulerAngles;
+        e.z += pitch + variation;
+        return Quaternion.Euler(e);
     }
 
-    // adjust motion intensity at runtime
-    public void SetMotionIntensity(float intensity)
+    private void ResolveFrameRoots()
     {
-        _motionIntensity = Mathf.Clamp(intensity, 0f, 3f);
+        if (shipContentRoot == null)
+            shipContentRoot = transform;
+
+        if (actorsRoot == null)
+        {
+            actorsRoot = ResolveDefaultActorsRoot();
+        }
+
+        if (actorsRoot == null || actorsRoot == transform)
+            return;
+
+        if (detachActorsRootAtRuntime && actorsRoot.IsChildOf(transform))
+        {
+            actorsRoot.SetParent(transform.parent, true);
+        }
+
+        if (actorsRoot.IsChildOf(transform))
+        {
+            applyShipDeltaToActors = false;
+            Debug.LogWarning($"{nameof(ShipMovement)}: actorsRoot is still child of ship. Delta ride compensation disabled.", this);
+        }
     }
+
+    private Transform ResolveDefaultActorsRoot()
+    {
+        var playerMovement = GetComponentInChildren<PlayerMovement>(true);
+        var handFollower = GetComponentInChildren<HandFollower>(true);
+        var interactor = GetComponentInChildren<Interactor>(true);
+
+        Transform playerTransform = playerMovement != null ? playerMovement.transform : null;
+        Transform handTransform = handFollower != null ? handFollower.transform : null;
+        Transform interactorTransform = interactor != null ? interactor.transform : null;
+
+        if (!autoGroupPlayerAndHand)
+            return playerTransform != null ? playerTransform : (handTransform != null ? handTransform : interactorTransform);
+
+        int rootChildActorCount = 0;
+        if (playerTransform != null && playerTransform.parent == transform)
+            rootChildActorCount++;
+        if (handTransform != null && handTransform.parent == transform && handTransform != playerTransform)
+            rootChildActorCount++;
+        if (interactorTransform != null && interactorTransform.parent == transform &&
+            interactorTransform != playerTransform && interactorTransform != handTransform)
+        {
+            rootChildActorCount++;
+        }
+
+        if (rootChildActorCount < 2)
+            return playerTransform != null ? playerTransform : (handTransform != null ? handTransform : interactorTransform);
+
+        Transform anchor = playerTransform != null ? playerTransform : (handTransform != null ? handTransform : interactorTransform);
+        if (anchor == null)
+            return null;
+
+        GameObject actorsRootObject = new GameObject("ActorsRoot");
+        Transform newActorsRoot = actorsRootObject.transform;
+        newActorsRoot.SetParent(transform.parent, false);
+        newActorsRoot.SetPositionAndRotation(anchor.position, anchor.rotation);
+        newActorsRoot.localScale = Vector3.one;
+
+        if (playerTransform != null && playerTransform.parent == transform)
+            playerTransform.SetParent(newActorsRoot, true);
+
+        if (handTransform != null && handTransform.parent == transform)
+            handTransform.SetParent(newActorsRoot, true);
+
+        if (interactorTransform != null && interactorTransform.parent == transform)
+            interactorTransform.SetParent(newActorsRoot, true);
+
+        return newActorsRoot;
+    }
+
+    private void ApplyShipDeltaToActors(Vector3 shipPosition, Quaternion shipRotation)
+    {
+        if (!useDecoupledActorsFrame)
+            return;
+
+        if (!applyShipDeltaToActors || actorsRoot == null)
+            return;
+
+        if (actorsRoot.IsChildOf(transform))
+            return;
+
+        Quaternion deltaRotation = shipRotation * Quaternion.Inverse(_previousRotation);
+        Vector3 deltaPosition = shipPosition - _previousPosition;
+
+        if (deltaPosition.sqrMagnitude < 0.0000001f && Quaternion.Angle(Quaternion.identity, deltaRotation) < 0.001f)
+            return;
+
+        Vector3 actorPosition = actorsRoot.position;
+        actorPosition = _previousPosition + deltaRotation * (actorPosition - _previousPosition) + deltaPosition;
+
+        actorsRoot.SetPositionAndRotation(actorPosition, deltaRotation * actorsRoot.rotation);
+    }
+
+    public void SetMotionIntensity(float intensity) => _motionIntensity = Mathf.Clamp(intensity, 0f, 3f);
 }

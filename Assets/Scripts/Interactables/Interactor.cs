@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using VContainer;
 
@@ -26,6 +25,7 @@ public readonly struct InteractionContext
     }
 }
 
+[DefaultExecutionOrder(-80)]
 public class Interactor : MonoBehaviour, IInteractor
 {
 
@@ -73,6 +73,7 @@ public class Interactor : MonoBehaviour, IInteractor
     {
         handColliders = handTransform.GetComponentsInChildren<Collider>(true).ToList();
         hand = handTransform.GetComponent<HandFollower>();
+        _lastPosition = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -221,6 +222,7 @@ public class Interactor : MonoBehaviour, IInteractor
         Selected.OnInteractStart(this);
         hand?.CloseHand(true);
         interactableColliders = transform.GetComponentsInChildren<Collider>().Skip(1).ToList();
+        interactableColliders.Add(handTransform.GetComponent<Collider>());
         IgnoreCollisionWithInteractable(true);
     }
 
@@ -251,20 +253,30 @@ public class Interactor : MonoBehaviour, IInteractor
 
     private void FixedUpdate()
     {
-        CurrentVelocity = (transform.position - _lastPosition) / Time.fixedDeltaTime;
-        _lastPosition = transform.position;
-    }
-
-    private void LateUpdate()
-    {
         FollowHand();
+        UpdateVelocity(Time.fixedDeltaTime);
     }
 
     private void FollowHand()
     {
         if (handTransform == null) return;
-        transform.position = handTransform.TransformPoint(offset);
-        transform.rotation = handTransform.rotation;
+
+        Vector3 worldPosition = handTransform.TransformPoint(offset);
+        transform.SetPositionAndRotation(worldPosition, handTransform.rotation);
+    }
+
+    private void UpdateVelocity(float dt)
+    {
+        if (dt > Mathf.Epsilon)
+        {
+            CurrentVelocity = (transform.position - _lastPosition) / dt;
+        }
+        else
+        {
+            CurrentVelocity = Vector3.zero;
+        }
+
+        _lastPosition = transform.position;
     }
 
     private IEnumerator Cooldown()

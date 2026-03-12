@@ -1167,6 +1167,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 458097870847859768, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: shipTransform
+      value: 
+      objectReference: {fileID: 3692266845561087129}
     - target: {fileID: 1421288006806267418, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.9
@@ -1235,6 +1239,10 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: -2.87
       objectReference: {fileID: 0}
+    - target: {fileID: 8476422744027328308, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 8641746334696106664, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
       propertyPath: m_Center.x
       value: -0.23
@@ -1248,6 +1256,11 @@ PrefabInstance:
 --- !u!1 &3692266845561087128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2546484174596182163, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
+  m_PrefabInstance: {fileID: 3692266845561087127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3692266845561087129 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1956334102833184303, guid: fa7f8a533504fc844a3463d2aba6c855, type: 3}
   m_PrefabInstance: {fileID: 3692266845561087127}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4891924021116540991
