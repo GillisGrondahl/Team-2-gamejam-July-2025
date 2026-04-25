@@ -221,8 +221,10 @@ public class Interactor : MonoBehaviour, IInteractor
 
         Selected.OnInteractStart(this);
         hand?.CloseHand(true);
-        interactableColliders = transform.GetComponentsInChildren<Collider>().Skip(1).ToList();
-        interactableColliders.Add(handTransform.GetComponent<Collider>());
+        interactableColliders.Clear();
+        if (Selected is Component selectedComponent)
+            selectedComponent.GetComponentsInChildren(includeInactive: true, result: interactableColliders);
+        //interactableColliders.Add(handTransform.GetComponent<Collider>());
         IgnoreCollisionWithInteractable(true);
     }
 

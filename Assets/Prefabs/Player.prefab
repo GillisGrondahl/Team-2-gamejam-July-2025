@@ -292,9 +292,9 @@ MonoBehaviour:
   minYaw: -60
   maxYaw: 60
   aimDistance: 0.26
-  handReachMin: -0.6
-  handReachMax: 1.8
-  reachSpeed: 3.5
+  handReachMin: -0.2
+  handReachMax: 0.8
+  reachSpeed: 2
 --- !u!1001 &2877582393600200799
 PrefabInstance:
   m_ObjectHideFlags: 0

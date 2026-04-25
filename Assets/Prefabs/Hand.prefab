@@ -85,7 +85,7 @@ MonoBehaviour:
   handCollider: {fileID: 6802753342762819155}
   collisionMask:
     serializedVersion: 2
-    m_Bits: -1
+    m_Bits: 1791
   excludeSelfLayerFromCollisionMask: 1
   collisionSlideFactor: 0.9
   depenetrationIterations: 2

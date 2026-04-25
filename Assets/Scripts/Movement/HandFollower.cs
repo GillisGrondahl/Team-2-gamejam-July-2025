@@ -11,14 +11,6 @@ public enum ArmContactState
 [RequireComponent(typeof(Rigidbody))]
 public sealed class HandFollower : MonoBehaviour
 {
-    private const float MinDistanceEpsilon = 0.0001f;
-    private const string ReasonFree = "NoContact";
-    private const string ReasonPrimaryHit = "PrimarySweepHit";
-    private const string ReasonPrimaryBlocked = "PrimaryBlocked";
-    private const string ReasonSlideResolved = "SlideResolved";
-    private const string ReasonSlideBlocked = "SlideBlocked";
-    private const string ReasonDepenetrationGuard = "DepenetrationGuard";
-
     [Header("Target")]
     [SerializeField] private Transform target;
 
@@ -68,19 +60,15 @@ public sealed class HandFollower : MonoBehaviour
 
     private bool _isClosing;
     private bool _missingTargetLogged;
-    private bool _missingCapsuleLogged;
 
     private Rigidbody _rb;
-    private CapsuleCollider _capsuleCollider;
     private ArmContactState _currentState;
-    private string _lastTransitionReason = ReasonFree;
+    private string _lastTransitionReason = "NoContact";
     private Vector3 _lastContactNormal;
     private Vector3 _linearVelocity;
     private int _stuckFrameCount;
     private HandController _handController;
-
-    private readonly RaycastHit[] _castHits = new RaycastHit[8];
-    private readonly Collider[] _overlapBuffer = new Collider[16];
+    private HandCollisionResolver _collisionResolver;
 
     private void Awake()
     {
@@ -93,10 +81,10 @@ public sealed class HandFollower : MonoBehaviour
         if (handCollider == null)
             handCollider = GetComponentInChildren<Collider>(true);
 
-        _capsuleCollider = handCollider as CapsuleCollider;
-
         if (excludeSelfLayerFromCollisionMask)
             collisionMask &= ~(1 << gameObject.layer);
+
+        RebuildCollisionResolver();
     }
 
     private void Start()
@@ -130,7 +118,6 @@ public sealed class HandFollower : MonoBehaviour
         Quaternion currentRotation = _rb.rotation;
         float dt = Time.fixedDeltaTime;
         bool isReachActive = _handController != null && _handController.IsReachActive;
-
         Vector3 positionError = target.position - currentPosition;
         Vector3 desiredLinearVelocity = positionError * Mathf.Max(0f, positionStiffness);
         float linearSpeed = Mathf.Max(0f, maxLinearSpeed) * (isReachActive ? Mathf.Max(1f, reachLinearSpeedMultiplier) : 1f);
@@ -145,13 +132,27 @@ public sealed class HandFollower : MonoBehaviour
         float maxRotationStep = Mathf.Max(0f, maxAngularSpeed) * Mathf.Rad2Deg * dt;
         Quaternion desiredRotation = Quaternion.RotateTowards(currentRotation, blendedRotation, maxRotationStep);
 
-        Vector3 resolvedPosition = ResolveCollisionCastAndSlide(
-            currentPosition,
-            desiredPosition,
-            desiredRotation,
-            out ArmContactState nextState,
-            out Vector3 contactNormal,
-            out string transitionReason);
+        Vector3 resolvedPosition = desiredPosition;
+        ArmContactState nextState;
+        Vector3 contactNormal;
+        string transitionReason;
+
+        if (_collisionResolver != null)
+        {
+            resolvedPosition = _collisionResolver.Resolve(
+                currentPosition,
+                desiredPosition,
+                desiredRotation,
+                out nextState,
+                out contactNormal,
+                out transitionReason);
+        }
+        else
+        {
+            nextState = ArmContactState.Free;
+            contactNormal = Vector3.zero;
+            transitionReason = "NoContact";
+        }
 
         if (enableStuckRecovery)
         {
@@ -194,280 +195,23 @@ public sealed class HandFollower : MonoBehaviour
         }
     }
 
-    private Vector3 ResolveCollisionCastAndSlide(
-        Vector3 currentPosition,
-        Vector3 desiredPosition,
-        Quaternion desiredRotation,
-        out ArmContactState state,
-        out Vector3 contactNormal,
-        out string reason)
+    private void RebuildCollisionResolver()
     {
-        state = ArmContactState.Free;
-        contactNormal = Vector3.zero;
-        reason = ReasonFree;
-
-        if (handCollider == null || !handCollider.enabled || handCollider.isTrigger)
-            return desiredPosition;
-
-        if (_capsuleCollider == null || _capsuleCollider.transform != transform)
+        if (handCollider == null)
         {
-            if (!_missingCapsuleLogged)
-            {
-                Debug.LogWarning($"{nameof(HandFollower)} on '{name}' requires a CapsuleCollider on the same object for cast-and-slide.", this);
-                _missingCapsuleLogged = true;
-            }
-
-            return ApplyDepenetrationGuard(desiredPosition, desiredRotation, ref state, ref contactNormal, ref reason);
+            _collisionResolver = null;
+            return;
         }
 
-        _missingCapsuleLogged = false;
-
-        Vector3 displacement = desiredPosition - currentPosition;
-        float distance = displacement.magnitude;
-
-        if (distance <= MinDistanceEpsilon)
-            return ApplyDepenetrationGuard(desiredPosition, desiredRotation, ref state, ref contactNormal, ref reason);
-
-        Vector3 direction = displacement / distance;
-        Vector3 resolvedPosition = desiredPosition;
-
-        if (TryCapsuleCast(currentPosition, desiredRotation, direction, distance + skin, out RaycastHit firstHit))
-        {
-            float firstMove = Mathf.Max(0f, firstHit.distance - skin);
-            Vector3 firstStep = currentPosition + direction * firstMove;
-
-            state = ArmContactState.Contact;
-            contactNormal = firstHit.normal;
-            reason = ReasonPrimaryHit;
-
-            Vector3 consumed = direction * firstMove;
-            Vector3 remaining = displacement - consumed;
-            Vector3 slide = Vector3.ProjectOnPlane(remaining, firstHit.normal) * Mathf.Clamp01(collisionSlideFactor);
-
-            float slideDistance = slide.magnitude;
-            if (slideDistance > MinDistanceEpsilon)
-            {
-                Vector3 slideDir = slide / slideDistance;
-
-                if (TryCapsuleCast(firstStep, desiredRotation, slideDir, slideDistance + skin, out RaycastHit slideHit))
-                {
-                    float secondMove = Mathf.Max(0f, slideHit.distance - skin);
-                    resolvedPosition = firstStep + slideDir * secondMove;
-                    contactNormal = slideHit.normal;
-                    reason = ReasonSlideBlocked;
-
-                    if (firstMove <= MinDistanceEpsilon && secondMove <= MinDistanceEpsilon)
-                        state = ArmContactState.Blocked;
-                }
-                else
-                {
-                    resolvedPosition = firstStep + slide;
-                    reason = ReasonSlideResolved;
-                }
-            }
-            else
-            {
-                resolvedPosition = firstStep;
-                if (firstMove <= MinDistanceEpsilon)
-                {
-                    state = ArmContactState.Blocked;
-                    reason = ReasonPrimaryBlocked;
-                }
-            }
-        }
-
-        return ApplyDepenetrationGuard(resolvedPosition, desiredRotation, ref state, ref contactNormal, ref reason);
-    }
-
-    private Vector3 ApplyDepenetrationGuard(
-        Vector3 desiredPosition,
-        Quaternion desiredRotation,
-        ref ArmContactState state,
-        ref Vector3 contactNormal,
-        ref string reason)
-    {
-        if (_capsuleCollider == null)
-            return desiredPosition;
-
-        Vector3 corrected = desiredPosition;
-
-        for (int iteration = 0; iteration < depenetrationIterations; iteration++)
-        {
-            if (!GetCapsuleGeometry(corrected, desiredRotation, out Vector3 pointA, out Vector3 pointB, out float radius))
-                break;
-
-            int overlapCount = Physics.OverlapCapsuleNonAlloc(
-                pointA,
-                pointB,
-                radius,
-                _overlapBuffer,
-                collisionMask,
-                QueryTriggerInteraction.Ignore);
-
-            bool correctedThisIteration = false;
-
-            for (int i = 0; i < overlapCount; i++)
-            {
-                Collider other = _overlapBuffer[i];
-                if (!IsValidCollisionCandidate(other))
-                    continue;
-
-                if (!Physics.ComputePenetration(
-                        handCollider,
-                        corrected,
-                        desiredRotation,
-                        other,
-                        other.transform.position,
-                        other.transform.rotation,
-                        out Vector3 depenetrationDirection,
-                        out float depenetrationDistance))
-                {
-                    continue;
-                }
-
-                if (depenetrationDistance <= 0f)
-                    continue;
-
-                corrected += depenetrationDirection * (depenetrationDistance + skin);
-                contactNormal = depenetrationDirection;
-                correctedThisIteration = true;
-
-                if (state == ArmContactState.Free)
-                    state = ArmContactState.Contact;
-
-                reason = ReasonDepenetrationGuard;
-            }
-
-            if (!correctedThisIteration)
-                break;
-        }
-
-        return corrected;
-    }
-
-    private bool TryCapsuleCast(
-        Vector3 fromPosition,
-        Quaternion castRotation,
-        Vector3 direction,
-        float distance,
-        out RaycastHit bestHit)
-    {
-        bestHit = default;
-
-        if (distance <= MinDistanceEpsilon)
-            return false;
-
-        if (!GetCapsuleGeometry(fromPosition, castRotation, out Vector3 pointA, out Vector3 pointB, out float radius))
-            return false;
-
-        int hitCount = Physics.CapsuleCastNonAlloc(
-            pointA,
-            pointB,
-            radius,
-            direction,
-            _castHits,
-            distance,
+        _collisionResolver = new HandCollisionResolver(
+            handCollider,
+            _rb,
+            transform,
             collisionMask,
-            QueryTriggerInteraction.Ignore);
-
-        bool found = false;
-        float bestDistance = float.PositiveInfinity;
-
-        for (int i = 0; i < hitCount; i++)
-        {
-            RaycastHit hit = _castHits[i];
-            if (!IsValidCollisionCandidate(hit.collider))
-                continue;
-
-            if (hit.distance < 0f)
-                continue;
-
-            if (hit.distance < bestDistance)
-            {
-                bestDistance = hit.distance;
-                bestHit = hit;
-                found = true;
-            }
-        }
-
-        return found;
-    }
-
-    private bool GetCapsuleGeometry(
-        Vector3 rootPosition,
-        Quaternion rootRotation,
-        out Vector3 pointA,
-        out Vector3 pointB,
-        out float radius)
-    {
-        pointA = rootPosition;
-        pointB = rootPosition;
-        radius = 0.01f;
-
-        if (_capsuleCollider == null)
-            return false;
-
-        Vector3 lossyScale = transform.lossyScale;
-        Vector3 absLossy = new Vector3(
-            Mathf.Abs(lossyScale.x),
-            Mathf.Abs(lossyScale.y),
-            Mathf.Abs(lossyScale.z));
-
-        Vector3 axis;
-        float radiusScale;
-        float heightScale;
-
-        switch (_capsuleCollider.direction)
-        {
-            case 0:
-                axis = Vector3.right;
-                radiusScale = Mathf.Max(absLossy.y, absLossy.z);
-                heightScale = absLossy.x;
-                break;
-            case 1:
-                axis = Vector3.up;
-                radiusScale = Mathf.Max(absLossy.x, absLossy.z);
-                heightScale = absLossy.y;
-                break;
-            default:
-                axis = Vector3.forward;
-                radiusScale = Mathf.Max(absLossy.x, absLossy.y);
-                heightScale = absLossy.z;
-                break;
-        }
-
-        radius = Mathf.Max(0.0001f, _capsuleCollider.radius * radiusScale);
-        float height = Mathf.Max(_capsuleCollider.height * heightScale, radius * 2f);
-        float halfSegment = Mathf.Max(0f, height * 0.5f - radius);
-
-        Vector3 scaledCenter = Vector3.Scale(_capsuleCollider.center, lossyScale);
-        Vector3 worldCenter = rootPosition + rootRotation * scaledCenter;
-        Vector3 worldAxis = rootRotation * axis;
-
-        pointA = worldCenter + worldAxis * halfSegment;
-        pointB = worldCenter - worldAxis * halfSegment;
-
-        return true;
-    }
-
-    private bool IsValidCollisionCandidate(Collider other)
-    {
-        if (other == null)
-            return false;
-
-        if (!other.enabled || other.isTrigger)
-            return false;
-
-        if (other == handCollider)
-            return false;
-
-        if (other.attachedRigidbody == _rb)
-            return false;
-
-        if (handCollider != null && Physics.GetIgnoreCollision(handCollider, other))
-            return false;
-
-        return true;
+            collisionSlideFactor,
+            depenetrationIterations,
+            skin,
+            this);
     }
 
     private void ConfigureRigidbody()
@@ -475,7 +219,7 @@ public sealed class HandFollower : MonoBehaviour
         _rb.isKinematic = true;
         _rb.useGravity = false;
         _rb.detectCollisions = true;
-        _rb.interpolation = RigidbodyInterpolation.Interpolate;
+        _rb.interpolation = RigidbodyInterpolation.None;
         _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;

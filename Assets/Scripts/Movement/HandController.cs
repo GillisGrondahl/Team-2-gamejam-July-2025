@@ -20,7 +20,8 @@ public class HandController : MonoBehaviour
     [SerializeField] private float aimDistance = 0.26f;
 
     [Header("Reach")]
-    [SerializeField] private float handReachMin = -0.6f, handReachMax = 1.8f;
+    [SerializeField] private float handReachMin = 0f; 
+    [SerializeField] private float handReachMax = 1f;
     [SerializeField] private float reachSpeed = 3.5f;
 
     private float pitch;
@@ -67,7 +68,7 @@ public class HandController : MonoBehaviour
     private void UpdateReachInput(float direction) => _reach = direction;
     private void UpdateLookInput(Vector2 direction) => _look = direction;
 
-    private void Update()
+    private void FixedUpdate()
     {
         UpdateAim();
         Reach();
@@ -88,7 +89,7 @@ public class HandController : MonoBehaviour
 
     private void Reach()
     {
-        handZOffset += _reach * reachSpeed * Time.deltaTime;
+        handZOffset += _reach * reachSpeed * Time.fixedDeltaTime;
         handZOffset = Mathf.Clamp(handZOffset, handReachMin, handReachMax);
         UpdateHandPointPosition();
     }
@@ -98,12 +99,16 @@ public class HandController : MonoBehaviour
         if (handPoint == null || handPivot == null)
             return;
 
-        Vector3 desiredPosition =
-            handPivot.position +
-            handPivot.forward * aimDistance +
-            Vector3.forward * handZOffset;
+        float reachDistance = aimDistance + handZOffset;
 
-        handPoint.position = desiredPosition;
+        if (handPoint.parent == handPivot)
+        {
+            handPoint.localPosition = new Vector3(0f, 0f, reachDistance);
+        }
+        else
+        {
+            handPoint.position = handPivot.TransformPoint(0f, 0f, reachDistance);
+        }
     }
 
     private void ConfigurePivotRigidbody()
