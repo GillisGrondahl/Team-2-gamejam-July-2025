@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 
 public interface IInteractable
 {
+    void CollectInteractionColliders(List<Collider> colliders);
+
     void OnHoverStart(IInteractor interactor);
     void OnHoverEnd(IInteractor interactor);
 
@@ -21,6 +24,10 @@ public class Interactable : MonoBehaviour, IInteractable, IDespawnNotifiable
 {
     [SerializeField] Transform attachTransform;
     [SerializeField] bool pickable = true;
+    [SerializeField] Collider[] interactionColliders;
+    [SerializeField] bool collectChildColliders = true;
+
+    readonly List<Collider> _colliderBuffer = new();
 
     [Header("Events")]
     public UnityEvent<Interactor> OnHover = new();
@@ -29,6 +36,54 @@ public class Interactable : MonoBehaviour, IInteractable, IDespawnNotifiable
     public UnityEvent<Interactor> OnStopInteract = new();
 
     public event Action<IDespawnNotifiable> Despawned;
+
+    public void CollectInteractionColliders(List<Collider> colliders)
+    {
+        if (colliders == null)
+            return;
+
+        if (TryGetComponent<InteractableGroupMember>(out var groupMember) &&
+            groupMember.Group != null)
+        {
+            groupMember.Group.CollectInteractionColliders(colliders);
+            return;
+        }
+
+        CollectOwnInteractionColliders(colliders);
+    }
+
+    public void CollectOwnInteractionColliders(List<Collider> colliders)
+    {
+        if (colliders == null)
+            return;
+
+        if (interactionColliders != null && interactionColliders.Length > 0)
+        {
+            for (int i = 0; i < interactionColliders.Length; i++)
+            {
+                if (interactionColliders[i] != null)
+                    colliders.Add(interactionColliders[i]);
+            }
+
+            return;
+        }
+
+        if (collectChildColliders)
+        {
+            _colliderBuffer.Clear();
+            GetComponentsInChildren<Collider>(true, _colliderBuffer);
+            for (int i = 0; i < _colliderBuffer.Count; i++)
+            {
+                if (_colliderBuffer[i] != null)
+                    colliders.Add(_colliderBuffer[i]);
+            }
+
+            return;
+        }
+
+        if (TryGetComponent<Collider>(out var ownCollider))
+            colliders.Add(ownCollider);
+    }
 
     public void OnHoverStart(IInteractor interactor)
     {

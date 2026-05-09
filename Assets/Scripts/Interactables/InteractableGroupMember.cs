@@ -8,6 +8,8 @@ public sealed class InteractableGroupMember : MonoBehaviour
     private Interactable _interactable;
     private bool _registered;
 
+    public InteractableGroup Group => group;
+
     private void Awake()
     {
         _interactable = GetComponent<Interactable>();

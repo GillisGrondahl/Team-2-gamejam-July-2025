@@ -18,6 +18,21 @@ public sealed class InteractableGroup : MonoBehaviour
         members.Remove(interactable);
     }
 
+    public void CollectInteractionColliders(List<Collider> colliders)
+    {
+        if (colliders == null)
+            return;
+
+        for (int i = 0; i < members.Count; i++)
+        {
+            var member = members[i];
+            if (member == null)
+                continue;
+
+            member.CollectOwnInteractionColliders(colliders);
+        }
+    }
+
     // Called by ANY member on hover start
     public void GroupHoverStart(Interactor _)
     {
