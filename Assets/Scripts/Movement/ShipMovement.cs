@@ -19,6 +19,9 @@ public sealed class ShipMovement : MonoBehaviour
     [Header("Wave Variation")]
     [SerializeField] private float _waveVariation = 0.1f;
 
+    [Header("Startup Blend")]
+    [SerializeField, Min(0f)] private float _motionBlendInSeconds = 1f;
+
     [Header("Frame Roots")]
     [Tooltip("Root for ship deck/environment content that should sway with ship motion. Defaults to this transform.")]
     [SerializeField] private Transform shipContentRoot;
@@ -39,6 +42,7 @@ public sealed class ShipMovement : MonoBehaviour
     private float _pitchOffset;
     private Vector3 _previousPosition;
     private Quaternion _previousRotation;
+    private float _motionBlendStartFixedTime;
 
     private Rigidbody _rb;
 
@@ -97,6 +101,7 @@ public sealed class ShipMovement : MonoBehaviour
 
         _heaveOffset = Random.Range(0f, 2f * Mathf.PI);
         _pitchOffset = Random.Range(0f, 2f * Mathf.PI);
+        _motionBlendStartFixedTime = Time.fixedTime;
 
         if (useDecoupledActorsFrame)
             ResolveFrameRoots();
@@ -120,14 +125,15 @@ public sealed class ShipMovement : MonoBehaviour
     private void FixedUpdate()
     {
         float t = Time.fixedTime * _motionIntensity;
+        float motionBlend = EvaluateMotionBlend();
 
         Vector3 pos = _rb.position;
         Quaternion rot = _rb.rotation;
 
         if (!_freeze)
         {
-            pos = CalcHeavingPosition(t);
-            rot = CalcPitchingRotation(t);
+            pos = CalcHeavingPosition(t, motionBlend);
+            rot = CalcPitchingRotation(t, motionBlend);
         }
 
         _rb.MovePosition(pos);
@@ -144,7 +150,17 @@ public sealed class ShipMovement : MonoBehaviour
         _motionIntensity = gameplaySettings.LandlubberMode ? 0f : configuredIntensity;
     }
 
-    private Vector3 CalcHeavingPosition(float t)
+    private float EvaluateMotionBlend()
+    {
+        if (_motionBlendInSeconds <= 0f)
+            return 1f;
+
+        float normalized = (Time.fixedTime - _motionBlendStartFixedTime) / _motionBlendInSeconds;
+        normalized = Mathf.Clamp01(normalized);
+        return normalized * normalized * (3f - (2f * normalized)); // SmoothStep
+    }
+
+    private Vector3 CalcHeavingPosition(float t, float motionBlend)
     {
         float f = 1f / _heavePeriod;
 
@@ -152,11 +168,11 @@ public sealed class ShipMovement : MonoBehaviour
         float variation = Mathf.Sin(t * f * 1.3f * 2f * Mathf.PI + _heaveOffset + 1f) * (_heaveAmplitude * _waveVariation);
 
         Vector3 p = _initialPosition;
-        p.y += heave + variation;
+        p.y += (heave + variation) * motionBlend;
         return p;
     }
 
-    private Quaternion CalcPitchingRotation(float t)
+    private Quaternion CalcPitchingRotation(float t, float motionBlend)
     {
         float f = 1f / _pitchPeriod;
 
@@ -165,7 +181,7 @@ public sealed class ShipMovement : MonoBehaviour
 
         // Your original used Z axis for pitch (side view). Keep that.
         Vector3 e = _initialRotation.eulerAngles;
-        e.z += pitch + variation;
+        e.z += (pitch + variation) * motionBlend;
         return Quaternion.Euler(e);
     }
 

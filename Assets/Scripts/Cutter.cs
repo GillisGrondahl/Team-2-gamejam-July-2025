@@ -51,11 +51,12 @@ public class Cutter : MonoBehaviour
         originalGameObject.GetComponent<MeshRenderer>().materials = mats;
         var originalIngredient = originalGameObject.GetComponent<Ingredient>();
 
-        var group = originalGameObject.GetComponent<InteractableGroup>();
-        if (group == null)
+        var originalMember = originalGameObject.GetComponent<InteractableGroupMember>();
+        var group = originalMember != null ? originalMember.Group : null;
+
+        if (group == null && !originalGameObject.TryGetComponent(out group))
             group = originalGameObject.AddComponent<InteractableGroup>();
 
-        var originalMember = originalGameObject.GetComponent<InteractableGroupMember>();
         if (originalMember == null)
             originalMember = originalGameObject.AddComponent<InteractableGroupMember>();
 
