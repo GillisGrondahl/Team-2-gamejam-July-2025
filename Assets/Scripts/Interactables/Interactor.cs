@@ -222,8 +222,7 @@ public class Interactor : MonoBehaviour, IInteractor
         Selected.OnInteractStart(this);
         hand?.CloseHand(true);
         interactableColliders.Clear();
-        if (Selected is Component selectedComponent)
-            selectedComponent.GetComponentsInChildren(includeInactive: true, result: interactableColliders);
+        Selected.CollectInteractionColliders(interactableColliders);
         //interactableColliders.Add(handTransform.GetComponent<Collider>());
         IgnoreCollisionWithInteractable(true);
     }
