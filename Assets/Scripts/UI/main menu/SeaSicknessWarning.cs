@@ -16,8 +16,12 @@ public class SeaSicknessWarning : MonoBehaviour
         if (s_hasShownWarning)
         {
             imageCanvasGroup.gameObject.SetActive(false);
+            imageCanvasGroup.alpha = 0f;
             return;
         }
+
+        imageCanvasGroup.gameObject.SetActive(true);
+        imageCanvasGroup.alpha = 1f;
 
     }
 
