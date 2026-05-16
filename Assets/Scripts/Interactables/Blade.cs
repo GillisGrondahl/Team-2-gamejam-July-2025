@@ -5,6 +5,7 @@ using UnityEngine;
 public class Blade : MonoBehaviour
 {
     [SerializeField] private MMF_Player _MMFCutting;
+    [SerializeField, Min(0f)] private float _minimumCutPieceSize = 0.01f;
 
     private bool _isKnifing = false;
 
@@ -13,8 +14,10 @@ public class Blade : MonoBehaviour
         if(enabled == false) return;
         if (other.gameObject.TryGetComponent(out Ingredient ingredient) && ingredient.cutable && !_isKnifing)
         {
+            if (!Cutter.Cut(ingredient.gameObject, transform.position, transform.right, minimumPieceSize: _minimumCutPieceSize))
+                return;
+
             _isKnifing = true;
-            Cutter.Cut(ingredient.gameObject, transform.position, transform.right);
             StartCoroutine("WaitForNextSlice");
 
             // call MMF Feedback for cutting sounds

@@ -3,6 +3,7 @@ using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 using VContainer;
 using VContainer.Unity;
 
@@ -75,6 +76,7 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
 
     [Inject]
+    [UnityEngine.Scripting.Preserve]
     public FMODAudioManager(FMODTrackLookup fmodLookup, ISettingsService settingsService)
     {
         _fmodLookup = fmodLookup;

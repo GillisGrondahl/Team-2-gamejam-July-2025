@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Scripting;
+using VContainer;
 
 
 public class LeaderboardEntry
@@ -43,6 +45,8 @@ public class LocalLeaderboardService : ILeaderboardService
 
     private readonly List<LeaderboardEntry> _entries = new();
 
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
     public LocalLeaderboardService()
     {
         LoadFromPrefs();

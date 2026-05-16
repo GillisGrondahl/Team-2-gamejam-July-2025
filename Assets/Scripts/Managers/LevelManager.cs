@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using UnityEngine.Scripting;
+using VContainer;
 using VContainer.Unity;
 
 public class LevelManager : IInitializable, IStartable, IDisposable
@@ -20,6 +22,8 @@ public class LevelManager : IInitializable, IStartable, IDisposable
 
 
 
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
     public LevelManager(ITimerService timerService, RecipeSystem recipeSystem, SceneController sceneController, ILeaderboardService leaderboardService, IGameStateService gameStateService)
     {
         _timerService = timerService;

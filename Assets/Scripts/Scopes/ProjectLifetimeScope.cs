@@ -11,8 +11,8 @@ public class ProjectLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterComponentInNewPrefab(sceneController, Lifetime.Singleton).DontDestroyOnLoad().AsImplementedInterfaces();
-        builder.RegisterEntryPoint<FMODAudioManager>();
-        builder.RegisterEntryPoint<InputManager>();
+        builder.RegisterEntryPoint<FMODAudioManager>().As<IAudioService>();
+        builder.RegisterEntryPoint<InputManager>().As<IInputService>();
 
         builder.RegisterBuildCallback(r => r.Resolve<ISceneController>());
 

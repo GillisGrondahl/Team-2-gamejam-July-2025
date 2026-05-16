@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using VContainer;
 using VContainer.Unity;
 using static InputSystem_Actions;
 
 public class InputManager : IInputService, IStartable, IDisposable, IPlayerActions
 {
     private InputSystem_Actions _actions;
-
     public Vector2 Direction => _actions.Player.Move.ReadValue<Vector2>();
     public bool IsInteractPressed => _actions.Player.Interact.IsPressed();
     public bool IsEscapePressed => _actions.Player.Escape.IsPressed();
@@ -20,6 +20,13 @@ public class InputManager : IInputService, IStartable, IDisposable, IPlayerActio
     public event Action<Vector2> MousePosition = delegate { };
     public event Action<bool> OneArmedRMB = delegate { };
     public event Action Escape = delegate { };
+
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
+    public InputManager()
+    {
+
+    }
 
     public void Start()
     {

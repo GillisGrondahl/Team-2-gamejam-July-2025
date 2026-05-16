@@ -1,4 +1,6 @@
 using System;
+using UnityEngine.Scripting;
+using VContainer;
 
 public class SettingsService : ISettingsService
 {
@@ -8,6 +10,8 @@ public class SettingsService : ISettingsService
 
     public event Action<GameplaySettings> GameplaySettingsChanged;
 
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
     public SettingsService(ISettingsStorage storage, GameSettings defaults)
     {
         _storage = storage;

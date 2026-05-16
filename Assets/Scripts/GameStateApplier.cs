@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 using VContainer;
 using VContainer.Unity;
 
@@ -7,6 +8,12 @@ public sealed class GameStateApplier : IStartable, IDisposable
 {
     IGameStateService _state;
     StateMask _currentMask;
+
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
+    public GameStateApplier()
+    {
+    }
 
     [Inject]
     public void Construct(IGameStateService state)

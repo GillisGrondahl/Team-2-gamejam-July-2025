@@ -1,10 +1,14 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.Scripting;
+using VContainer;
 
 public class FileSettingsStorage : ISettingsStorage
 {
     private readonly string _path;
 
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
     public FileSettingsStorage()
     {
         _path = Path.Combine(Application.persistentDataPath, "game_settings_v1.json");

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 public sealed class GameStateService : IGameStateService
 {
@@ -14,6 +15,13 @@ public sealed class GameStateService : IGameStateService
     public event Action<StateMask> MaskChanged;
 
     private readonly Dictionary<object, StateMask> _overlays = new();
+
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
+    public GameStateService()
+    {
+
+    }
 
 
     public void SetGameState(GameState state)

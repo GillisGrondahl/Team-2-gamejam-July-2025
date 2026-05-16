@@ -6,7 +6,9 @@ using UnityEngine;
 public class MMF_OpenURL : MMF_Feedback
 {
     /// Sets the color of this feedback in the inspector
+    #if UNITY_EDITOR
     public override Color FeedbackColor { get { return MMFeedbacksInspectorColors.GameObjectColor; } }
+    #endif
 
     /// a static bool used to disable all feedbacks of this type at once
     public static bool FeedbackTypeAuthorized = true;

@@ -1,8 +1,16 @@
 using UnityEngine;
+using VContainer;
 
 public class PlayerPrefsSettingsStorage : ISettingsStorage
 {
     private const string Key = "game_settings_v1";
+
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
+    public PlayerPrefsSettingsStorage()
+    {
+        
+    }
 
     public bool TryLoad(out GameSettings settings)
     {

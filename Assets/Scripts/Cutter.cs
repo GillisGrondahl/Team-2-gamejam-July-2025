@@ -5,22 +5,38 @@ public class Cutter : MonoBehaviour
 {
     private static bool isBusy;
     private static Mesh originalMesh;
+    private static int capSubmeshIndex;
 
-    public static void Cut(GameObject originalGameObject, Vector3 contactPoint, Vector3 cutNormal)
+    public static bool Cut(GameObject originalGameObject, Vector3 contactPoint, Vector3 cutNormal, Material capMaterial = null, float minimumPieceSize = 0.01f)
     {
         if (isBusy)
-            return;
+            return false;
 
         isBusy = true;
         Debug.DrawRay(contactPoint, cutNormal.normalized * 1.5f, Color.red, 2f);
         Plane cutPlane = new Plane(originalGameObject.transform.InverseTransformDirection(cutNormal), originalGameObject.transform.InverseTransformPoint(contactPoint));
-        originalMesh = originalGameObject.GetComponent<MeshFilter>().mesh;
+
+        MeshFilter meshFilter = originalGameObject.GetComponent<MeshFilter>();
+        MeshRenderer meshRenderer = originalGameObject.GetComponent<MeshRenderer>();
+
+        if (meshFilter == null || meshRenderer == null)
+        {
+            Debug.LogError("Need MeshFilter and MeshRenderer to cut");
+            isBusy = false;
+            return false;
+        }
+
+        originalMesh = meshFilter.mesh;
 
         if (originalMesh == null)
         {
             Debug.LogError("Need mesh to cut");
-            return;
+            isBusy = false;
+            return false;
         }
+
+        Material[] sourceMaterials = meshRenderer.sharedMaterials;
+        capSubmeshIndex = capMaterial != null ? originalMesh.subMeshCount : 0;
 
         List<Vector3> addedVertices = new List<Vector3>();
         GeneratedMesh leftMesh = new GeneratedMesh();
@@ -32,23 +48,27 @@ public class Cutter : MonoBehaviour
         Mesh finishedLeftMesh = leftMesh.GetGeneratedMesh();
         Mesh finishedRightMesh = rightMesh.GetGeneratedMesh();
 
+        if (IsMeshPieceTooSmall(finishedLeftMesh, originalGameObject.transform, minimumPieceSize) ||
+            IsMeshPieceTooSmall(finishedRightMesh, originalGameObject.transform, minimumPieceSize))
+        {
+            Destroy(finishedLeftMesh);
+            Destroy(finishedRightMesh);
+            isBusy = false;
+            return false;
+        }
+
         //Getting and destroying all original colliders to prevent having multiple colliders
         //of different kinds on one object
         var originalCols = originalGameObject.GetComponents<Collider>();
         foreach (var col in originalCols)
             Destroy(col);
 
-        originalGameObject.GetComponent<MeshFilter>().mesh = finishedLeftMesh;
+        meshFilter.mesh = finishedLeftMesh;
         var collider = originalGameObject.AddComponent<MeshCollider>();
         collider.sharedMesh = finishedLeftMesh;
         collider.convex = true;
 
-        Material[] mats = new Material[finishedLeftMesh.subMeshCount];
-        for (int i = 0; i < finishedLeftMesh.subMeshCount; i++)
-        {
-            mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
-        }
-        originalGameObject.GetComponent<MeshRenderer>().materials = mats;
+        meshRenderer.sharedMaterials = BuildMaterialsForMesh(finishedLeftMesh, sourceMaterials, capMaterial);
         var originalIngredient = originalGameObject.GetComponent<Ingredient>();
 
         var originalMember = originalGameObject.GetComponent<InteractableGroupMember>();
@@ -68,12 +88,7 @@ public class Cutter : MonoBehaviour
         part.transform.localScale = originalGameObject.transform.localScale;
         part.AddComponent<MeshRenderer>();
 
-        mats = new Material[finishedRightMesh.subMeshCount];
-        for (int i = 0; i < finishedRightMesh.subMeshCount; i++)
-        {
-            mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
-        }
-        part.GetComponent<MeshRenderer>().materials = mats;
+        part.GetComponent<MeshRenderer>().sharedMaterials = BuildMaterialsForMesh(finishedRightMesh, sourceMaterials, capMaterial);
         part.AddComponent<MeshFilter>().mesh = finishedRightMesh;
         part.AddComponent<MeshCollider>().sharedMesh = finishedRightMesh;
         var cols = part.GetComponents<MeshCollider>();
@@ -111,6 +126,51 @@ public class Cutter : MonoBehaviour
         part.transform.SetParent(originalGameObject.transform.parent); //ship
 
         isBusy = false;
+        return true;
+    }
+
+    private static bool IsMeshPieceTooSmall(Mesh mesh, Transform sourceTransform, float minimumPieceSize)
+    {
+        if (minimumPieceSize <= 0f)
+            return false;
+
+        if (mesh == null || mesh.vertexCount == 0)
+            return true;
+
+        Bounds bounds = mesh.bounds;
+        Vector3 scale = sourceTransform.lossyScale;
+        Vector3 worldSize = new Vector3(
+            Mathf.Abs(bounds.size.x * scale.x),
+            Mathf.Abs(bounds.size.y * scale.y),
+            Mathf.Abs(bounds.size.z * scale.z));
+
+        float smallestDimension = Mathf.Min(worldSize.x, Mathf.Min(worldSize.y, worldSize.z));
+        return smallestDimension < minimumPieceSize;
+    }
+
+    private static Material[] BuildMaterialsForMesh(Mesh mesh, Material[] sourceMaterials, Material capMaterial)
+    {
+        int materialCount = mesh.subMeshCount;
+        Material[] materials = new Material[materialCount];
+        Material fallbackMaterial = sourceMaterials.Length > 0 ? sourceMaterials[0] : null;
+
+        for (int i = 0; i < materialCount; i++)
+        {
+            if (capMaterial != null && i == capSubmeshIndex)
+            {
+                materials[i] = capMaterial;
+            }
+            else if (i < sourceMaterials.Length && sourceMaterials[i] != null)
+            {
+                materials[i] = sourceMaterials[i];
+            }
+            else
+            {
+                materials[i] = fallbackMaterial;
+            }
+        }
+
+        return materials;
     }
 
     /// <summary>
@@ -461,7 +521,7 @@ public class Cutter : MonoBehaviour
             Vector3[] normals = { -_plane.normal, -_plane.normal, -_plane.normal };
             Vector2[] uvs = { uv1, uv2, new(0.5f, 0.5f) };
 
-            MeshTriangle currentTriangle = new MeshTriangle(vertices, normals, uvs, originalMesh.subMeshCount + 1);
+            MeshTriangle currentTriangle = new MeshTriangle(vertices, normals, uvs, capSubmeshIndex);
 
             if (Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), normals[0]) < 0)
             {
@@ -470,7 +530,7 @@ public class Cutter : MonoBehaviour
             _leftMesh.AddTriangle(currentTriangle);
 
             normals = new[] { _plane.normal, _plane.normal, _plane.normal };
-            currentTriangle = new MeshTriangle(vertices, normals, uvs, originalMesh.subMeshCount + 1);
+            currentTriangle = new MeshTriangle(vertices, normals, uvs, capSubmeshIndex);
 
             if (Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), normals[0]) < 0)
             {

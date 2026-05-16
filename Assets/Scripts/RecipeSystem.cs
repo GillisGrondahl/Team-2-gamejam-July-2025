@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Scripting;
 using VContainer;
 using VContainer.Unity;
 
@@ -33,6 +34,8 @@ public class RecipeSystem : IStartable
 
     private readonly LevelData _levelData;
 
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
     public RecipeSystem(SceneController sceneController)
     {
         _levelData = sceneController.CurrentLevelData;

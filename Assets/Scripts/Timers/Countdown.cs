@@ -1,10 +1,18 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Scripting;
+using VContainer;
 using VContainer.Unity;
 
 public class Countdown : ITimerService, ITickable
 {
     private float _timeScale = 1f;
+
+    [Inject]
+    [UnityEngine.Scripting.Preserve]
+    public Countdown()
+    {
+    }
 
     public event Action<float> Tick = delegate { };
     public event Action Completed = delegate { };

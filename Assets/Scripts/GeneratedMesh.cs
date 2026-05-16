@@ -72,6 +72,8 @@ public class GeneratedMesh
         {
             mesh.SetTriangles(submeshIndices[i], i);
         }
+
+        mesh.RecalculateBounds();
         return mesh;
     }
 
