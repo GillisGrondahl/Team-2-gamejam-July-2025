@@ -1,13 +1,15 @@
 using FMOD.Studio;
 using FMODUnity;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Scripting;
 using VContainer;
 using VContainer.Unity;
 
-
+// A minimal MonoBehaviour whose only job is to run coroutines for non-MonoBehaviour classes
+public class CoroutineRunner : MonoBehaviour { }
 
 public class FMODAudioManager : IAudioService, IStartable, IDisposable
 {
@@ -85,18 +87,27 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
     public void Start()
     {
+        // Create a persistent coroutine runner so we can yield without blocking the main thread
+        var go = new GameObject("FMODAudioCoroutineRunner");
+        GameObject.DontDestroyOnLoad(go);
+        var runner = go.AddComponent<CoroutineRunner>();
 
-        // Ensure banks are loaded (redundant if auto-loading works, but safe)
-        if (!RuntimeManager.HasBankLoaded("Master"))
-        {
-            RuntimeManager.LoadBank("BGM");
-            RuntimeManager.LoadBank("Ambience");
-            RuntimeManager.LoadBank("SFX");
-            RuntimeManager.LoadBank("Master");
-        }
+        // Load banks and trigger sample data preloading (fixes first-play stutter on WebGL)
+        RuntimeManager.LoadBank("BGM");
+        RuntimeManager.StudioSystem.getBank("bank:/BGM", out Bank bgmBank);
+        bgmBank.loadSampleData();
 
-        // Wait for all banks to finish loading
-        RuntimeManager.WaitForAllSampleLoading();
+        RuntimeManager.LoadBank("Ambience");
+        RuntimeManager.StudioSystem.getBank("bank:/Ambience", out Bank ambBank);
+        ambBank.loadSampleData();
+
+        RuntimeManager.LoadBank("SFX");
+        RuntimeManager.StudioSystem.getBank("bank:/SFX", out Bank sfxBank);
+        sfxBank.loadSampleData();
+
+        RuntimeManager.LoadBank("Master");
+        RuntimeManager.StudioSystem.getBank("bank:/Master", out Bank masterBank);
+        masterBank.loadSampleData();
 
         // Assign busses
         masterBus = RuntimeManager.GetBus("bus:/");
@@ -104,21 +115,34 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         AMBBus = RuntimeManager.GetBus("bus:/Ambience");
         SFXBus = RuntimeManager.GetBus("bus:/SFX");
 
-        //InitializeAmbience();
-
+        // Load saved volume settings
         var audio = _settingsService.Current.Audio;
-
-        //Load saved volume settings
         _masterVolume = audio.MasterVolume;
         _bgmVolume = audio.MusicVolume;
         _ambVolume = audio.AmbienceVolume;
         _sfxVolume = audio.SfxVolume;
 
-        // Set initial Volume
+        // Set initial volumes
         SetVolume(masterBus, _masterVolume);
         SetVolume(BGMBus, _bgmVolume);
         SetVolume(AMBBus, _ambVolume);
         SetVolume(SFXBus, _sfxVolume);
+
+        // Defer the wait for banks and sample loading to a coroutine to avoid blocking the main thread
+        runner.StartCoroutine(WaitForAudioReady());
+    }
+
+    private IEnumerator WaitForAudioReady()
+    {
+        // Wait for master banks to be loaded before proceeding
+        while (!RuntimeManager.HaveAllBanksLoaded)
+        {
+            yield return null;
+        }
+
+        RuntimeManager.WaitForAllSampleLoading();
+
+        Debug.Log("FMODAudioManager: audio ready");
     }
 
     private void SetVolume(Bus volumeControlBus, float volume)
