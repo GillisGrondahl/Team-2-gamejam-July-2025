@@ -1,6 +1,7 @@
 ﻿<Solution>
   <Project Path="MoreMountains.Tools.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Unity.PlayerPrefsEditor.Editor.csproj" />
   <Project Path="LineworkLite.csproj" />
   <Project Path="MoreMountains.Tools.Editor.csproj" />
   <Project Path="Lofelt.NiceVibrations.csproj" />
@@ -12,4 +13,6 @@
   <Project Path="Lofelt.NiceVibrations.Demo.csproj" />
   <Project Path="Lofelt.NiceVibrations.Editor.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
+  <Project Path="Unity.PlayerPrefsEditor.EditorResources.csproj" />
+  <Project Path="Unity.PlayerPrefsEditor.Samples.SampleScene.csproj" />
 </Solution>
