@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1140296450800019457}
   - component: {fileID: 4667809944858572091}
   - component: {fileID: 5640874631592454413}
+  - component: {fileID: 1412678564570810629}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -355,7 +356,7 @@ MonoBehaviour:
           ButtonText: 
         Owner: {fileID: 5640874631592454413}
         DebugActive: 0
-        LoadingSceneName: MMAdditiveLoadingScreen
+        LoadingSceneName: 
         DestinationSceneName: 
         LoadingMode: 0
         Priority: 4
@@ -364,11 +365,11 @@ MonoBehaviour:
         AntiSpillSceneName: 
         DebugMode: 0
         BeforeEntryFadeDelay: 0
-        EntryFadeDuration: 0.2
+        EntryFadeDuration: 0.1
         AfterEntryFadeDelay: 0
-        BeforeSceneActivationDelay: 0
+        BeforeSceneActivationDelay: 0.1
         AfterSceneActivationDelay: 0
-        ExitFadeDuration: 0.2
+        ExitFadeDuration: 0.1
         InterpolateProgress: 1
         ProgressInterpolationSpeed: 5
         SpeedIntervals: []
@@ -517,3 +518,19 @@ MonoBehaviour:
         ScriptDriven: 0
         AutoResume: 0
         AutoResumeAfter: 0.25
+--- !u!114 &1412678564570810629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3781983662237930806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dd23bf97680be41a75b45b50f0d8ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoreMountains.Tools::MoreMountains.Tools.MMFPSUnlock
+  TargetFPS: 30
+  RenderFrameInterval: 0
+  VSyncCount: 0
+  EnableNumberShortcuts: 0

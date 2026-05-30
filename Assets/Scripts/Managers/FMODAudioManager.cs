@@ -109,6 +109,9 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         RuntimeManager.StudioSystem.getBank("bank:/Master", out Bank masterBank);
         masterBank.loadSampleData();
 
+        RuntimeManager.CoreSystem.mixerSuspend();
+        RuntimeManager.CoreSystem.mixerResume();
+
         // Assign busses
         masterBus = RuntimeManager.GetBus("bus:/");
         BGMBus = RuntimeManager.GetBus("bus:/BGM");
