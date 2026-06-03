@@ -15,7 +15,7 @@ public class LevelSelectionManager : MonoBehaviour
     StateMask LevelSelectionMask = StateMask.CursorVisible | StateMask.CursorUnlocked;
 
     [Inject]
-    private void Constructor(SceneController sceneController, IGameStateService stateService)
+    public void Constructor(SceneController sceneController, IGameStateService stateService)
     {
         _sceneController = sceneController;
         _state = stateService;
