@@ -98,7 +98,7 @@ namespace MoreMountains.Feedbacks
         /// </summary>
         /// <param name="position"></param>
         /// <param name="feedbacksIntensity"></param>
-        protected virtual void PlayFMODOneShot(Vector3 position, float feedbacksIntensity)
+        /*protected virtual void PlayFMODOneShot(Vector3 position, float feedbacksIntensity)
         {
             // Create event instance for parameter control
             var eventInstance = RuntimeManager.CreateInstance(FMODEventPath);
@@ -137,6 +137,48 @@ namespace MoreMountains.Feedbacks
             eventInstance.start();
 
             // Release immediately for one-shot behavior
+            eventInstance.release();
+        }
+        */
+        protected virtual void PlayFMODOneShot(Vector3 position, float feedbacksIntensity)
+        {
+            // Use PlayOneShot for simple cases without parameters
+            if ((Parameters == null || Parameters.Length == 0) && !UseIntensityForVolume)
+            {
+                if (Play3D)
+                    RuntimeManager.PlayOneShot(FMODEventPath, GetPlayPosition(position));
+                else
+                    RuntimeManager.PlayOneShot(FMODEventPath);
+                return;
+            }
+
+            // Only fall back to CreateInstance when you actually need parameter control
+            var eventInstance = RuntimeManager.CreateInstance(FMODEventPath);
+
+            float finalVolume = UseIntensityForVolume ?
+                IntensityToVolumeCurve.Evaluate(feedbacksIntensity) * Volume :
+                Volume;
+
+            eventInstance.setParameterByName("Volume", finalVolume);
+
+            if (Parameters != null)
+            {
+                foreach (var param in Parameters)
+                {
+                    if (!string.IsNullOrEmpty(param.ParameterName))
+                    {
+                        float value = param.UseIntensity ?
+                            param.IntensityCurve.Evaluate(feedbacksIntensity) * param.Value :
+                            param.Value;
+                        eventInstance.setParameterByName(param.ParameterName, value);
+                    }
+                }
+            }
+
+            if (Play3D)
+                eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(GetPlayPosition(position)));
+
+            eventInstance.start();
             eventInstance.release();
         }
 

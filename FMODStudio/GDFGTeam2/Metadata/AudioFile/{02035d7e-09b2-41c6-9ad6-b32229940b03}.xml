@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
-	<object class="AudioFile" id="{d032f064-efd0-4e63-8e2a-1969780b4f90}">
+	<object class="AudioFile" id="{02035d7e-09b2-41c6-9ad6-b32229940b03}">
 		<property name="assetPath">
-			<value>AMB/WATRWave_Water Lapping against port_Jake Fielding_Industrial Harbor.wav</value>
+			<value>AMB/Surf_Ocean Medium to Large Rocks.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>48</value>
+			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>101.34664583333333</value>
+			<value>114.05061224489796</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{f5b6c4f3-3661-42af-a193-793c1a6624a6}</destination>

@@ -26,6 +26,9 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
     Bus AMBBus;
     Bus SFXBus;
 
+    Bank _sfxBank;
+    Bank _masterBank;
+
     public float MasterVolume
     {
         get => _masterVolume;
@@ -95,15 +98,15 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
         // Load banks and trigger sample data preloading (fixes first-play stutter on WebGL)
         RuntimeManager.LoadBank("BGM");
         RuntimeManager.StudioSystem.getBank("bank:/BGM", out Bank bgmBank);
-        bgmBank.loadSampleData();
+        //bgmBank.loadSampleData();
 
         RuntimeManager.LoadBank("Ambience");
         RuntimeManager.StudioSystem.getBank("bank:/Ambience", out Bank ambBank);
-        ambBank.loadSampleData();
+        //ambBank.loadSampleData();
 
         RuntimeManager.LoadBank("SFX");
-        RuntimeManager.StudioSystem.getBank("bank:/SFX", out Bank sfxBank);
-        sfxBank.loadSampleData();
+        RuntimeManager.StudioSystem.getBank("bank:/SFX", out _sfxBank);
+        _sfxBank.loadSampleData();
 
         RuntimeManager.LoadBank("Master");
         RuntimeManager.StudioSystem.getBank("bank:/Master", out Bank masterBank);
@@ -137,13 +140,21 @@ public class FMODAudioManager : IAudioService, IStartable, IDisposable
 
     private IEnumerator WaitForAudioReady()
     {
-        // Wait for master banks to be loaded before proceeding
         while (!RuntimeManager.HaveAllBanksLoaded)
+            yield return null;
+
+        // Poll until SFX sample data is actually fully loaded
+        while (true)
         {
+            _sfxBank.getSampleLoadingState(out LOADING_STATE state);
+            if (state == LOADING_STATE.LOADED) break;
+            if (state == LOADING_STATE.ERROR)
+            {
+                Debug.LogError("FMODAudioManager: SFX bank sample loading failed");
+                break;
+            }
             yield return null;
         }
-
-        RuntimeManager.WaitForAllSampleLoading();
 
         Debug.Log("FMODAudioManager: audio ready");
     }

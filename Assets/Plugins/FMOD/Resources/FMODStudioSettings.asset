@@ -620,7 +620,7 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     BuildDirectory:
-      Value: Mobile
+      Value: Desktop
       HasValue: 1
     SpeakerMode:
       Value: 3
