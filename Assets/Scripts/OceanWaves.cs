@@ -40,48 +40,43 @@ public class SimpleOceanWaves : MonoBehaviour
         AnimateWaves();
     }
 
-    void AnimateWaves()
+    public float GetWaveHeightLocal(Vector3 localPoint)
     {
-        // Animate existing vertices with wave motion
+        float wave =
+            Mathf.Sin(localPoint.x * 0.5f + Time.time * waveSpeed) *
+            Mathf.Sin(localPoint.z * 0.3f + Time.time * waveSpeed * 0.7f);
+
+        return wave * waveHeight;
+    }
+
+    public Vector3 GetDisplacedLocalPoint(Vector3 originalLocalPoint)
+    {
+        originalLocalPoint.y += GetWaveHeightLocal(originalLocalPoint);
+        return originalLocalPoint;
+    }
+
+    private void AnimateWaves()
+    {
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 vertex = originalVertices[i];
 
-            // Create wave using sine functions
-            float wave = Mathf.Sin(vertex.x * 0.5f + Time.time * waveSpeed) *
-                        Mathf.Sin(vertex.z * 0.3f + Time.time * waveSpeed * 0.7f);
-
-            vertices[i] = new Vector3(vertex.x, vertex.y + wave * waveHeight, vertex.z);
+            vertices[i] = GetDisplacedLocalPoint(vertex);
         }
 
-        // Update visual mesh every frame
         mesh.vertices = vertices;
         mesh.RecalculateNormals();
 
-        // Update collider mesh only every few frames
         if (updateCollider && meshCollider != null)
         {
             frameCounter++;
+
             if (frameCounter >= colliderUpdateInterval)
             {
-                meshCollider.sharedMesh = null; // Clear first
-                meshCollider.sharedMesh = mesh; // Assign updated mesh
-                frameCounter = 0; // Reset counter
+                meshCollider.sharedMesh = null;
+                meshCollider.sharedMesh = mesh;
+                frameCounter = 0;
             }
         }
     }
-
-    //MaybeLater
-    //public float GetHeightAtPosition(Vector3 worldPosition)
-    //{
-    //    Vector3 localPos = transform.InverseTransformPoint(worldPosition);
-    //    Debug.Log((Mathf.Sqrt(vertices.Length) - 1));
-    //    int x = Mathf.FloorToInt((localPos.x + 0.5f) * (Mathf.Sqrt(vertices.Length) - 1));
-    //    int z = Mathf.FloorToInt((localPos.z + 0.5f) * (Mathf.Sqrt(vertices.Length) - 1));
-
-    //    if (x >= Mathf.Sqrt(vertices.Length) || z >= Mathf.Sqrt(vertices.Length)) return 0f;
-
-    //    int index = (int)(z * (Mathf.Sqrt(vertices.Length) - 1) + x);
-    //    return vertices[index].y;
-    //}
 }

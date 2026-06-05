@@ -207,7 +207,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671792197414465521}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00334}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0048}
   m_LocalScale: {x: 0.0026000002, y: 0.0026000002, z: 0.0026000002}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -216,7 +216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.00457}
+  m_AnchoredPosition: {x: 0, y: -0.0046}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6997117944633863495
@@ -1867,10 +1867,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5332701540394784781}
-  - component: {fileID: 2733071894546859062}
   - component: {fileID: 8895965705467208023}
   - component: {fileID: 921514586704523211}
   - component: {fileID: 4025030316061995534}
+  - component: {fileID: 2006810400119946940}
   m_Layer: 0
   m_Name: MainMenu_Chest=Leaderboard
   m_TagString: Untagged
@@ -1888,7 +1888,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: -0.01306, y: -0, z: -7.62279}
-  m_LocalScale: {x: 87.06, y: 87.06, z: 87.06}
+  m_LocalScale: {x: 8.706005, y: 21.765, z: 87.06}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 437206175779347660}
@@ -1900,33 +1900,6 @@ Transform:
   - {fileID: 4334314786022260843}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
---- !u!54 &2733071894546859062
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702408283687797892}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 10
-  m_CollisionDetection: 2
 --- !u!65 &8895965705467208023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2070,6 +2043,23 @@ MonoBehaviour:
   requireMouseButton: 1
   playerCamera: {fileID: 0}
   isHovering: 0
+--- !u!114 &2006810400119946940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702408283687797892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae6386122064e3c45ac2573ed8538429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSurfaceAnchor
+  ocean: {fileID: 0}
+  originalLocalPosition: {x: -0.55631, y: -0.1, z: -1.2475}
+  surfaceOffset: -0.1
+  followOceanRotation: 0
+  followWaveNormal: 0
 --- !u!1 &8991552815491079773
 GameObject:
   m_ObjectHideFlags: 0
